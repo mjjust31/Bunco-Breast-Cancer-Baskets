@@ -25,12 +25,18 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
 
   //adds a basket
   const handleAddBasket = (newBasket) => {
-    setBasketData((prevBaskets) => [
-      ...prevBaskets,
-      { id: prevBaskets.length + 1, ...newBasket },
-    ]);
-    setShowForm(false);
+    setBasketData((prevBaskets) => {
+      // Add the new basket to the array
+      const updatedBaskets = [...prevBaskets, newBasket];
+  
+      // Reassign IDs to ensure they stay sequential (1, 2, 3, ...)
+      return updatedBaskets.map((basket, index) => ({
+        ...basket,
+        id: index + 1, // Always assigns IDs in order
+      }));
+    });
   };
+  
 
   //deletes all baskets
 
@@ -41,10 +47,27 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
 
   //deletets a basket
   const deleteSingleBasket = (basket) => {
-    setBasketData((prevBaskets) => prevBaskets.filter((b) => b.id !== basket.id));
+    setBasketData((prevBaskets) => {
+      // Remove the selected basket
+      const updatedBaskets = prevBaskets.filter((b) => b.id !== basket.id);
+  
+      // Renumber the remaining baskets to keep IDs sequential
+      return updatedBaskets.map((b, index) => ({
+        ...b,
+        id: index + 1, // Always assigns IDs in order
+      }));
+    });
   };
   
   //edits a particular basket by id
+  const editSingleBasket = (updatedBasket) => {
+    setBasketData((prevBaskets) =>
+      prevBaskets.map((b) =>
+        b.id === updatedBasket.id ? { ...b, ...updatedBasket } : b
+      )
+    );
+  };
+  
 
   return (
     <div>
@@ -77,7 +100,7 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
         <ul>
           {basketData.map((basket) => (
             <li className="basket-card" key={basket.id}>
-              <button>Edit Basket</button>
+              <button onClick={()=>editSingleBasket(basket)}>Edit Basket</button>
               <button onClick={()=>deleteSingleBasket(basket)}>Delete Basket</button>
               <h3>
                 #{basket.id} {basket.name}
