@@ -1,11 +1,6 @@
 /* NavTabs.scss */
 
-/* Colors for Breast Cancer Theme */
-$primary-pink: #f06292; /* Dark Pink */
-$secondary-pink: #f8bbd0; /* Soft Pink */
-$text-color: #333; /* Dark text for contrast */
-$background-color: #ffffff; /* White background for navbar */
-
+/* Ensuring the Navbar is above other elements */
 .navbar {
   display: flex;
   justify-content: center;
@@ -14,8 +9,12 @@ $background-color: #ffffff; /* White background for navbar */
   padding: 10px 0;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+  border-bottom: 10px solid black;
+  position: relative; /* Make sure it's positioned */
+  z-index: 1000; /* Ensure navbar is on top */
 }
 
+/* Links styling */
 .nav-tabs {
   display: flex;
   list-style: none;
