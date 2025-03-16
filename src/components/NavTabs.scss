@@ -9,13 +9,12 @@ $background-color: #ffffff; /* White background for navbar */
 /* Navbar styles */
 .navbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: $primary-pink;
   padding: 10px 0;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
-  border-bottom: 10px solid black;
 
   /* Ensure the navbar is positioned correctly */
   position: fixed; /* Fix navbar to the top of the page */
