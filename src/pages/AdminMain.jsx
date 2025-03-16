@@ -1,37 +1,26 @@
 import React, { useState } from "react";
-import { useOutletContext } from "react-router-dom";
-// import "./AdminMain.css"; // ✅ Add custom styles
+import BasketForm from "../components/BasketForm";
+import "./AdminMain.css"; 
 
-const AdminMain = () => {
-  const { basketData, setBasketData } = useOutletContext();
-  const [showModal, setShowModal] = useState(false); // ✅ Controls Add Basket Modal
-  const [newBasket, setNewBasket] = useState({ name: "", content: "" }); // ✅ Only ONE content entry
+const AdminMain = ({ username, basketData, setBasketData }) => {
+  const [showForm, setShowForm] = useState(false);
 
-  // ✅ Handle Basket Deletion
-  const handleDeleteBasket = (id) => {
-    setBasketData((prevBaskets) => prevBaskets.filter((basket) => basket.id !== id));
-  };
+  // ✅ Redirect non-admin users
+  if (username.toLowerCase() !== "administrator") {
+    return (
+      <div>
+        <h1>Access Denied</h1>
+        <p>You must be an administrator to manage baskets.</p>
+      </div>
+    );
+  }
 
-  // ✅ Delete All Baskets
-  const handleDeleteAll = () => {
-    setBasketData([]);
-  };
-
-  // ✅ Handle Adding a New Basket
-  const handleAddBasket = () => {
-    if (newBasket.name.trim() === "" || newBasket.content.trim() === "") {
-      alert("Please enter a basket name and one content item.");
-      return;
-    }
-
+  const handleAddBasket = (newBasket) => {
     setBasketData((prevBaskets) => [
       ...prevBaskets,
-      { id: prevBaskets.length + 1, name: newBasket.name, content: newBasket.content }
+      { id: prevBaskets.length + 1, ...newBasket }
     ]);
-
-    // ✅ Reset Form & Close Modal
-    setNewBasket({ name: "", content: "" });
-    setShowModal(false);
+    setShowForm(false);
   };
 
   return (
@@ -39,40 +28,26 @@ const AdminMain = () => {
       <h1>Admin Panel: Manage Baskets</h1>
       <p>Total Baskets: <strong>{basketData.length}</strong></p>
 
-      {/* ✅ Add Basket Button - Opens Modal */}
-      <button onClick={() => setShowModal(true)}>Add New Basket</button>
-      <button onClick={handleDeleteAll}>Delete All Baskets</button>
+      {/* ✅ Admin Controls */}
+      <button onClick={() => setShowForm(true)}>➕ Add a Basket</button>
 
-      {/* ✅ List of Existing Baskets */}
-      <ul>
-        {basketData.map((basket) => (
-          <li key={basket.id}>
-            <h3>{basket.name}</h3>
-            <p>Content: {basket.content}</p>
-            <button onClick={() => handleDeleteBasket(basket.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      {basketData.length === 0 ? (
+        <p>No baskets available. Click "Add a Basket" to create one.</p>
+      ) : (
+        <ul>
+          {basketData.map((basket) => (
+            <li key={basket.id}>
+              <h3>{basket.name}</h3>
+              <p>Content: {basket.content}</p>
+            </li>
+          ))}
+        </ul>
+      )}
 
-      {/* ✅ Add Basket Modal */}
-      {showModal && (
+      {showForm && (
         <div className="modal">
           <div className="modal-content">
-            <h2>Add a New Basket</h2>
-            <input
-              type="text"
-              placeholder="Basket Name"
-              value={newBasket.name}
-              onChange={(e) => setNewBasket({ ...newBasket, name: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Content"
-              value={newBasket.content}
-              onChange={(e) => setNewBasket({ ...newBasket, content: e.target.value })}
-            />
-            <button onClick={handleAddBasket}>Save Basket</button>
-            <button onClick={() => setShowModal(false)}>Cancel</button>
+            <BasketForm onAddBasket={handleAddBasket} onClose={() => setShowForm(false)} />
           </div>
         </div>
       )}
@@ -81,3 +56,4 @@ const AdminMain = () => {
 };
 
 export default AdminMain;
+
