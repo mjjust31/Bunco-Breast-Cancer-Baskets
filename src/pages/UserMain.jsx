@@ -1,20 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./UserMain.css";
 
 const UserMain = ({ username, setUsername, basketData }) => {
   const [tempUsername, setTempUsername] = useState(username || "");
-  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (tempUsername.trim() === "") return;
     setUsername(tempUsername.trim());
     localStorage.setItem("username", tempUsername.trim());
-
-    // ✅ Redirect administrator to /administrator
-    if (tempUsername.toLowerCase() === "administrator") {
-      navigate("/administrator");  // ✅ Ensure correct path
-    }
   };
 
   return (
@@ -35,8 +28,9 @@ const UserMain = ({ username, setUsername, basketData }) => {
         <p>Welcome, <strong>{username}</strong>!</p>
       )}
 
+      {/* ✅ Prevents crash when there are no baskets */}
       {basketData.length === 0 ? (
-        <p>No baskets available yet. Check back later!</p>
+        <p>No basket data at this time. Check back later!</p>
       ) : (
         basketData.map((basket) => (
           <div key={basket.id} className="basket-container">

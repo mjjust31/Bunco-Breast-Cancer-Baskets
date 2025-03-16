@@ -8,6 +8,7 @@ import App from "./App.jsx";
 import Main from "./pages/UserMain.jsx";
 import Favs from "./pages/UserFav.jsx";
 import AdminMain from "./pages/AdminMain.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
 //inmport css
 import "./index.css";
 
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <Error />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
