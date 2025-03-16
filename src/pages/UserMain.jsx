@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./UserMain.css";
 
 const UserMain = ({ username, setUsername, basketData }) => {
@@ -7,12 +8,16 @@ const UserMain = ({ username, setUsername, basketData }) => {
     JSON.parse(localStorage.getItem("favorites")) || []
   );
 
+  const navigate = useNavigate(); // Set up useNavigate for redirection
+
   // Handle Add to Favorites
   const handleAddToFavorites = (id) => {
     if (!favorites.includes(id)) {
       const updatedFavorites = [...favorites, id];
       setFavorites(updatedFavorites);
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      // Redirect to the Home page after adding to favorites
+      navigate("/");
     }
   };
 
@@ -21,6 +26,8 @@ const UserMain = ({ username, setUsername, basketData }) => {
     const updatedFavorites = favorites.filter((favId) => favId !== id);
     setFavorites(updatedFavorites);
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    // Redirect to the Home page after removing from favorites
+    navigate("/");
   };
 
   // Handle Login
