@@ -44,6 +44,11 @@ function App() {
             path="/administrator" 
             element={<AdminMain username={username} setUsername={setUsername} basketData={basketData} setBasketData={setBasketData} />} 
           />
+          <Route 
+            path="/Favorites" 
+            element={<AdminMain username={username} setUsername={setUsername} basketData={basketData} setBasketData={setBasketData} />} 
+          />
+
         </Routes>
       </main>
     </>
