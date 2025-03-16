@@ -10,7 +10,7 @@
 
 # production
 /build
-/dist  # Add this line to ignore the dist folder
+
 
 # misc
 .DS_Store
