@@ -3,6 +3,25 @@ import "./UserMain.css";
 
 const UserMain = ({ username, setUsername, basketData }) => {
   const [tempUsername, setTempUsername] = useState(username || "");
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favorites")) || []
+  );
+
+  // Handle Add to Favorites
+  const handleAddToFavorites = (id) => {
+    if (!favorites.includes(id)) {
+      const updatedFavorites = [...favorites, id];
+      setFavorites(updatedFavorites);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    }
+  };
+
+  // Handle Remove from Favorites
+  const handleRemoveFromFavorites = (id) => {
+    const updatedFavorites = favorites.filter((favId) => favId !== id);
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  };
 
   // Handle Login
   const handleLogin = () => {
@@ -14,21 +33,16 @@ const UserMain = ({ username, setUsername, basketData }) => {
   // Handle Logout
   const handleLogout = () => {
     setUsername(""); // Clear username state
+    setFavorites([]); // Clear favorites state
     localStorage.removeItem("username"); // Remove username from localStorage
+    localStorage.removeItem("favorites"); // Clear favorites from localStorage
   };
-
-  // Effect to initialize username from localStorage
-  useEffect(() => {
-    const savedUsername = localStorage.getItem("username");
-    if (savedUsername) {
-      setUsername(savedUsername);
-    }
-  }, [setUsername]);
 
   return (
     <div>
       <h1>Bunco Baskets</h1>
 
+      {/* If username is not provided, show the login form */}
       {!username ? (
         <div className="login-container">
           <input
@@ -47,17 +61,33 @@ const UserMain = ({ username, setUsername, basketData }) => {
         </div>
       )}
 
-      {/* Prevents crash when there are no baskets */}
-      {basketData.length === 0 ? (
-        <p>No basket data at this time. Check back later!</p>
-      ) : (
-        basketData.map((basket) => (
-          <div key={basket.id} className="basket-container">
-            <h2>{`#${basket.id}: ${basket.name}`}</h2>
-            <p>Content: {basket.content}</p>
-          </div>
-        ))
-      )}
+      {/* Display Baskets */}
+      <div>
+        {basketData.length === 0 ? (
+          <p>No baskets available</p>
+        ) : (
+          basketData.map((basket) => (
+            <div key={basket.id} className="basket-container">
+              <h2>{`#${basket.id}: ${basket.name}`}</h2>
+              <p>Content: {basket.content}</p>
+
+              {/* Show Add to Favorites if user is logged in */}
+              {username && !favorites.includes(basket.id) && (
+                <button onClick={() => handleAddToFavorites(basket.id)}>
+                  Add to Favorites
+                </button>
+              )}
+
+              {/* Show Remove from Favorites if the basket is already a favorite */}
+              {username && favorites.includes(basket.id) && (
+                <button onClick={() => handleRemoveFromFavorites(basket.id)}>
+                  Remove from Favorites
+                </button>
+              )}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

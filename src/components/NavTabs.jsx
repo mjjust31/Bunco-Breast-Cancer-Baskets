@@ -19,7 +19,7 @@ const NavTabs = ({ username }) => {
         </li>
       )}
 
-      {/* Show Favorites link if username is entered */}
+      {/* Show Favorites link only if username is entered and not "administrator" */}
       {safeUsername !== "" && safeUsername !== "administrator" && (
         <li className="nav-item">
           <Link to="/favorites" className="nav-link">Favorites</Link>
