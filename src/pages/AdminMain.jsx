@@ -32,10 +32,18 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
     setShowForm(false);
   };
 
-  //deletets a basket
-
   //deletes all baskets
 
+  const deleteAllBaskets = (basket) => {
+    setBasketData([]);
+    setShowForm(false);
+  };
+
+  //deletets a basket
+  const deleteSingleBasket = (basket) => {
+    setBasketData((prevBaskets) => prevBaskets.filter((b) => b.id !== basket.id));
+  };
+  
   //edits a particular basket by id
 
   return (
@@ -47,6 +55,7 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
       <p>
         Total Baskets: <strong>{basketData.length}</strong>
       </p>
+
 
       {/* ✅ Admin Controls */}
       <button onClick={() => setShowForm(true)}>➕ Add a Basket</button>
@@ -60,16 +69,16 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
           </div>
         </div>
       )}
-      <button>Delete All Baskets</button>
+      <button onClick={() => deleteAllBaskets()}>Delete All Baskets</button>
 
       {basketData.length === 0 ? (
         <p>No baskets yet. Click "Add a Basket" to create one.</p>
       ) : (
-        <ul >
+        <ul>
           {basketData.map((basket) => (
             <li className="basket-card" key={basket.id}>
               <button>Edit Basket</button>
-              <button>Delete Basket</button>
+              <button onClick={()=>deleteSingleBasket(basket)}>Delete Basket</button>
               <h3>
                 #{basket.id} {basket.name}
               </h3>
