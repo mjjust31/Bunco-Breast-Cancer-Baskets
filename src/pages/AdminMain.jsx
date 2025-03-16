@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Import Link to navigate
 import BasketForm from "../components/BasketForm";
 import "./AdminMain.scss";
 
@@ -16,14 +16,14 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
 
   if (username.toLowerCase() !== "administrator") {
     return (
-      <div>
+      <div className="access-denied">
         <h1>Access Denied</h1>
         <p>You must be an administrator to manage baskets.</p>
       </div>
     );
   }
 
-  //adds a basket
+  // Adds a basket
   const handleAddBasket = (newBasket) => {
     setBasketData((prevBaskets) => {
       // Add the new basket to the array
@@ -36,16 +36,14 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
       }));
     });
   };
-  
 
-  //deletes all baskets
-
-  const deleteAllBaskets = (basket) => {
+  // Deletes all baskets
+  const deleteAllBaskets = () => {
     setBasketData([]);
     setShowForm(false);
   };
 
-  //deletets a basket
+  // Deletes a single basket
   const deleteSingleBasket = (basket) => {
     setBasketData((prevBaskets) => {
       // Remove the selected basket
@@ -58,8 +56,8 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
       }));
     });
   };
-  
-  //edits a particular basket by id
+
+  // Edits a particular basket by id
   const editSingleBasket = (updatedBasket) => {
     setBasketData((prevBaskets) =>
       prevBaskets.map((b) =>
@@ -67,21 +65,24 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
       )
     );
   };
-  
 
   return (
-    <div>
+    <div className="admin-container">
       <h1>Admin Panel: Manage Baskets</h1>
+
       {/* ✅ Logout Button */}
-      <button onClick={handleLogout}>🚪 Logout</button>
+      <button className="logout-button" onClick={handleLogout}>🚪 Logout</button>
+
 
       <p>
         Total Baskets: <strong>{basketData.length}</strong>
       </p>
 
-
       {/* ✅ Admin Controls */}
-      <button onClick={() => setShowForm(true)}>➕ Add a Basket</button>
+      
+      <Link to="/" className="back-to-home-button">Back to Home</Link>
+      <button className="add-basket-button" onClick={() => setShowForm(true)}>➕ Add a Basket</button>
+      
       {showForm && (
         <div className="modal">
           <div className="modal-content">
@@ -92,16 +93,17 @@ const AdminMain = ({ username, setUsername, basketData, setBasketData }) => {
           </div>
         </div>
       )}
-      <button onClick={() => deleteAllBaskets()}>Delete All Baskets</button>
+      
+      <button className="delete-all-button" onClick={deleteAllBaskets}>Delete All Baskets</button>
 
       {basketData.length === 0 ? (
         <p>No baskets yet. Click "Add a Basket" to create one.</p>
       ) : (
-        <ul>
+        <ul className="basket-list">
           {basketData.map((basket) => (
             <li className="basket-card" key={basket.id}>
-              <button onClick={()=>editSingleBasket(basket)}>Edit Basket</button>
-              <button onClick={()=>deleteSingleBasket(basket)}>Delete Basket</button>
+              <button className="edit-button" onClick={() => editSingleBasket(basket)}>Edit Basket</button>
+              <button className="delete-button" onClick={() => deleteSingleBasket(basket)}>Delete Basket</button>
               <h3>
                 #{basket.id} {basket.name}
               </h3>

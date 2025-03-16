@@ -21,24 +21,24 @@ function UserFav({ favorites, basketData }) {
   );
 
   return (
-    <div>
-      <h1>Your Favorites</h1>
+    <div className="favorites-container">
+      <h1 className="favorites-heading">Your Favorites</h1>
       {favoriteBaskets.length === 0 ? (
-        <p>No favorites selected yet.</p>
+        <p className="no-favorites-message">No favorites selected yet.</p>
       ) : (
-        <ul>
+        <div className="basket-cards-container">
           {favoriteBaskets.map((basket) => (
-            <li key={basket.id}>
-              <h2>{`Basket #${basket.id}: ${basket.name}`}</h2>
+            <div key={basket.id} className="basket-card">
+              <h2 className="basket-name">{`Basket #${basket.id}: ${basket.name}`}</h2>
               {/* Render basket content as a single string */}
               {basket.content ? (
-                <p>{basket.content}</p>
+                <p className="basket-content">{basket.content}</p>
               ) : (
-                <p>No content available</p>
+                <p className="no-content-message">No content available</p>
               )}
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
