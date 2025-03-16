@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: "/Favorites",
+        path: "/favorites",
         element: <Favs />,
       },
       { path: "/administrator", element: <AdminMain /> },

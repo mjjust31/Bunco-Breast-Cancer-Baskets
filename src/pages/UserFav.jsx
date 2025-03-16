@@ -1,15 +1,12 @@
 import React from "react";
-import { useOutletContext } from "react-router-dom";
 
-function UserFav() {
-  const { favorites, basketData } = useOutletContext();
-
-  // ✅ Find full basket info based on stored favorite IDs
+function UserFav({ favorites, basketData }) {
+  // Filter the baskets based on favorites
   const favoriteBaskets = basketData.filter((basket) => favorites.includes(basket.id));
 
   return (
     <div>
-      <h1>Favorites</h1>
+      <h1>Your Favorites</h1>
       {favoriteBaskets.length === 0 ? (
         <p>No favorites selected yet.</p>
       ) : (
@@ -17,11 +14,13 @@ function UserFav() {
           {favoriteBaskets.map((basket) => (
             <li key={basket.id}>
               <h2>{`Basket #${basket.id}: ${basket.name}`}</h2>
-              <ul>
-                {basket.content.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
+
+        
+              {basket.content ? (
+                <p>{basket.content}</p> 
+              ) : (
+                <p>No content available</p> 
+              )}
             </li>
           ))}
         </ul>
