@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import "./App.css";
-import AdminDashboard from "./components/AdminDashboard";
+import UserMain from "./pages/UserMain";
+import { Outlet } from 'react-router-dom';
+import Nav from './components/NavTabs';
 
 function App() {
-  const [currentView, setCurrentView] = useState("dashboard"); // Default to dashboard
-
+  // The Outlet component will conditionally swap between the different pages according to the URL
   return (
-    <div>
-      <div>
-        {/* Toggle between different views */}
-        <button onClick={() => setCurrentView("dashboard")}>Admin Dashboard</button>
-      </div>
-
-      {/* Render the selected component */}
-      {currentView === "dashboard" && <AdminDashboard />}
-    </div>
+    <>
+      <Nav />
+      <main className="mx-3">
+        <Outlet />
+      </main>
+    </>
   );
 }
 
