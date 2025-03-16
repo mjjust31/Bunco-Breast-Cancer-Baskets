@@ -1,18 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client'
+import React from "react";
+import ReactDOM from "react-dom/client";
 // Bringing in the required imports from 'react-router-dom' to set up application routing behavior
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 //import pages
 import App from "./App.jsx";
-import Main from "./pages/UserMain.jsx"
-import Favs from "./pages/UserFav.jsx"
+import Main from "./pages/UserMain.jsx";
+import Favs from "./pages/UserFav.jsx";
+import AdminMain from "./pages/AdminMain.jsx";
 //inmport css
 import "./index.css";
 
+
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <Error />,
     children: [
@@ -21,13 +23,14 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: '/Favorites',
+        path: "/Favorites",
         element: <Favs />,
       },
+      { path: "/administrator", element: <AdminMain /> },
     ],
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
 );
