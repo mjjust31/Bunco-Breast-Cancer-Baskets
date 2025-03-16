@@ -6,26 +6,28 @@ const NavTabs = ({ username }) => {
   const safeUsername = username?.toLowerCase() || ""; // Prevent errors if username is empty
 
   return (
-    <ul className="nav nav-tabs">
-      {/* Always show the Home page link */}
-      <li className="nav-item">
-        <Link to="/" className="nav-link">Home</Link>
-      </li>
-
-      {/* Show Admin Panel only if username is "administrator" */}
-      {safeUsername === "administrator" && (
-        <li className="nav-item">
-          <Link to="/administrator" className="nav-link">Admin Panel</Link>
+    <div className="navbar"> {/* Add the navbar class */}
+      <ul className="nav nav-tabs"> {/* Add the nav-tabs class */}
+        {/* Always show the Home page link */}
+        <li className="nav-item"> {/* Add the nav-item class */}
+          <Link to="/" className="nav-link">Home</Link> {/* Add the nav-link class */}
         </li>
-      )}
 
-      {/* Show Favorites link only if username is entered and not "administrator" */}
-      {safeUsername !== "" && safeUsername !== "administrator" && (
-        <li className="nav-item">
-          <Link to="/favorites" className="nav-link">Favorites</Link>
-        </li>
-      )}
-    </ul>
+        {/* Show Admin Panel only if username is "administrator" */}
+        {safeUsername === "administrator" && (
+          <li className="nav-item">
+            <Link to="/administrator" className="nav-link">Admin Panel</Link>
+          </li>
+        )}
+
+        {/* Show Favorites link only if username is entered and not "administrator" */}
+        {safeUsername !== "" && safeUsername !== "administrator" && (
+          <li className="nav-item">
+            <Link to="/favorites" className="nav-link">Favorites</Link>
+          </li>
+        )}
+      </ul>
+    </div>
   );
 };
 

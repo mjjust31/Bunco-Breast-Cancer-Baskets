@@ -1,27 +1,63 @@
+/* NavTabs.scss */
+
+/* Colors for Breast Cancer Theme */
+$primary-pink: #f06292; /* Dark Pink */
+$secondary-pink: #f8bbd0; /* Soft Pink */
+$text-color: #333; /* Dark text for contrast */
+$background-color: #ffffff; /* White background for navbar */
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary-pink;
+  padding: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
 .nav-tabs {
   display: flex;
-  justify-content: space-between;
   list-style: none;
-  padding: 0;
   margin: 0;
-  border-bottom: 2px solid black; // Optional: Adds a bottom border for styling
+  padding: 0;
 }
 
 .nav-item {
-  background: none;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
+  margin: 0 15px;
 }
 
-.nav-item a {
-  text-decoration: none; // Removes underline from links
-  color: inherit; // Keeps text color consistent
-  font-size: 16px;
-  font-weight: 500;
+.nav-link {
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-pink, 10%);
+  }
+
+  /* Active link styling */
+  &.active {
+    background-color: darken($primary-pink, 15%);
+  }
 }
 
-.nav-item a.active {
-  font-weight: bold; // Highlights active link
-  color: red
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .nav-tabs {
+    flex-direction: column; /* Stack links vertically on small screens */
+  }
+
+  .nav-item {
+    margin: 10px 0;
+  }
+
+  .nav-link {
+    font-size: 16px;
+    padding: 10px 20px; /* Larger clickable area */
+  }
 }

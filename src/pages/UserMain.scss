@@ -1,0 +1,132 @@
+/* UserMain.scss */
+
+/* Colors for Breast Cancer Theme */
+$primary-pink: #f06292; /* Dark Pink */
+$secondary-pink: #f8bbd0; /* Soft Pink */
+$text-color: #333; /* Dark text for contrast */
+$background-color: #f8bbd0; /* Light pink background */
+
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  background: $background-color;
+  color: $text-color;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Full height of the viewport */
+}
+
+/* Main Container */
+.main-container {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 600px; /* Restrict max-width to make the page not too wide */
+  text-align: center; /* Center all text */
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+}
+
+/* Header */
+header {
+  padding: 20px;
+  background-color: $primary-pink;
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0;
+
+}
+
+/* Buttons */
+button {
+  background-color: $primary-pink;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: darken($primary-pink, 10%);
+}
+
+/* Login Form */
+.login-container {
+  text-align: center;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  width: 80%;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid $primary-pink;
+}
+
+input:focus {
+  outline: none;
+  border-color: $primary-pink;
+}
+
+/* Basket Cards */
+.basket-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.basket-container h2 {
+  font-size: 24px;
+  color: $primary-pink;
+}
+
+.basket-container p {
+  font-size: 18px;
+}
+
+.basket-container button {
+  font-size: 16px;
+  padding: 10px;
+  width: auto;
+  margin-top: 10px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  font-size: 14px;
+  color: $text-color;
+  margin-top: 40px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .main-container {
+    padding: 15px;
+  }
+
+  button {
+    font-size: 16px;
+  }
+
+  input {
+    width: 90%;
+  }
+}

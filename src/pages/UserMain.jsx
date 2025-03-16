@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import "./UserMain.css";
+import "./UserMain.scss";
 
 const UserMain = ({ username, setUsername, basketData }) => {
   const [tempUsername, setTempUsername] = useState(username || "");
@@ -46,25 +46,28 @@ const UserMain = ({ username, setUsername, basketData }) => {
   };
 
   return (
-    <div>
-      <h1>Bunco Baskets</h1>
+    <div className="main-container"> {/* Apply the main-container class */}
+      <header>
+        <h1>Bunco Baskets</h1> {/* Header section */}
+      </header>
 
       {/* If username is not provided, show the login form */}
       {!username ? (
-        <div className="login-container">
+        <div className="login-container"> {/* Apply login-container class */}
           <input
             type="text"
             placeholder="Enter your username"
             value={tempUsername}
             onChange={(e) => setTempUsername(e.target.value)}
+            className="input" // Add input class for styling
           />
-          <button onClick={handleLogin}>Submit</button>
+          <button onClick={handleLogin} className="login-button">Submit</button> {/* Add button class */}
         </div>
       ) : (
         <div>
           <p>Welcome, <strong>{username}</strong>!</p>
           {/* Log Out Button */}
-          <button onClick={handleLogout}>Log Out</button>
+          <button onClick={handleLogout} className="logout-button">Log Out</button> {/* Add button class */}
         </div>
       )}
 
@@ -74,20 +77,26 @@ const UserMain = ({ username, setUsername, basketData }) => {
           <p>No baskets available</p>
         ) : (
           basketData.map((basket) => (
-            <div key={basket.id} className="basket-container">
+            <div key={basket.id} className="basket-container"> {/* Apply basket-container class */}
               <h2>{`#${basket.id}: ${basket.name}`}</h2>
-              <p>Content: {basket.content}</p>
+              <p>{basket.content}</p>
 
               {/* Show Add to Favorites if user is logged in */}
               {username && !favorites.includes(basket.id) && (
-                <button onClick={() => handleAddToFavorites(basket.id)}>
+                <button 
+                  onClick={() => handleAddToFavorites(basket.id)} 
+                  className="add-favorite-button" // Add button class for styling
+                >
                   Add to Favorites
                 </button>
               )}
 
               {/* Show Remove from Favorites if the basket is already a favorite */}
               {username && favorites.includes(basket.id) && (
-                <button onClick={() => handleRemoveFromFavorites(basket.id)}>
+                <button 
+                  onClick={() => handleRemoveFromFavorites(basket.id)} 
+                  className="remove-favorite-button" // Add button class for styling
+                >
                   Remove from Favorites
                 </button>
               )}
