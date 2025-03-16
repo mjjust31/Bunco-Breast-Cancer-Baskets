@@ -6,6 +6,7 @@ $secondary-pink: #f8bbd0; /* Soft Pink */
 $text-color: #333; /* Dark text for contrast */
 $background-color: #ffffff; /* White background for navbar */
 
+/* Admin Container */
 .admin-container {
   padding: 20px;
   background-color: $secondary-pink;
@@ -37,7 +38,7 @@ $background-color: #ffffff; /* White background for navbar */
   cursor: pointer;
   margin-top: 20px;
   transition: background-color 0.3s ease;
-  
+
   &:hover {
     background-color: darken($primary-pink, 10%);
   }
@@ -54,7 +55,7 @@ $background-color: #ffffff; /* White background for navbar */
   cursor: pointer;
   margin-top: 20px;
   transition: background-color 0.3s ease;
-  
+
   &:hover {
     background-color: darken($primary-pink, 10%);
   }
@@ -147,6 +148,8 @@ $background-color: #ffffff; /* White background for navbar */
     padding: 20px;
   }
 }
+
+/* Back to Home Button */
 .back-to-home-button {
   background-color: $primary-pink;
   color: white;
@@ -157,7 +160,7 @@ $background-color: #ffffff; /* White background for navbar */
   display: inline-block;
   margin-top: 20px;
   transition: background-color 0.3s ease;
-  
+
   &:hover {
     background-color: darken($primary-pink, 10%);
   }

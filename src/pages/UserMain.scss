@@ -15,7 +15,7 @@ body {
   padding: 0;
   display: flex;
   justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
+  align-items: flex-start; /* Align content to the top */
   height: 100vh; /* Full height of the viewport */
 }
 
@@ -28,6 +28,7 @@ body {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  margin-top: 80px; /* Added margin to avoid overlap with fixed navbar */
 }
 
 /* Header */
@@ -43,7 +44,6 @@ header h1 {
   font-size: 32px;
   font-weight: bold;
   margin: 0;
-
 }
 
 /* Buttons */
@@ -120,6 +120,7 @@ footer {
 @media (max-width: 600px) {
   .main-container {
     padding: 15px;
+    margin-top: 120px; /* Adjusted top margin for mobile screens to account for navbar height */
   }
 
   button {
