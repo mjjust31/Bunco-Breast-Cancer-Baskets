@@ -1,0 +1,27 @@
+.nav-tabs {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid black; // Optional: Adds a bottom border for styling
+}
+
+.nav-item {
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.nav-item a {
+  text-decoration: none; // Removes underline from links
+  color: inherit; // Keeps text color consistent
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.nav-item a.active {
+  font-weight: bold; // Highlights active link
+  color: red
+}

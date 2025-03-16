@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from "react";
-import basketData from "../data/basketsData";
+import React from "react";
+import { useOutletContext } from "react-router-dom";
 import "./UserMain.css";
-import UserFav from "./UserFav";
 
-const AdminDashboard = () => {
-  const [favorites, setFavorites] = useState([]);
+const UserMain = () => {
+  const { favorites, setFavorites, basketData } = useOutletContext();
 
   const handleFav = (id) => {
-    if (!id) return; // ✅ Prevent adding an invalid ID
+    if (!id) return;
 
     setFavorites((prevFavorites) => {
-      const filteredFavorites = prevFavorites.filter((favId) => favId !== id);
-      return [...filteredFavorites, id]; // ✅ Ensures no duplicates
+      const newFavorites = prevFavorites.includes(id)
+        ? prevFavorites.filter((favId) => favId !== id) // Remove if already a favorite
+        : [...prevFavorites, id]; // Add if not a favorite
+
+      console.log("Updated Favorites:", newFavorites); // ✅ Debugging log
+      return newFavorites;
     });
   };
-
-  useEffect(() => {
-    console.log("Updated Favorites:", favorites);
-  }, [favorites]); // ✅ Logs the latest state
 
   return (
     <div>
       <section className="container">
         <h1 className="basket-title">Bunco Baskets</h1>
-        <button onClick={UserFav}>View My Favorites</button>
-
         {basketData.map((basket) => (
           <div key={basket.id} className="basket-container">
-            <button onClick={() => handleFav(basket.id)}>Add to Favorites</button>
+            <button onClick={() => handleFav(basket.id)}>
+              {favorites.includes(basket.id) ? "Remove from Favorites" : "Add to Favorites"}
+            </button>
             <h2>{`#${basket.id}: ${basket.name}`}</h2>
             <ul>
               {basket.content.map((item, index) => (
@@ -41,4 +40,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default UserMain;
