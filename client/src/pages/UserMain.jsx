@@ -10,7 +10,7 @@ const UserMain = ({ username, setUsername, basketData }) => {
   // Fetch the favorites from the server when the component loads
   useEffect(() => {
     if (username) {
-      fetch(`/api/favorites/${username}`)  // Call the backend to get favorites based on username
+      fetch("/api/baskets")  // Calls all baskets without login
         .then(response => response.json())
         .then(data => setFavorites(data))
         .catch(error => console.error("Error fetching favorites:", error));
@@ -20,7 +20,7 @@ const UserMain = ({ username, setUsername, basketData }) => {
   // Handle Add to Favorites
   const handleAddToFavorites = (id) => {
     if (!favorites.includes(id)) {
-      fetch(`/api/favorites/${username}`, {
+      fetch(`/api/${username}/favorites`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const UserMain = ({ username, setUsername, basketData }) => {
 
   // Handle Remove from Favorites
   const handleRemoveFromFavorites = (id) => {
-    fetch(`/api/favorites/${username}`, {
+    fetch(`/api/${username}/favorites`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -90,10 +90,11 @@ const UserMain = ({ username, setUsername, basketData }) => {
 
       {/* Display Baskets */}
       <div>
-        {basketData.length === 0 ? (
+        {/* Check if basketData is an array and has data before using map */}
+        {Array.isArray(basketData) && basketData.length === 0 ? (
           <p>No baskets available</p>
         ) : (
-          basketData.map((basket) => (
+          basketData && Array.isArray(basketData) && basketData.map((basket) => (
             <div key={basket.id} className="basket-container">
               <h2>{`#${basket.id}: ${basket.name}`}</h2>
               <p>{basket.content}</p>
@@ -126,4 +127,3 @@ const UserMain = ({ username, setUsername, basketData }) => {
 };
 
 export default UserMain;
-

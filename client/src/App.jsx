@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import "./App.css";
-import UserMain from "./pages/UserMain";
-import AdminMain from "./pages/AdminMain";
-import Favs from "./pages/UserFav"; // Import UserFav component
 import Nav from "./components/NavTabs";
 
 function App() {
-  const [username, setUsername] = useState(
-    localStorage.getItem("username") || ""
-  ); // Always a string
-  const [basketData, setBasketData] = useState(() => {
-    try {
-      const savedBaskets = localStorage.getItem("baskets");
-      return savedBaskets ? JSON.parse(savedBaskets) : [];
-    } catch (error) {
-      console.error("Error loading baskets:", error);
-      return [];
-    }
-  });
+  console.log("🔥 App.jsx is rendering"); // ✅ Check if this logs in the browser
 
+  const [username, setUsername] = useState(localStorage.getItem("username") || ""); 
+  const [basketData, setBasketData] = useState([]);
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || []
   );
@@ -27,49 +15,28 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (username.toLowerCase() === "administrator") {
-      navigate("/administrator");
-    }
-  }, [username, navigate]); // Only run if username changes
-
+    console.log("🚀 useEffect in App.jsx is running"); // ✅ Log if the effect runs
+    fetch("/api/baskets") 
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("📦 Fetched baskets in App.jsx:", data);
+        setBasketData(data);
+      })
+      .catch((error) => console.error("❌ Error fetching baskets:", error));
+  }, []);
+  
+  // ✅ Redirect Admin
   useEffect(() => {
-    localStorage.setItem("baskets", JSON.stringify(basketData)); // Save basket data to localStorage
-  }, [basketData]);
+    if (username.toLowerCase() === "administrator") {
+      navigate("/administrator"); // ✅ Navigate to the Admin Page
+    }
+  }, [username, navigate]);
 
   return (
     <>
-      <Nav username={username} /> {/* Pass username to Nav */}
+      <Nav username={username} />
       <main className="mx-3">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <UserMain
-                username={username}
-                setUsername={setUsername}
-                basketData={basketData}
-                favorites={favorites}
-                setBasketData={setBasketData}
-              />
-            }
-          />
-          <Route
-            path="/administrator"
-            element={
-              <AdminMain
-                username={username}
-                setUsername={setUsername}
-                basketData={basketData}
-                setBasketData={setBasketData}
-              />
-            }
-          />
-          {/* Now importing UserFav for /favorites route */}
-          <Route
-            path="/favorites"
-            element={<Favs favorites={favorites} basketData={basketData} />}
-          />
-        </Routes>
+        <Outlet /> {/* ✅ This tells React Router where to render child pages */}
       </main>
     </>
   );

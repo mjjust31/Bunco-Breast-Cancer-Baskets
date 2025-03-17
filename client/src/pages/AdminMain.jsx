@@ -8,13 +8,17 @@ const AdminMain = ({ username, setUsername }) => {
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
 
-  // ✅ Fetch baskets from backend on load
   useEffect(() => {
-    fetch("/api/baskets")
+    console.log("🚀 Fetching baskets from /api/baskets..."); // ✅ Log when fetch starts
+  
+    fetch("/api/baskets") // Make sure it's the correct API route
       .then((response) => response.json())
-      .then((data) => setBasketData(data))
-      .catch((error) => console.error("Error fetching baskets:", error));
-  }, []);
+      .then((data) => {
+        console.log("📦 Baskets received in AdminMain:", data); // ✅ Log data
+        setBasketData(data);
+      })
+      .catch((error) => console.error("❌ Error fetching baskets:", error));
+  }, [])
 
   // ✅ Logout function
   const handleLogout = () => {
@@ -34,33 +38,37 @@ const AdminMain = ({ username, setUsername }) => {
 
   // ✅ Add a basket (backend)
   const handleAddBasket = (newBasket) => {
-    fetch("/api/baskets", {
+    console.log("Adding basket:", newBasket);
+    fetch("/api/baskets/admin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newBasket),
     })
       .then((response) => response.json())
-      .then((updatedBaskets) => setBasketData(updatedBaskets))
+      .then((updatedBaskets) => {
+        console.log("Updated baskets:", updatedBaskets);
+        setBasketData(updatedBaskets); // Update basketData state with the new array of baskets
+      })
       .catch((error) => console.error("Error adding basket:", error));
   };
 
   // ✅ Delete all baskets (backend)
   const deleteAllBaskets = () => {
-    fetch("/api/baskets", { method: "DELETE" })
+    fetch("/api/baskets/admin", { method: "DELETE" })
       .then(() => setBasketData([]))
       .catch((error) => console.error("Error deleting all baskets:", error));
   };
 
   // ✅ Delete a single basket (backend)
   const deleteSingleBasket = (basketId) => {
-    fetch(`/api/baskets/${basketId}`, { method: "DELETE" })
-      .then(() => setBasketData((prevBaskets) => prevBaskets.filter((b) => b.id !== basketId)))
+    fetch(`/api/baskets/admin/${basketId}`, { method: "DELETE" })
+      .then(() => setBasketData((prevBaskets) => prevBaskets.filter((b) => b._id !== basketId))) // Use _id for MongoDB
       .catch((error) => console.error("Error deleting basket:", error));
   };
 
   // ✅ Edit a basket (backend)
   const editSingleBasket = (updatedBasket) => {
-    fetch(`/api/baskets/${updatedBasket.id}`, {
+    fetch(`/api/baskets/admin/${updatedBasket._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedBasket),
@@ -103,11 +111,11 @@ const AdminMain = ({ username, setUsername }) => {
       ) : (
         <ul className="basket-list">
           {basketData.map((basket) => (
-            <li className="basket-card" key={basket.id}>
+            <li className="basket-card" key={basket._id}> {/* Use _id for MongoDB */}
               <button className="edit-button" onClick={() => editSingleBasket(basket)}>Edit Basket</button>
-              <button className="delete-button" onClick={() => deleteSingleBasket(basket.id)}>Delete Basket</button>
+              <button className="delete-button" onClick={() => deleteSingleBasket(basket._id)}>Delete Basket</button>
               <h3>
-                #{basket.id} {basket.name}
+                #{basket._id} {basket.name} {/* Use _id for MongoDB */}
               </h3>
               <p>{basket.content}</p>
             </li>
@@ -119,4 +127,3 @@ const AdminMain = ({ username, setUsername }) => {
 };
 
 export default AdminMain;
-

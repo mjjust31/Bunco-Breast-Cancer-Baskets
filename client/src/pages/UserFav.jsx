@@ -5,14 +5,10 @@ function UserFav() {
   const [basketData, setBasketData] = useState([]);
 
   useEffect(() => {
-    // Fetch user favorites from the backend
-    fetch("/api/favorites")
-      .then((response) => response.json())
-      .then((data) => setLocalFavorites(data))
-      .catch((error) => console.error("Error fetching favorites:", error));
+
 
     // Fetch basket data from backend
-    fetch("/api/baskets")
+    fetch(`/api/${username}/favorites`)
       .then((response) => response.json())
       .then((data) => setBasketData(data))
       .catch((error) => console.error("Error fetching baskets:", error));

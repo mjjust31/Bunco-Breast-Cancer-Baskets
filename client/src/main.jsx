@@ -1,33 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// Bringing in the required imports from 'react-router-dom' to set up application routing behavior
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-//import pages
+// Import pages
 import App from "./App.jsx";
 import Main from "./pages/UserMain.jsx";
 import Favs from "./pages/UserFav.jsx";
 import AdminMain from "./pages/AdminMain.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
-//inmport css
 import "./index.css";
 
+console.log("🚀 main.jsx is running!"); // ✅ Log to check if main.jsx runs
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    path: "/", // Base route for the app
+    element: <App />, // Renders the App component
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
+        index: true, // This renders the Main component at "/"
         element: <Main />,
       },
       {
-        path: "/favorites",
-        element: <Favs />,
+        path: "/favorites", // This renders the Favs component at "/favorites"
+       element: <Favs />,
       },
-      { path: "/administrator", element: <AdminMain /> },
+      {
+        path: "/administrator", // This renders the AdminMain component at "/administrator"
+        element: <AdminMain />,
+      },
     ],
   },
 ]);
