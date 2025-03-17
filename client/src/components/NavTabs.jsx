@@ -13,13 +13,6 @@ const NavTabs = ({ username }) => {
           <Link to="/" className="nav-link">Home</Link> {/* Add the nav-link class */}
         </li>
 
-        {/* Show Admin Panel only if username is "administrator" */}
-        {safeUsername === "administrator" && (
-          <li className="nav-item">
-            <Link to="/administrator" className="nav-link">Admin Panel</Link>
-          </li>
-        )}
-
         {/* Show Favorites link only if username is entered and not "administrator" */}
         {safeUsername !== "" && safeUsername !== "administrator" && (
           <li className="nav-item">

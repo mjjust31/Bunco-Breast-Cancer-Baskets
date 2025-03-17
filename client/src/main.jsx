@@ -4,13 +4,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Import pages
 import App from "./App.jsx";
-import Main from "./pages/UserMain.jsx";
+import UserMain from "./pages/UserMain.jsx";
 import Favs from "./pages/UserFav.jsx";
 import AdminMain from "./pages/AdminMain.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import "./index.css";
+import BasketForm from "./pages/BasketForm.jsx";
 
-console.log("🚀 main.jsx is running!"); // ✅ Log to check if main.jsx runs
+// console.log("🚀 main.jsx is running!"); // ✅ Log to check if main.jsx runs
 
 const router = createBrowserRouter([
   {
@@ -20,16 +21,17 @@ const router = createBrowserRouter([
     children: [
       {
         index: true, // This renders the Main component at "/"
-        element: <Main />,
+        element: <UserMain />,
       },
       {
         path: "/favorites", // This renders the Favs component at "/favorites"
-       element: <Favs />,
+        element: <Favs />,
       },
       {
         path: "/administrator", // This renders the AdminMain component at "/administrator"
         element: <AdminMain />,
       },
+      { path: "/administrator/basketform", element: <BasketForm /> },
     ],
   },
 ]);

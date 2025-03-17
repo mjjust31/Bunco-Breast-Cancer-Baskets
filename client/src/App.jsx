@@ -1,44 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/NavTabs";
 
-function App() {
-  console.log("🔥 App.jsx is rendering"); // ✅ Check if this logs in the browser
+// 🔹 Create Context
+export const BasketContext = createContext();
 
-  const [username, setUsername] = useState(localStorage.getItem("username") || ""); 
+function App() {
+  const [username, setUsername] = useState(localStorage.getItem("username") || "");
   const [basketData, setBasketData] = useState([]);
-  const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favorites")) || []
-  );
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("🚀 useEffect in App.jsx is running"); // ✅ Log if the effect runs
     fetch("/api/baskets") 
       .then((response) => response.json())
       .then((data) => {
-        console.log("📦 Fetched baskets in App.jsx:", data);
-        setBasketData(data);
+        setBasketData(data); 
       })
       .catch((error) => console.error("❌ Error fetching baskets:", error));
   }, []);
-  
-  // ✅ Redirect Admin
+
   useEffect(() => {
     if (username.toLowerCase() === "administrator") {
-      navigate("/administrator"); // ✅ Navigate to the Admin Page
+      navigate("/administrator");
     }
   }, [username, navigate]);
 
+  // ✅ Centralized handleLogin function
+  const handleLogin = (inputUsername) => {
+    if (inputUsername.trim() === "") return;
+    const formattedUsername = inputUsername.trim().toLowerCase(); // ✅ Always lowercase
+    setUsername(formattedUsername);
+    localStorage.setItem("username", formattedUsername); // ✅ Save in lowercase
+  };
+
+  // ✅ Centralized handleLogout function
+  const handleLogout = () => {
+    setUsername("");
+    localStorage.removeItem("username");
+  };
+
   return (
-    <>
+    <BasketContext.Provider value={{ basketData, setBasketData, username, setUsername, handleLogin, handleLogout }}>
       <Nav username={username} />
       <main className="mx-3">
         <Outlet /> {/* ✅ This tells React Router where to render child pages */}
       </main>
-    </>
+    </BasketContext.Provider>
   );
 }
 
