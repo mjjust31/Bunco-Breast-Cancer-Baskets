@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { BasketContext } from "../context/BasketContext"; // ✅ Correct Import
 
 function UserFav() {
+  const { basketData, username } = useContext(BasketContext); // ✅ Get data from context
   const [localFavorites, setLocalFavorites] = useState([]);
-  const [basketData, setBasketData] = useState([]);
 
   useEffect(() => {
-
-
-    // Fetch basket data from backend
-    fetch(`/api/${username}/favorites`)
-      .then((response) => response.json())
-      .then((data) => setBasketData(data))
-      .catch((error) => console.error("Error fetching baskets:", error));
-  }, []);
+    // Fetch user's favorite baskets from backend
+    if (username) {
+      fetch(`/api/${username}/favorites`)
+        .then((response) => response.json())
+        .then((data) => setLocalFavorites(data))
+        .catch((error) => console.error("Error fetching favorites:", error));
+    }
+  }, [username]);
 
   // Filter the baskets based on favorites
   const favoriteBaskets = basketData.filter((basket) =>

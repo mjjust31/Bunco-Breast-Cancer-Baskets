@@ -1,55 +1,42 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { BasketContext } from "../App"; 
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";  // ✅ Import `useNavigate`
+import { BasketContext } from "../context/BasketContext";  
 import "./UserMain.scss";
 
 const UserMain = () => {
-  const { basketData, username, handleLogin, handleLogout } = useContext(BasketContext); // ✅ Use from context
-  const [tempUsername, setTempUsername] = useState(username || "");
-  const [favorites, setFavorites] = useState([]);
-  const navigate = useNavigate();
+    const { username, handleLogin, handleLogout } = useContext(BasketContext);
+    const [tempUsername, setTempUsername] = useState(username || "");
+    const navigate = useNavigate(); // ✅ Get navigate
 
-  useEffect(() => {
-    if (username) {
-      fetch("/api/baskets")
-        .then((response) => response.json())
-        .then((data) => setFavorites(data))
-        .catch((error) => console.error("Error fetching favorites:", error));
-    }
-  }, [username]);
+    return (
+        <div className="main-container">
+            <header>
+                <h1>Bunco Baskets</h1>
+            </header>
 
-  return (
-    <div className="main-container">
-      <header>
-        <h1>Bunco Baskets</h1>
-      </header>
-
-      {!username ? (
-        <div className="login-container">
-          <input
-            type="text"
-            placeholder="Enter your username"
-            value={tempUsername}
-            onChange={(e) => setTempUsername(e.target.value)}
-            className="input"
-          />
-          <button onClick={() => handleLogin(tempUsername)} className="login-button">
-            Submit
-          </button>
+            {!username ? (
+                <div className="login-container">
+                    <input
+                        type="text"
+                        placeholder="Enter your username"
+                        value={tempUsername}
+                        onChange={(e) => setTempUsername(e.target.value)}
+                        className="input"
+                    />
+                    <button onClick={() => handleLogin(tempUsername, navigate)} className="login-button"> {/* ✅ Pass `navigate` */}
+                        Submit
+                    </button>
+                </div>
+            ) : (
+                <div>
+                    <p>Welcome, <strong>{username}</strong>!</p>
+                    <button onClick={() => handleLogout(navigate)} className="logout-button"> {/* ✅ Pass `navigate` */}
+                        Log Out
+                    </button>
+                </div>
+            )}
         </div>
-      ) : (
-        <div>
-          <p>
-            Welcome, <strong>{username}</strong>!
-          </p>
-          <button onClick={handleLogout} className="logout-button">
-            Log Out
-          </button>
-        </div>
-      )}
-    </div>
-  );
+    );
 };
 
 export default UserMain;
-

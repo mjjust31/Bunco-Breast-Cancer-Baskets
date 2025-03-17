@@ -2,27 +2,28 @@ require("dotenv").config(); // Load environment variables from .env file
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const connectDB = require("./connection/connection"); // Import MongoDB connection function
-const Basket = require("./models/Basket"); // Import Basket model
+const connectDB = require("./connection/connection"); // MongoDB connection function
+const Basket = require("./models/Basket"); // Basket model
+const Favorite = require("./models/Favorite"); // Favorite model (NEW)
 
 const app = express();
 const PORT = process.env.PORT || 5050;
 
-console.log("Server is running");
+console.log("✅ Server is running");
 
-// Middleware
+// ====== ✅ MIDDLEWARE ======
 app.use(cors());
-app.use(express.json()); // To parse incoming JSON requests
+app.use(express.json()); // Parse incoming JSON requests
 
 // ✅ Connect to MongoDB
 connectDB();
 
-// Serve static files from the correct folder (client, not dist)
-app.use(express.static(path.join(__dirname, "../client"))); // Updated
+// Serve static files for frontend
+app.use(express.static(path.join(__dirname, "../client")));
 
-// ====== ✅ PUBLIC ROUTE: GET ALL BASKETS FOR USERS ======
+// ====== ✅ PUBLIC ROUTE: GET ALL BASKETS ======
 app.get("/api/baskets", async (req, res) => {
-  console.log("🛠️ GET /api/baskets was called!"); // ✅ Log to check if request is received
+  console.log("🛠️ GET /api/baskets was called!");
   try {
     const baskets = await Basket.find({});
     res.json(baskets);
@@ -32,29 +33,33 @@ app.get("/api/baskets", async (req, res) => {
   }
 });
 
-// ====== ✅ ADMIN ROUTES (Restricted) ======
+// ====== ✅ ADMIN ROUTES ======
 // Only Admins Can Add, Edit, Delete Baskets
 
-// ✅ Add a new basket (Admin only)
+// ✅ Add a new basket
 app.post("/api/baskets/admin", async (req, res) => {
   try {
     const { name, content } = req.body;
-    console.log("New basket to save:", { name, content }); // Log to check received data
+
+    if (!name || !content) {
+      return res.status(400).json({ error: "Name and content are required" });  // ✅ Prevent empty submissions
+    }
 
     const newBasket = new Basket({ name, content });
-    await newBasket.save(); // Save to MongoDB
+    await newBasket.save();  // ✅ Save to MongoDB
 
-    const updatedBaskets = await Basket.find(); // Get all baskets after adding the new one
-    console.log("Updated baskets:", updatedBaskets); // Log all baskets
-
-    res.json(updatedBaskets); // Send the updated baskets array to frontend
+    console.log("✅ New basket added:", newBasket);
+    
+    const updatedBaskets = await Basket.find();  // ✅ Get updated list
+    res.json(updatedBaskets);
   } catch (error) {
-    console.error("Error adding basket:", error);
+    console.error("❌ Error adding basket:", error);
     res.status(500).json({ error: "Failed to add basket" });
   }
 });
 
-// ✅ Edit an existing basket (Admin only)
+
+// ✅ Edit an existing basket
 app.put("/api/baskets/admin/:id", async (req, res) => {
   try {
     await Basket.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -65,81 +70,81 @@ app.put("/api/baskets/admin/:id", async (req, res) => {
   }
 });
 
-// ✅ Delete a single basket (Admin only)
+// ✅ Delete a single basket & reorder numbers
 app.delete("/api/baskets/admin/:id", async (req, res) => {
   try {
     await Basket.findByIdAndDelete(req.params.id);
-    const updatedBaskets = await Basket.find();
-    res.json(updatedBaskets);
+
+    // Fetch remaining baskets and reorder their numbers
+    const baskets = await Basket.find().sort({ _id: 1 });
+    baskets.forEach((basket, index) => {
+      basket.number = index + 1; // Ensure correct numbering
+      basket.save();
+    });
+
+    res.json(baskets);
   } catch (error) {
     res.status(500).json({ error: "Failed to delete basket" });
   }
 });
 
-// ✅ Delete all baskets (Admin only)
+// ✅ Delete all baskets (Confirmation required in frontend)
 app.delete("/api/baskets/admin", async (req, res) => {
   try {
     await Basket.deleteMany({});
-    res.json([]);
+    res.json([]); // Send back an empty array
   } catch (error) {
     res.status(500).json({ error: "Failed to delete all baskets" });
   }
 });
 
-// ====== ✅ USER FAVORITES API ======
-
-// Simulated "database" for user favorites
-let favoritesDb = {}; // { username: [favoriteBasketIds] }
+// ====== ✅ USER FAVORITES API (Stored in MongoDB) ======
 
 // ✅ Get all favorites for a user
-app.get("/api/:username/favorites", (req, res) => {
-  const { username } = req.params;
-  res.json(favoritesDb[username] || []);
+app.get("/api/:username/favorites", async (req, res) => {
+  try {
+    const favorites = await Favorite.find({ username: req.params.username });
+    res.json(favorites.map(fav => fav.basketId));
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch favorites" });
+  }
 });
 
 // ✅ Add a basket to favorites
-app.post("/api/:username/favorites", (req, res) => {
-  const { username } = req.params;
+app.post("/api/:username/favorites", async (req, res) => {
   const { basketId } = req.body;
-
-  if (!basketId) {
-    return res.status(400).json({ error: "basketId is required" });
+  try {
+    const newFavorite = new Favorite({ username: req.params.username, basketId });
+    await newFavorite.save();
+    res.json({ success: true, message: "Favorite added" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to add favorite" });
   }
-
-  if (!favoritesDb[username]) {
-    favoritesDb[username] = [];
-  }
-
-  // Avoid duplicates
-  if (!favoritesDb[username].includes(basketId)) {
-    favoritesDb[username].push(basketId);
-  }
-
-  res.json(favoritesDb[username]);
 });
 
-// ✅ Remove a basket from favorites
-app.delete("/api/:username/favorites", (req, res) => {
-  const { username } = req.params;
-  const { basketId } = req.body;
-
-  if (!basketId) {
-    return res.status(400).json({ error: "basketId is required" });
+// ✅ Remove a specific favorite (Fix: No request body in DELETE)
+app.delete("/api/:username/favorites/:basketId", async (req, res) => {
+  try {
+    await Favorite.findOneAndDelete({ username: req.params.username, basketId: req.params.basketId });
+    res.json({ success: true, message: "Favorite removed" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to remove favorite" });
   }
+});
 
-  if (favoritesDb[username]) {
-    favoritesDb[username] = favoritesDb[username].filter(
-      (id) => id !== basketId
-    );
+// ✅ Remove ALL favorites for a user
+app.delete("/api/:username/favorites", async (req, res) => {
+  try {
+    await Favorite.deleteMany({ username: req.params.username });
+    res.json({ success: true, message: "All favorites removed" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to remove all favorites" });
   }
-
-  res.json(favoritesDb[username] || []);
 });
 
 // ====== ✅ SERVE REACT FRONTEND ======
-// Catch-all route to ensure React Router can handle frontend routes
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client", "index.html")); // Updated
+  res.sendFile(path.join(__dirname, "../client", "index.html"));
 });
 
 // Start the server

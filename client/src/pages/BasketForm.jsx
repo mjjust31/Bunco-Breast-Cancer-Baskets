@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { BasketContext } from "../App"; // ✅ Access context
+import { BasketContext } from "../context/BasketContext"; // ✅ Correct Import
 import { useNavigate } from "react-router-dom";
 // import "./BasketForm.scss"; // Add styling if needed
 
@@ -18,12 +18,11 @@ const BasketForm = () => {
     }
 
     const newBasket = {
-      id: basketData.length + 1, // Temporary ID
       name: basketName.trim(),
       content: basketContent.trim(),
     };
 
-    // ✅ Update Context State (Optimistic UI)
+    // ✅ Optimistic UI Update
     setBasketData([...basketData, newBasket]);
 
     // ✅ Send to backend (if API exists)
