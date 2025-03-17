@@ -1,20 +1,16 @@
 {
   "name": "bunco-breast-cancer-baskets",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "node server/server.js",
-    "test": "node server/server.js"
+    "start": "concurrently \"npm run server\" \"npm run client\"", 
+    "server": "cd server && npm start", 
+    "client": "cd client && npm run dev", 
+    "build": "npm run client && npm run server", 
+    "test": "echo \"No tests specified\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "mongodb": "^6.14.2",
-    "mongoose": "^8.12.1"
-  }
+    "concurrently": "^7.0.0"
+  },
+  "devDependencies": {}
 }

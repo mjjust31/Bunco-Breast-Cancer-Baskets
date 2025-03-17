@@ -1,4 +1,3 @@
-// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -10,6 +9,11 @@ export default defineConfig({
     open: true,
     proxy: {
       '/api': 'http://localhost:5050', // Proxy API requests to your backend server
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: 'client/index.html', // Ensure the right entry point is being used
     },
   },
 });
