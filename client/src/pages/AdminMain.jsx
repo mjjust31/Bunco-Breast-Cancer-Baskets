@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BasketContext } from "../App";
-import { Link } from "react-router-dom"; // ✅ Import Link for navigation
+import { Link } from "react-router-dom";
 
 const AdminMain = () => {
-  const { username, handleLogin, handleLogout } = useContext(BasketContext); // ✅ Use from context
-  const [tempUsername, setTempUsername] = useState(username || "");
+  const { basketData, username, handleLogin, handleLogout } = useContext(BasketContext);
+  const [tempUsername, setTempUsername] = useState("");
 
   return (
     <div className="admin-container">
@@ -17,20 +17,14 @@ const AdminMain = () => {
             onChange={(e) => setTempUsername(e.target.value)}
             className="input"
           />
-          <button
-            onClick={() => handleLogin(tempUsername)}
-            className="login-button">
+          <button onClick={() => handleLogin(tempUsername)} className="login-button">
             Submit
           </button>
         </div>
       ) : (
         <div>
-          <p>
-            Welcome, <strong>{username}</strong>!
-          </p>
-          <button onClick={handleLogout} className="logout-button">
-            Log Out
-          </button>
+          <p>Welcome, <strong>{username}</strong>!</p>
+          <button onClick={handleLogout} className="logout-button">Log Out</button>
 
           {/* ✅ Create Basket Button */}
           <div className="admin-actions">
@@ -38,6 +32,9 @@ const AdminMain = () => {
               <button className="create-basket-button">Create Basket</button>
             </Link>
           </div>
+
+        
+  
         </div>
       )}
     </div>

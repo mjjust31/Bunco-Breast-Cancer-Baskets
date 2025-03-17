@@ -28,7 +28,7 @@ const BasketForm = () => {
 
     // ✅ Send to backend (if API exists)
     try {
-      const response = await fetch("/api/baskets", {
+      const response = await fetch("/api/baskets/admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newBasket),
