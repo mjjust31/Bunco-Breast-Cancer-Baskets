@@ -1,74 +1,151 @@
 import React, { useState, useContext } from "react";
-import { BasketContext } from "../context/BasketContext"; // ✅ Correct Import
 import { useNavigate } from "react-router-dom";
-// import "./BasketForm.scss"; // Add styling if needed
+import { BasketContext } from "../context/BasketContext"; 
+import "./BasketForm.scss"; // ✅ Import styles
 
 const BasketForm = () => {
-  const { basketData, setBasketData } = useContext(BasketContext); // ✅ Get baskets
-  const [basketName, setBasketName] = useState("");
-  const [basketContent, setBasketContent] = useState("");
-  const navigate = useNavigate();
+    const { basketData, setBasketData } = useContext(BasketContext);
+    const [basketName, setBasketName] = useState("");  
+    const [basketContent, setBasketContent] = useState(""); 
+    const [editingBasketId, setEditingBasketId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    // ✅ Open/Close Modal
+    const openModal = () => {
+        setBasketName(""); 
+        setBasketContent("");
+        setEditingBasketId(null);
+        setIsModalOpen(true);
+    };
+    const closeModal = () => setIsModalOpen(false);
 
-    if (!basketName.trim() || !basketContent.trim()) {
-      alert("Basket name and content cannot be empty.");
-      return;
-    }
+    // ✅ Add or Update Basket
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!basketName.trim() || !basketContent.trim()) {
+            alert("Basket name and content cannot be empty.");
+            return;
+        }
 
-    const newBasket = {
-      name: basketName.trim(),
-      content: basketContent.trim(),
+        const basketDataToSend = { name: basketName.trim(), content: basketContent.trim() };
+        try {
+            let response;
+            if (editingBasketId) {
+                response = await fetch(`/api/baskets/admin/${editingBasketId}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(basketDataToSend),
+                });
+            } else {
+                response = await fetch("/api/baskets/admin", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(basketDataToSend),
+                });
+            }
+
+            if (!response.ok) throw new Error(`Failed to ${editingBasketId ? "edit" : "add"} basket`);
+
+            const updatedBaskets = await response.json();
+            setBasketData(updatedBaskets);
+            closeModal(); 
+            navigate("/administrator");
+        } catch (error) {
+            console.error(`❌ Error ${editingBasketId ? "editing" : "adding"} basket:`, error);
+        }
     };
 
-    // ✅ Optimistic UI Update
-    setBasketData([...basketData, newBasket]);
+    // ✅ Edit Basket
+    const startEditing = (basket) => {
+        setEditingBasketId(basket._id);
+        setBasketName(basket.name);
+        setBasketContent(basket.content);
+        setIsModalOpen(true);
+    };
 
-    // ✅ Send to backend (if API exists)
-    try {
-      const response = await fetch("/api/baskets/admin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newBasket),
-      });
+    // ✅ Delete One Basket
+    const deleteBasket = async (basketId) => {
+        if (!window.confirm("Are you sure you want to delete this basket?")) return;
+        try {
+            const response = await fetch(`/api/baskets/admin/${basketId}`, { method: "DELETE" });
+            if (!response.ok) throw new Error("Failed to delete basket");
 
-      if (!response.ok) throw new Error("Failed to add basket");
+            const updatedBaskets = await response.json();
+            setBasketData(updatedBaskets);
+        } catch (error) {
+            console.error("❌ Error deleting basket:", error);
+        }
+    };
 
-      console.log("✅ Basket added successfully");
-    } catch (error) {
-      console.error("❌ Error adding basket:", error);
-    }
+    // ✅ Delete All Baskets
+    const deleteAllBaskets = async () => {
+        if (!window.confirm("Are you sure you want to delete ALL baskets?")) return;
+        try {
+            const response = await fetch(`/api/baskets/admin`, { method: "DELETE" });
+            if (!response.ok) throw new Error("Failed to delete all baskets");
 
-    // ✅ Reset form and navigate back
-    setBasketName("");
-    setBasketContent("");
-    navigate("/administrator");
-  };
+            setBasketData([]);
+        } catch (error) {
+            console.error("❌ Error deleting all baskets:", error);
+        }
+    };
 
-  return (
-    <div className="basket-form-container">
-      <h2>Add a New Basket</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Basket Name:
-          <input
-            type="text"
-            value={basketName}
-            onChange={(e) => setBasketName(e.target.value)}
-          />
-        </label>
-        <label>
-          Basket Content:
-          <textarea
-            value={basketContent}
-            onChange={(e) => setBasketContent(e.target.value)}
-          />
-        </label>
-        <button type="submit">Add Basket</button>
-      </form>
-    </div>
-  );
+    return (
+        <div className="admin-container">
+            <button onClick={openModal} className="create-basket-button">
+                + Create Basket
+            </button>
+
+            <h2>Manage Baskets</h2>
+            <ul className="basket-list">
+                {basketData.map((basket) => (
+                    <li key={basket._id} className="basket-item">
+                        <h3>{basket.name}</h3>
+                        <p>{basket.content}</p>
+                        <button onClick={() => startEditing(basket)} className="edit-button">Edit</button>
+                        <button onClick={() => deleteBasket(basket._id)} className="delete-button">Delete</button>
+                    </li>
+                ))} 
+            </ul>
+
+            {basketData.length > 0 && (
+                <button onClick={deleteAllBaskets} className="delete-all">
+                    Delete All Baskets
+                </button>
+            )}
+
+            {/* ✅ Modal */}
+            {isModalOpen && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h2>{editingBasketId ? "Edit Basket" : "Create a New Basket"}</h2>
+                        <form onSubmit={handleSubmit}>
+                            <label>
+                                Basket Name:
+                                <input
+                                    type="text"
+                                    value={basketName}
+                                    onChange={(e) => setBasketName(e.target.value)}
+                                />
+                            </label>
+                            <label>
+                                Basket Content:
+                                <textarea
+                                    value={basketContent}
+                                    onChange={(e) => setBasketContent(e.target.value)}
+                                />
+                            </label>
+                            <div className="modal-buttons">
+                                <button type="submit">{editingBasketId ? "Update Basket" : "Add Basket"}</button>
+                                <button type="button" onClick={closeModal} className="cancel-button">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 };
 
 export default BasketForm;

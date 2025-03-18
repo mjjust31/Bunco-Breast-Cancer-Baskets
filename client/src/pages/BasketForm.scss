@@ -1,0 +1,106 @@
+.admin-container {
+  text-align: center;
+}
+
+.create-basket-button {
+  background-color: #e91e63; /* Pink */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.basket-list {
+  list-style: none;
+  padding: 0;
+}
+
+.basket-item {
+  background: #ffe4e1; /* Light pink */
+  padding: 10px;
+  margin: 10px auto;
+  width: 80%;
+  border-radius: 8px;
+}
+
+.edit-button {
+  background-color: #ff69b4; /* Bright pink */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.delete-button {
+  background-color: #d32f2f; /* Red */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.delete-all {
+  background-color: #880e4f; /* Dark pink */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  max-width: 90%;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.cancel-button {
+  background: #d32f2f;
+  color: white;
+}
+
+.admin-container {
+  text-align: center;
+  padding-top: 80px; /* ✅ Adds space below navbar */
+}
+
+.create-basket-button {
+  background-color: #e91e63; /* Pink */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  display: inline-block;
+  position: relative; /* ✅ Ensures it's positioned correctly */
+  z-index: 10; /* ✅ Makes sure it's above other elements */
+}

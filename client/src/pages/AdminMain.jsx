@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import { BasketContext } from "../context/BasketContext";
-import { Link } from "react-router-dom";
+import BasketForm from "./BasketForm"; // ✅ Import modal component
 
 const AdminMain = () => {
     const { username, handleLogin, handleLogout } = useContext(BasketContext);
     const [tempUsername, setTempUsername] = useState("");
-    const navigate = useNavigate(); // ✅ Get navigate
+    const [showModal, setShowModal] = useState(false); // ✅ Controls modal visibility
 
     return (
         <div className="admin-container">
@@ -19,23 +18,33 @@ const AdminMain = () => {
                         onChange={(e) => setTempUsername(e.target.value)}
                         className="input"
                     />
-                    <button onClick={() => handleLogin(tempUsername, navigate)} className="login-button"> {/* ✅ Pass navigate */}
+                    <button onClick={() => handleLogin(tempUsername)} className="login-button">
                         Submit
                     </button>
                 </div>
             ) : (
                 <div>
                     <p>Welcome, <strong>{username}</strong>!</p>
-                    <button onClick={() => handleLogout(navigate)} className="logout-button"> {/* ✅ Pass navigate */}
+                    <button onClick={handleLogout} className="logout-button">
                         Log Out
                     </button>
 
-                    {/* ✅ Create Basket Button */}
+                    {/* ✅ Button to open the modal */}
                     <div className="admin-actions">
-                        <Link to="/administrator/basketform">
-                            <button className="create-basket-button">Create Basket</button>
-                        </Link>
+                        <button className="create-basket-button" onClick={() => setShowModal(true)}>
+                            Create Basket
+                        </button>
                     </div>
+
+                    {/* ✅ Render BasketForm modal conditionally */}
+                    {showModal && (
+                        <div className="modal-overlay">
+                            <div className="modal-content">
+                                <button className="close-modal" onClick={() => setShowModal(false)}>X</button>
+                                <BasketForm closeModal={() => setShowModal(false)} /> {/* ✅ Pass function to close modal */}
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

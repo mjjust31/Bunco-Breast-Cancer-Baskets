@@ -13,9 +13,9 @@ function App() {
       <main className="mx-3">
         <Outlet /> {/* ✅ Renders UserMain, AdminMain, etc. */}
         <section className="global-baskets">
-          <h2>Available Baskets</h2>
+          <h2></h2>
           {basketData.length === 0 ? (
-            <p>No baskets available.</p>
+           console.log("No baskets")// ✅ Shows message instead of empty list
           ) : (
             <ul className="basket-list">
               {basketData.map((basket, index) => (
