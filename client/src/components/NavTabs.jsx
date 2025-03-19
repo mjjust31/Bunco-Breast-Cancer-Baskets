@@ -1,26 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { BasketContext } from "../context/BasketContext"; // ✅ Import context
 import "./NavTabs.scss";
 
-const NavTabs = ({ username }) => {
-  const safeUsername = username?.toLowerCase() || ""; // Prevent errors if username is empty
+const NavTabs = () => {
+  const { username, handleLogout } = useContext(BasketContext);
+  const safeUsername = username?.toLowerCase() || ""; // Prevent errors if empty
+  const navigate = useNavigate(); // ✅ Define navigate here
 
   return (
-    <div className="navbar"> {/* Add the navbar class */}
-      <ul className="nav nav-tabs"> {/* Add the nav-tabs class */}
-        {/* Always show the Home page link */}
-        <li className="nav-item"> {/* Add the nav-item class */}
-          <Link to="/" className="nav-link">Home</Link> {/* Add the nav-link class */}
+    <nav className="navbar">
+      <ul className="nav-tabs">
+        <li className="nav-item">
+          <Link to="/" className="nav-link">Home</Link>
         </li>
 
-        {/* Show Favorites link only if username is entered and not "administrator" */}
         {safeUsername !== "" && safeUsername !== "admin" && (
           <li className="nav-item">
             <Link to="/favorites" className="nav-link">Favorites</Link>
           </li>
         )}
+
+        {safeUsername === "admin" && (
+          <li className="nav-item">
+            <button onClick={() => handleLogout(navigate)} className="nav-link logout-button">
+              Logout
+            </button>
+          </li>
+        )}
       </ul>
-    </div>
+    </nav>
   );
 };
 

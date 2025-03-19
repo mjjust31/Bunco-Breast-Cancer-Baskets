@@ -1,0 +1,39 @@
+/* ✅ Global Basket Section */
+.global-baskets {
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8bbd0; /* ✅ Soft pink for fundraiser theme */
+  border-radius: 10px;
+}
+
+/* ✅ Carousel Layout */
+.basket-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* ✅ Carousel Buttons */
+.carousel-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #e91e63; /* ✅ Dark pink */
+  transition: transform 0.2s;
+}
+
+.carousel-button:hover {
+  transform: scale(1.1);
+}
+
+/* ✅ Basket Display */
+.basket-display {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid #e91e63; /* ✅ Dark pink border */
+  min-width: 250px;
+}

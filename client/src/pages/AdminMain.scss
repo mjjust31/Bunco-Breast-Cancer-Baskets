@@ -1,3 +1,129 @@
+/* ✅ Ensure Navbar Doesn't Hide Admin Content */
+.admin-container {
+  padding-top: 60px; /* Prevents overlap with navbar */
+  text-align: center;
+  max-width: 500px;
+  margin: auto;
+}
+
+/* ✅ Title Styling */
+h1 {
+  font-size: 24px;
+  color: #e91e63; /* Breast Cancer Pink */
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* ✅ Basket Count Text */
+p {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* ✅ Create Basket Button */
+.create-basket-button {
+  background: #e91e63;
+  color: white;
+  font-size: 18px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+  display: inline-block;
+  width: 90%;
+  max-width: 300px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.create-basket-button:hover {
+  background: #d81b60;
+}
+
+.create-basket-button:active {
+  transform: scale(0.98);
+}
+
+/* ✅ Basket Carousel */
+.basket-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 15px;
+}
+
+.basket-display {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  text-align: center;
+  border: 2px solid #e91e63;
+  min-height: 150px;
+}
+
+/* ✅ Edit & Delete Buttons */
+.edit-button,
+.delete-button {
+  background: #e91e63;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.edit-button:hover {
+  background: #d81b60;
+}
+
+.delete-button {
+  background: #ff1744;
+}
+
+.delete-button:hover {
+  background: #d50000;
+}
+
+/* ✅ Carousel Navigation */
+.carousel-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  color: #e91e63;
+}
+
+/* ✅ Delete All Baskets */
+.delete-all {
+  background: #ff1744;
+  color: white;
+  font-size: 16px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+  margin-top: 20px;
+  width: 90%;
+  max-width: 300px;
+}
+
+.delete-all:hover {
+  background: #d50000;
+}
+
+/* ✅ Fix Modal Being Hidden by Navbar */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -8,18 +134,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999; /* ✅ Ensure modal is on top */
 }
 
+/* ✅ Modal Content */
 .modal-content {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   text-align: center;
   position: relative;
+  z-index: 10000; /* ✅ Ensure content is above overlay */
 }
 
+/* ✅ Close Modal Button */
 .close-modal {
   position: absolute;
   top: 10px;
