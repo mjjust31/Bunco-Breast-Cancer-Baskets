@@ -1,121 +1,145 @@
-/* Modal Overlay */
+/* 🎗 Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* ✅ Semi-transparent background */
   display: flex;
   justify-content: center;
   align-items: center;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.3s ease;
+  z-index: 1000;
 }
 
-.modal-overlay.show {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* Modal Window */
+/* 🎀 Basket Form Modal */
 .modal {
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 12px;
   width: 90%;
-  max-width: 500px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden; /* ✅ Prevents form elements from overflowing */
   position: relative;
 }
 
-/* Modal Header */
+/* 🎗 Modal Title */
 .modal h2 {
-  font-size: 24px;
+  font-size: 22px;
   color: var(--primary-pink);
-  text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-/* Input and Textarea */
-label {
-  display: block;
-  margin-bottom: 10px;
+/* 🎀 Form Styles */
+.modal form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* 🎗 Labels */
+.modal label {
   font-size: 16px;
   color: var(--text-color);
-}
-
-input[type="text"], textarea {
+  font-weight: bold;
+  margin: 10px 0 5px;
+  display: block;
+  text-align: left;
   width: 100%;
+}
+
+/* 🎀 Input Fields */
+.modal input,
+.modal textarea {
+  width: calc(100% - 20px); /* ✅ Prevents overflow */
   padding: 10px;
+  border: 2px solid var(--primary-pink);
+  border-radius: 8px;
   font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  margin-bottom: 20px;
-  outline: none;
+  box-sizing: border-box; /* ✅ Ensures padding doesn’t exceed container */
+  margin-bottom: 15px;
 }
 
-input[type="text"]:focus, textarea:focus {
-  border-color: var(--primary-pink);
+/* 🎗 Textarea Styling */
+.modal textarea {
+  height: 100px;
+  resize: vertical;
 }
 
-/* Modal Buttons */
+/* 🎀 Buttons Container */
 .modal-buttons {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  width: 100%;
+  margin-top: 15px;
 }
 
-button {
-  padding: 12px 20px;
-  border-radius: 5px;
+/* ✅ Primary Button */
+.modal-buttons button {
+  flex: 1;
+  padding: 12px;
   border: none;
+  border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-button[type="submit"] {
+/* ✅ Add / Update Button */
+.modal-buttons button:first-child {
   background-color: var(--primary-pink);
   color: white;
+  margin-right: 10px;
 }
 
-button[type="submit"]:hover {
-  background-color: var(--button-hover);
+.modal-buttons button:first-child:hover {
+  background-color: var(--accent-gold);
 }
 
-.cancel-button {
-  background-color: #f2f2f2;
-  color: var(--text-color);
+/* ✅ Cancel Button */
+.modal-buttons .cancel-button {
+  background-color: #ccc;
+  color: black;
 }
 
-.cancel-button:hover {
-  background-color: #ddd;
+.modal-buttons .cancel-button:hover {
+  background-color: #bbb;
 }
 
-/* Modal Close Button */
-.cancel-button {
-  background-color: #f2f2f2;
-  color: var(--text-color);
+/* ✅ Close Button (X in the corner) */
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--primary-pink);
 }
 
-.cancel-button:hover {
-  background-color: #ddd;
+.modal-close:hover {
+  color: var(--accent-gold);
 }
 
-/* Responsiveness */
+/* ✅ Responsive Fixes */
 @media (max-width: 600px) {
   .modal {
-    width: 100%;
-    padding: 15px;
+    width: 95%;
+    padding: 20px;
   }
 
-  .modal h2 {
-    font-size: 20px;
-  }
-
-  button {
+  .modal input,
+  .modal textarea {
     font-size: 14px;
+    padding: 8px;
+  }
+
+  .modal-buttons button {
+    font-size: 14px;
+    padding: 10px;
   }
 }

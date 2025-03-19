@@ -47,31 +47,47 @@
   margin: 10px 0;
 }
 
-/* 💖 Remove Favorite Button */
-.remove-fav-button {
-  background-color: var(--primary-pink);
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
+/* 💖 Favorite Button Styling */
+.favorite-button {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid var(--primary-pink);
+  font-size: 16px;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
   width: 100%;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
 }
 
-/* ❤️ Heart Icon Styling */
+/* ❤️ Heart Icon */
 .heart-icon {
   margin-right: 8px;
 }
 
-/* ✅ Hover Effect */
-.remove-fav-button:hover {
-  background-color: var(--accent-gold);
+/* ❌ Not Favorited (White with Pink Border) */
+.not-favorited {
+  background-color: white;
+  color: var(--primary-pink);
+}
+
+/* ✅ Favorited (Pink with White Text) */
+.favorited {
+  background-color: var(--primary-pink);
   color: white;
+}
+
+/* ✅ Hover Effect */
+.not-favorited:hover {
+  background-color: var(--primary-pink);
+  color: white;
+}
+
+.favorited:hover {
+  background-color: var(--accent-gold);
+  border-color: var(--accent-gold);
 }
 
 /* 🎗 Carousel Buttons */
@@ -122,7 +138,7 @@
     width: 90%;
   }
 
-  .remove-fav-button {
+  .favorite-button {
     font-size: 14px;
   }
 

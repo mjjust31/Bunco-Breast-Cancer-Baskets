@@ -8,7 +8,7 @@ const UserMain = () => {
     const { username, handleLogin, handleLogout, basketData, favorites, setFavorites } = useContext(BasketContext);
     const [tempUsername, setTempUsername] = useState("");
     const [currentIndex, setCurrentIndex] = useState(0);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // ✅ Define navigate here
 
     useEffect(() => {
         if (username) {
@@ -69,7 +69,9 @@ const UserMain = () => {
                 </div>
             ) : (
                 <div className="welcome-container">
-                    <button onClick={handleLogout} className="logout-button">Log Out</button>
+                    <button onClick={() => handleLogout(navigate)} className="logout-button"> {/* ✅ Fixed the function call */}
+                        Log Out
+                    </button>
                     <p>Welcome, <strong>{username}</strong>!</p>
                 </div>
             )}

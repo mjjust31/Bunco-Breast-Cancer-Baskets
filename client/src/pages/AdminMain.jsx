@@ -1,104 +1,69 @@
-import React, { useState, useContext, useEffect } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // ✅ Import arrows
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; 
 import { BasketContext } from "../context/BasketContext";
-import "./UserMain.scss";
+import BasketForm from "./BasketForm"; // ✅ Import the form
+import "./AdminMain.scss";
 
-const UserMain = () => {
-    const { username, handleLogin, handleLogout, basketData, favorites, setFavorites } = useContext(BasketContext);
-    const [tempUsername, setTempUsername] = useState("");
+const AdminMain = () => {
+    const { basketData, setBasketData, username, handleLogout } = useContext(BasketContext);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingBasket, setEditingBasket] = useState(null);
 
-    useEffect(() => {
-        if (username) {
-            fetch(`/api/favorites/${username}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    if (Array.isArray(data)) {
-                        setFavorites(data);
-                    } else {
-                        console.error("❌ Unexpected response format:", data);
-                    }
-                })
-                .catch((error) => console.error("❌ Error fetching favorites:", error));
-        }
-    }, [username]);
+    // ✅ Open Form for New Basket
+    const openCreateBasket = () => {
+        setEditingBasket(null);
+        setIsModalOpen(true);
+    };
 
-    // ✅ Check if a basket is favorited
-    const isFavorited = (basketId) => favorites.some(fav => fav._id === basketId);
+    // ✅ Open Form for Editing a Basket
+    const openEditBasket = (basket) => {
+        setEditingBasket(basket);
+        setIsModalOpen(true);
+    };
 
-    // ✅ Add or Remove Favorite (Backend + Frontend Update)
-    const toggleFavorite = async (basketId) => {
+    // ✅ Remove Basket
+    const deleteBasket = async (basketId) => {
         try {
-            if (isFavorited(basketId)) {
-                await fetch(`/api/favorites/${username}/${basketId}`, { method: "DELETE" });
-                setFavorites(prev => prev.filter(fav => fav._id !== basketId));
-            } else {
-                const res = await fetch(`/api/favorites/${username}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ basketId }),
-                });
+            const response = await fetch(`/api/baskets/admin/${basketId}`, { method: "DELETE" });
+            if (!response.ok) throw new Error("Failed to delete basket");
 
-                const data = await res.json();
-                if (data.success) {
-                    const fullBasket = basketData.find(basket => basket._id === basketId);
-                    if (fullBasket) {
-                        setFavorites(prev => [...prev, fullBasket]); 
-                    }
-                }
-            }
+            // ✅ Remove from carousel list
+            setBasketData(prevBaskets => prevBaskets.filter(basket => basket._id !== basketId));
         } catch (error) {
-            console.error("❌ Error updating favorites:", error);
+            console.error("❌ Error deleting basket:", error);
         }
     };
 
     return (
-        <div className="main-container">
-            {/* ✅ User Welcome & Logout */}
-            {!username ? (
-                <div className="login-container">
-                    <input
-                        type="text"
-                        placeholder="Enter your username"
-                        value={tempUsername}
-                        onChange={(e) => setTempUsername(e.target.value)}
-                        className="input"
-                    />
-                    <button onClick={() => handleLogin(tempUsername, navigate)} className="login-button">
-                        Submit
-                    </button>
-                </div>
-            ) : (
-                <div className="welcome-container">
-                    <p>Welcome, <strong>{username}</strong>!</p>
-                    <button onClick={handleLogout} className="logout-button">
-                        Log Out
-                    </button>
-                </div>
-            )}
+        <div className="admin-container">
+            <div className="admin-header">
+                <button onClick={handleLogout} className="logout-button">Log Out</button>
+                <h1>🎗 Admin Control Panel 🎗</h1>
+            </div>
+
+            {/* ✅ Create Basket Button */}
+            <button onClick={openCreateBasket} className="create-basket-button">Create New Basket</button>
 
             {/* ✅ Basket Carousel */}
             {basketData.length > 0 && (
-                <div className="basket-carousel">
-                    {/* ✅ Basket Display */}
+                <div className="carousel-container">
                     <div className="basket-display">
                         <h3>#{currentIndex + 1} {basketData[currentIndex].name}</h3>
                         <p>{basketData[currentIndex].content}</p>
 
-                        {/* ✅ Favorite Button */}
-                        {username && (
-                            <button
-                                className={`favorite-button ${isFavorited(basketData[currentIndex]._id) ? "favorited" : "not-favorited"}`}
-                                onClick={() => toggleFavorite(basketData[currentIndex]._id)}>
-                                {isFavorited(basketData[currentIndex]._id) ? "Remove from Favorites" : "Add to Favorites"}
+                        {/* ✅ Admin Controls */}
+                        <div className="admin-buttons">
+                            <button onClick={() => openEditBasket(basketData[currentIndex])} className="edit-button">
+                                Edit
                             </button>
-                        )}
+                            <button onClick={() => deleteBasket(basketData[currentIndex]._id)} className="delete-button">
+                                Delete
+                            </button>
+                        </div>
                     </div>
 
-                    {/* ✅ Arrows Below the Card */}
-                    <div className="carousel-controls">
+                    <div className="carousel-arrows">
                         <button onClick={() => setCurrentIndex(prev => prev > 0 ? prev - 1 : basketData.length - 1)} className="carousel-button left">
                             <FaArrowLeft />
                         </button>
@@ -108,8 +73,11 @@ const UserMain = () => {
                     </div>
                 </div>
             )}
+
+            {/* ✅ Basket Form Modal */}
+            <BasketForm isModalOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} editingBasket={editingBasket} />
         </div>
     );
 };
 
-export default UserMain;
+export default AdminMain;

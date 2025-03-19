@@ -1,3 +1,4 @@
+/* 🎗 Main Container */
 .main-container {
   display: flex;
   flex-direction: column;
@@ -9,118 +10,109 @@
   padding-top: 80px;
 }
 
-/* 🎗 Log Out Button */
-.logout-button {
-  background-color: var(--primary-pink);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+/* 🎀 Basket Carousel */
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px; /* ✅ Adds space below the carousel */
 }
 
-.logout-button:hover {
-  background-color: var(--button-hover);
-}
-
-/* 🎀 Basket Card - Subtle Glow Effect */
+/* 🎲 Basket Card */
 .basket-display {
+  width: 85%;
+  max-width: 400px;
   background: white;
   padding: 20px;
   border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 85%;
-  max-width: 400px;
-
-  /* ✨ Subtle Pink Glow */
-  border: 2px solid var(--primary-pink);
-  box-shadow: 0 0 15px rgba(235, 75, 152, 0.4);
-  transition: box-shadow 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  margin-bottom: 20px; /* ✅ Adds space between basket and arrows */
 }
 
-/* 🩷 Glow effect on hover */
 .basket-display:hover {
-  box-shadow: 0 0 25px rgba(235, 75, 152, 0.6);
+  transform: scale(1.05);
 }
 
-/* 🎀 Favorite Button - Heart Feature */
-.favorite-button {
-  width: 100%;
-  font-size: 16px;
-  border: 2px solid var(--primary-pink);
-  background-color: var(--background-color);
-  color: var(--primary-pink);
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.favorite-button:hover {
-  background-color: var(--background-color); /* Keeps it the same */
-  border: 2px solid var(--primary-pink); /* Ensures border stays */
-  color: var(--primary-pink);
-}
-
-
-
-/* 💖 Filled Heart for Favorited */
-.favorite-button.favorited {
-  background-color: var(--primary-pink);
-  color: white;
-}
-
-/* 🎗 Heart Icon */
-.heart-icon {
-  font-size: 18px;
-  color: var(--primary-pink);
-}
-
-/* 🩷 When Favorited, Make Heart White */
-.favorite-button.favorited .heart-icon {
-  color: white;
-}
-
-/* 🚀 Carousel Arrows - Positioned Below */
+/* ✅ Pretty Pink Arrows */
 .carousel-arrows {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 20px;
+  margin-bottom: 40px; /* ✅ Adds space between arrows and login form */
 }
 
-/* 🎗 Carousel Buttons (Pink Background, White Arrows) */
 .carousel-button {
   background-color: var(--primary-pink);
   border: none;
+  color: white !important; /* ✅ Forces white arrow */
+  font-size: 28px; /* ✅ Bigger icon */
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
-/* ✅ White Arrows - Forcing Color */
-.carousel-button svg {
-  fill: white !important;
-  color: white !important;
-  font-size: 24px !important;
-}
-
-/* ✨ Hover Effect */
 .carousel-button:hover {
   background-color: var(--button-hover);
 }
 
-/* 📱 Responsive Styles */
+/* 🎀 Login Form */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  margin-top: 20px; /* ✅ Adds space between carousel arrows and login form */
+}
+
+.login-container h2 {
+  color: var(--primary-pink);
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid var(--primary-pink);
+  font-size: 16px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--accent-gold);
+}
+
+.login-button {
+  background-color: var(--primary-pink);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.login-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* ✅ Responsive Tweaks */
 @media (max-width: 600px) {
   .basket-display {
     width: 90%;
@@ -128,11 +120,13 @@
   }
 
   .carousel-button {
-    width: 40px;
-    height: 40px;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
   }
 
-  .carousel-button svg {
-    font-size: 20px !important;
+  .login-container {
+    width: 100%;
+    padding: 15px;
   }
 }

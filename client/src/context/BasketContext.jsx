@@ -84,12 +84,16 @@ export const BasketContextProvider = ({ children }) => {
         navigate(tempUsername.toLowerCase() === "admin" ? "/administrator" : "/");
     };
 
-    // ✅ Handle logout (Fixed: navigate is now a parameter again)
+    // ✅ Handle logout (Fixed: navigate is now a parameter)
     const handleLogout = (navigate) => {
-        setUsername("");
-        setFavorites([]); // ✅ Clear favorites on logout
-        localStorage.removeItem("username");
-        navigate("/");
+        if (typeof navigate === "function") {
+            setUsername("");
+            setFavorites([]); // ✅ Clear favorites on logout
+            localStorage.removeItem("username");
+            navigate("/"); // ✅ Redirect to home page
+        } else {
+            console.error("❌ Error: navigate is not a function");
+        }
     };
 
     return (

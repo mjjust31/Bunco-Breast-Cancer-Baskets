@@ -67,16 +67,27 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
                     <div className="modal show">
                         <h2>{editingBasket ? "Edit Basket" : "Create a New Basket"}</h2>
                         <form onSubmit={handleSubmit}>
-                            <label>
+                            <label className="form-label">
                                 Basket Name:
-                                <input type="text" value={basketName} onChange={(e) => setBasketName(e.target.value)} />
+                                <input 
+                                    type="text" 
+                                    value={basketName} 
+                                    onChange={(e) => setBasketName(e.target.value)} 
+                                    className="form-input"
+                                />
                             </label>
-                            <label>
+                            <label className="form-label">
                                 Basket Content:
-                                <textarea value={basketContent} onChange={(e) => setBasketContent(e.target.value)} />
+                                <textarea 
+                                    value={basketContent} 
+                                    onChange={(e) => setBasketContent(e.target.value)} 
+                                    className="form-textarea"
+                                />
                             </label>
                             <div className="modal-buttons">
-                                <button type="submit">{editingBasket ? "Update Basket" : "Add Basket"}</button>
+                                <button type="submit" className="submit-button">
+                                    {editingBasket ? "Update Basket" : "Add Basket"}
+                                </button>
                                 <button type="button" onClick={closeModal} className="cancel-button">
                                     Cancel
                                 </button>
@@ -90,4 +101,3 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
 };
 
 export default BasketForm;
-

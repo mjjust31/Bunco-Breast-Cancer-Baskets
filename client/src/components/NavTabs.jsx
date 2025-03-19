@@ -10,29 +10,35 @@ const NavTabs = () => {
 
   return (
     <nav className="navbar">
-      {/* ✅ Home Button (Left) */}
-      {safeUsername && safeUsername !== "admin" && (
-        <div className="nav-left">
+      <div className="nav-left">
+        {/* ✅ Home Button (Regular User) */}
+        {safeUsername && safeUsername !== "admin" && (
           <Link to="/" className="nav-link">
             Home
           </Link>
-        </div>
-      )}
+        )}
+
+        {/* ✅ Admin Home Link (View User Page) */}
+        {safeUsername === "admin" && (
+          <Link to="/" className="nav-link admin-home-link">
+           Home
+          </Link>
+        )}
+      </div>
 
       {/* ✅ Centered Title */}
       <div className="nav-center">
-        <h1 className="nav-title"> 🎗️🎲 Bunco Baskets 🎲 🎗️</h1>
+        <h1 className="nav-title">🎗️🎲 Bunco Baskets 🎲 🎗️</h1>
       </div>
 
-      {/* ✅ Favorites Button (Right) */}
-      {safeUsername && safeUsername !== "admin" && (
-        <div className="nav-right">
+      <div className="nav-right">
+        {/* ✅ Favorites Button (Regular User) */}
+        {safeUsername && safeUsername !== "admin" && (
           <Link to="/favorites" className="nav-link">
             Favorites
           </Link>
-        </div>
-      )}
-
+        )}
+      </div>
     </nav>
   );
 };
