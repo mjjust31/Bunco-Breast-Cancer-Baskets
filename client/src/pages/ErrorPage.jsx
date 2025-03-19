@@ -1,16 +1,17 @@
-import { useRouteError } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./ErrorPage.scss"; // ✅ Add some styling
 
-export default function ErrorPage() {
-  const error = useRouteError();
-  console.error(error);
+const ErrorPage = () => {
+  const navigate = useNavigate();
 
   return (
-    <div id="error-page">
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
+    <div className="error-container">
+      <h1>Oops! Page Not Found</h1>
+      <p>The page you’re looking for doesn’t exist.</p>
+      <button onClick={() => navigate("/")}>Go Back Home</button>
     </div>
   );
-}
+};
+
+export default ErrorPage;

@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";  
-import { BasketContext } from "../context/BasketContext";  
-import NavTabs from "../components/NavTabs";  // ✅ Import Nav for logged-in users
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { BasketContext } from "../context/BasketContext";
 import "./UserMain.scss";
 
 const UserMain = () => {
@@ -10,25 +9,53 @@ const UserMain = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const navigate = useNavigate();
 
-    // ✅ Toggle Favorite Functionality
-    const toggleFavorite = (basket) => {
-        if (favorites.some(fav => fav._id === basket._id)) {
-            setFavorites(favorites.filter(fav => fav._id !== basket._id)); // ✅ Remove from favorites
-        } else {
-            setFavorites([...favorites, basket]); // ✅ Add to favorites
+    useEffect(() => {
+        if (username) {
+            fetch(`/api/favorites/${username}`) // ✅ Corrected API endpoint
+                .then((res) => res.json())
+                .then((data) => {
+                    if (Array.isArray(data)) {
+                        setFavorites(data);
+                    } else {
+                        console.error("❌ Unexpected response format:", data);
+                    }
+                })
+                .catch((error) => console.error("❌ Error fetching favorites:", error));
+        }
+    }, [username]);
+
+    // ✅ Check if a basket is favorited
+    const isFavorited = (basketId) => favorites.some(fav => fav._id === basketId);
+
+    // ✅ Add or Remove Favorite (Backend + Frontend Update)
+    const toggleFavorite = async (basketId) => {
+        try {
+            if (isFavorited(basketId)) {
+                await fetch(`/api/favorites/${username}/${basketId}`, { method: "DELETE" });
+                setFavorites(prev => prev.filter(fav => fav._id !== basketId)); // ✅ Ensure consistent removal
+            } else {
+                const res = await fetch(`/api/favorites/${username}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ basketId }),
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    setFavorites(prev => [...prev, { _id: basketId }]); // ✅ Ensure correct structure
+                }
+            }
+        } catch (error) {
+            console.error("❌ Error updating favorites:", error);
         }
     };
 
     return (
         <div className="main-container">
-            {/* ✅ NavBar Logic */}
-            {username ? <NavTabs username={username} /> : <nav className="empty-navbar"></nav>}
-
             <header>
                 <h1>Bunco Baskets</h1>
             </header>
 
-            {/* ✅ Show Login When Not Logged In */}
             {!username ? (
                 <div className="login-container">
                     <input
@@ -51,36 +78,26 @@ const UserMain = () => {
                 </div>
             )}
 
-            {/* ✅ Basket Carousel (Visible for ALL users) */}
-            {basketData.length === 0 ? (
-                <p>No baskets available.</p>
-            ) : (
+            {/* ✅ Basket Carousel */}
+            {basketData.length > 0 && (
                 <div className="basket-carousel">
-                    <button
-                        onClick={() => setCurrentIndex(prev => prev > 0 ? prev - 1 : basketData.length - 1)}
-                        className="carousel-button left">
-                        ◀
-                    </button>
+                    <button onClick={() => setCurrentIndex(prev => prev > 0 ? prev - 1 : basketData.length - 1)} className="carousel-button left">◀</button>
 
                     <div className="basket-display">
                         <h3>#{currentIndex + 1} {basketData[currentIndex].name}</h3>
                         <p>{basketData[currentIndex].content}</p>
 
-                        {/* ✅ Show "Add to Favorites" only when logged in */}
+                        {/* ✅ Show "Add to Favorites" when logged in */}
                         {username && (
                             <button
-                                className={`favorite-button ${favorites.some(fav => fav._id === basketData[currentIndex]._id) ? "favorited" : ""}`}
-                                onClick={() => toggleFavorite(basketData[currentIndex])}>
-                                {favorites.some(fav => fav._id === basketData[currentIndex]._id) ? "Remove from Favorites" : "Add to Favorites"}
+                                className={`favorite-button ${isFavorited(basketData[currentIndex]._id) ? "favorited" : ""}`}
+                                onClick={() => toggleFavorite(basketData[currentIndex]._id)}>
+                                {isFavorited(basketData[currentIndex]._id) ? "Remove from Favorites" : "Add to Favorites"}
                             </button>
                         )}
                     </div>
 
-                    <button
-                        onClick={() => setCurrentIndex(prev => prev < basketData.length - 1 ? prev + 1 : 0)}
-                        className="carousel-button right">
-                        ▶
-                    </button>
+                    <button onClick={() => setCurrentIndex(prev => prev < basketData.length - 1 ? prev + 1 : 0)} className="carousel-button right">▶</button>
                 </div>
             )}
         </div>
@@ -88,4 +105,3 @@ const UserMain = () => {
 };
 
 export default UserMain;
-

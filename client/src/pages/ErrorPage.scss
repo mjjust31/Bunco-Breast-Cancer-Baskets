@@ -1,0 +1,63 @@
+/* ErrorPage.scss */
+
+/* Colors for Breast Cancer Theme */
+$primary-pink: #f06292; /* Dark Pink */
+$secondary-pink: #f8bbd0; /* Soft Pink */
+$text-color: #333; /* Dark text for contrast */
+$background-color: #fff; /* White background for readability */
+
+/* Error Page Styling */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+  background: $background-color;
+  color: $text-color;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 36px;
+  color: $primary-pink;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 18px;
+  color: $text-color;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: $primary-pink;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+
+  &:hover {
+    background-color: darken($primary-pink, 10%);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+}
