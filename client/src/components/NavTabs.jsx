@@ -1,40 +1,38 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
-import { BasketContext } from "../context/BasketContext"; // ✅ Import context
+import { Link, useNavigate } from "react-router-dom";
+import { BasketContext } from "../context/BasketContext";
 import "./NavTabs.scss";
 
 const NavTabs = () => {
   const { username, handleLogout } = useContext(BasketContext);
   const safeUsername = username?.toLowerCase() || ""; // Prevent errors if empty
-  const navigate = useNavigate(); // ✅ Define navigate here
+  const navigate = useNavigate();
 
   return (
     <nav className="navbar">
-      <ul className="nav-tabs">
-        <li className="nav-item">
-          <Link to="/" className="nav-link">Home</Link>
-        </li>
+      {/* ✅ Home Button (Left) */}
+      {safeUsername && safeUsername !== "admin" && (
+        <div className="nav-left">
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+        </div>
+      )}
 
-        {safeUsername !== "" && safeUsername !== "admin" && (
-          <li className="nav-item">
-            <Link to="/favorites" className="nav-link">Favorites</Link>
-          </li>
-        )}
+      {/* ✅ Centered Title */}
+      <div className="nav-center">
+        <h1 className="nav-title"> 🎗️🎲 Bunco Baskets 🎲 🎗️</h1>
+      </div>
 
-        {safeUsername && (
-          <li className="nav-item">
-            <button 
-              onClick={() => {
-                handleLogout();
-                navigate("/"); // ✅ Redirect user to Home after logout
-              }} 
-              className="nav-link logout-button"
-            >
-              Logout
-            </button>
-          </li>
-        )}
-      </ul>
+      {/* ✅ Favorites Button (Right) */}
+      {safeUsername && safeUsername !== "admin" && (
+        <div className="nav-right">
+          <Link to="/favorites" className="nav-link">
+            Favorites
+          </Link>
+        </div>
+      )}
+
     </nav>
   );
 };

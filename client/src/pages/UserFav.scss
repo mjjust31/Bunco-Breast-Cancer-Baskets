@@ -1,132 +1,138 @@
-/* Favorites Container */
+/* 🎗 Favorites Container */
 .favorites-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
   padding: 20px;
   background-color: var(--background-color);
   min-height: 100vh;
-  justify-content: flex-start;
+  padding-top: 80px; /* ✅ Push content down below navbar */
 }
 
-/* Title */
-h1 {
-  font-size: 24px;
-  color: var(--primary-pink);
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-/* Favorite Header */
+/* 🏆 Favorite Header */
 .favorite-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.favorite-header strong {
   font-size: 18px;
-  color: var(--primary-pink);
-  display: block;
+  font-weight: bold;
   margin-top: 10px;
+  color: var(--primary-pink);
 }
 
-/* Favorite Basket Carousel */
-.basket-carousel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
-  width: 100%;
-  max-width: 600px;
-  position: relative; /* For absolute positioning of arrows */
-}
-
-/* Carousel Button */
-.carousel-button {
-  background-color: var(--primary-pink);
-  color: white;
-  padding: 12px;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 10px;
-  position: absolute; /* Absolute positioning for arrows */
-  top: 50%; /* Center vertically */
-  transform: translateY(-50%); /* Center arrows properly */
-}
-
-.carousel-button.left {
-  left: 0; /* Place arrow on the left side */
-}
-
-.carousel-button.right {
-  right: 0; /* Place arrow on the right side */
-}
-
-/* Hover Effect for Arrows */
-.carousel-button:hover {
-  background-color: var(--button-hover);
-}
-
-/* Basket Display */
+/* 🎲 Basket Display */
 .basket-display {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: white;
   padding: 20px;
-  width: 80%;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  width: 85%;
+  max-width: 400px;
+  border: 3px solid var(--primary-pink);
+  transition: box-shadow 0.3s ease-in-out;
 }
 
+/* ✅ Subtle Glow Effect */
+.basket-display:hover {
+  box-shadow: 0px 0px 12px var(--primary-pink);
+}
+
+/* 🎗 Basket Number */
 .basket-display h3 {
   font-size: 22px;
   color: var(--primary-pink);
+  font-weight: bold;
 }
 
+/* 📝 Basket Content */
 .basket-display p {
   font-size: 16px;
   color: var(--text-color);
-  margin: 15px 0;
+  margin: 10px 0;
 }
 
-/* Remove from Favorites Button */
+/* 💖 Remove Favorite Button */
 .remove-fav-button {
   background-color: var(--primary-pink);
   color: white;
-  padding: 12px 20px;
   border: none;
+  padding: 12px 20px;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 15px;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
+/* ❤️ Heart Icon Styling */
+.heart-icon {
+  margin-right: 8px;
+}
+
+/* ✅ Hover Effect */
 .remove-fav-button:hover {
-  background-color: var(--button-hover);
+  background-color: var(--accent-gold);
+  color: white;
 }
 
-/* Responsiveness */
+/* 🎗 Carousel Buttons */
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* ✅ Arrows BELOW the Card */
+.carousel-arrows {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 15px;
+}
+
+/* ✅ Pretty Pink Arrow Buttons */
+.carousel-button {
+  background-color: var(--primary-pink);
+  color: white !important;
+  font-size: 28px;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ✅ Bigger White Arrow Icons */
+.arrow-icon {
+  font-size: 32px !important; /* ✅ Bigger for better visibility */
+  color: white !important;
+}
+
+/* ✅ Hover Effect */
+.carousel-button:hover {
+  background-color: var(--accent-gold);
+}
+
+/* ✅ Responsive Styles */
 @media (max-width: 600px) {
-  .favorite-header {
-    font-size: 14px;
-  }
-
-  .carousel-button {
-    font-size: 18px;
-  }
-
   .basket-display {
     width: 90%;
-    padding: 15px;
   }
 
   .remove-fav-button {
     font-size: 14px;
+  }
+
+  .carousel-button {
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .arrow-icon {
+    font-size: 28px !important;
   }
 }

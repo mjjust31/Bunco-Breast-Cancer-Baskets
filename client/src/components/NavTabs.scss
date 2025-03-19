@@ -1,73 +1,74 @@
-/* Nav Bar Styling */
+/* ✅ Full-Width Navbar */
 .navbar {
-  background-color: #fff5f5; /* Light pink background */
-  padding: 10px 20px;
+  background-color: #f8f8f8 !important; /* Soft Off-White */
+  width: 100vw; /* Full width */
+  padding: 15px 20px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border-bottom: 3px solid #eb4b98;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-bottom: 2px solid var(--primary-pink);
 }
 
-.nav-tabs {
+/* ✅ Keep Left, Center, and Right Aligned */
+.nav-left, .nav-center, .nav-right {
   display: flex;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  justify-content: center;
   align-items: center;
 }
 
-.nav-item {
-  margin: 0 15px;
+/* ✅ Center Title */
+.nav-center {
+  flex-grow: 1; /* Pushes content equally */
+  display: flex;
+  justify-content: center;
 }
 
-.nav-link {
-  color: var(--primary-pink);
+/* ✅ Title Styling */
+.nav-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ✅ Navigation Links (Including Logout) */
+.nav-link, .logout-button {
+  color: #eb4b98; /* Primary pink */
   font-size: 18px;
   text-decoration: none;
   padding: 10px 15px;
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
-  display: inline-block;
+  border: none;
+  background: none; /* ✅ Matches normal nav links */
+  cursor: pointer;
 }
-
-.nav-link:hover {
-  background-color: var(--primary-pink);
+/* ✅ Hover effect for both links & button */
+.nav-link:hover, .logout-button:hover {
+  background-color: #eb4b98;
   color: #fff;
 }
 
-.logout-button {
-  background-color: var(--primary-pink);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  border: none;
-}
-
-.logout-button:hover {
-  background-color: #f56c6c;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  .nav-tabs {
-    flex-direction: column;
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
   }
 
-  .nav-item {
-    margin: 10px 0;
+  .nav-title {
+    font-size: 1.3rem;
   }
 
-  .nav-link {
-    font-size: 16px;
-    padding: 8px 10px;
+  .nav-left, .nav-right {
+    flex: 1;
   }
 
-  .logout-button {
-    font-size: 16px;
-    padding: 8px 15px;
+  .nav-center {
+    flex-grow: 2;
   }
 }

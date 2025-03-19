@@ -1,73 +1,67 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import React, { useState, useContext, useEffect } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // ✅ Import arrows
+import { useNavigate } from "react-router-dom";
 import { BasketContext } from "../context/BasketContext";
-import BasketForm from "./BasketForm"; // ✅ Import modal component
-import "./AdminMain.scss"; // ✅ Ensure styles are applied
+import "./UserMain.scss";
 
-const AdminMain = () => {
-    const { username, handleLogin, basketData, setBasketData } = useContext(BasketContext);
+const UserMain = () => {
+    const { username, handleLogin, handleLogout, basketData, favorites, setFavorites } = useContext(BasketContext);
     const [tempUsername, setTempUsername] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingBasket, setEditingBasket] = useState(null);
-    const [currentBasketIndex, setCurrentBasketIndex] = useState(0);
-    const navigate = useNavigate(); // ✅ Fix navigate issue
-
-    console.log("AdminMain component is rendering. Username:", username);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (currentBasketIndex >= basketData.length) {
-            setCurrentBasketIndex(0); // ✅ Prevent invalid index after deletion
+        if (username) {
+            fetch(`/api/favorites/${username}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    if (Array.isArray(data)) {
+                        setFavorites(data);
+                    } else {
+                        console.error("❌ Unexpected response format:", data);
+                    }
+                })
+                .catch((error) => console.error("❌ Error fetching favorites:", error));
         }
-    }, [basketData]);
+    }, [username]);
 
-    // ✅ Open Create/Edit Modal
-    const openModal = (basket = null) => {
-        setEditingBasket(basket); // If editing, prefill basket details
-        setIsModalOpen(true);
-    };
+    // ✅ Check if a basket is favorited
+    const isFavorited = (basketId) => favorites.some(fav => fav._id === basketId);
 
-    // ✅ Close Modal
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setEditingBasket(null);
-    };
-
-    // ✅ Delete Single Basket & Update Numbers
-    const deleteBasket = async (basketId) => {
-        if (!window.confirm("Are you sure you want to delete this basket?")) return;
+    // ✅ Add or Remove Favorite (Backend + Frontend Update)
+    const toggleFavorite = async (basketId) => {
         try {
-            const response = await fetch(`/api/baskets/admin/${basketId}`, { method: "DELETE" });
-            if (!response.ok) throw new Error("Failed to delete basket");
+            if (isFavorited(basketId)) {
+                await fetch(`/api/favorites/${username}/${basketId}`, { method: "DELETE" });
+                setFavorites(prev => prev.filter(fav => fav._id !== basketId));
+            } else {
+                const res = await fetch(`/api/favorites/${username}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ basketId }),
+                });
 
-            const updatedBaskets = await response.json();
-            setBasketData(updatedBaskets);
-            setCurrentBasketIndex(0); // ✅ Reset index after deletion
+                const data = await res.json();
+                if (data.success) {
+                    const fullBasket = basketData.find(basket => basket._id === basketId);
+                    if (fullBasket) {
+                        setFavorites(prev => [...prev, fullBasket]); 
+                    }
+                }
+            }
         } catch (error) {
-            console.error("❌ Error deleting basket:", error);
-        }
-    };
-
-    // ✅ Delete All Baskets
-    const deleteAllBaskets = async () => {
-        if (!window.confirm("Do you want to delete all the baskets?")) return;
-        try {
-            const response = await fetch(`/api/baskets/admin`, { method: "DELETE" });
-            if (!response.ok) throw new Error("Failed to delete all baskets");
-
-            setBasketData([]);
-            setCurrentBasketIndex(0); // ✅ Reset index after deletion
-        } catch (error) {
-            console.error("❌ Error deleting all baskets:", error);
+            console.error("❌ Error updating favorites:", error);
         }
     };
 
     return (
-        <div className="admin-container">
+        <div className="main-container">
+            {/* ✅ User Welcome & Logout */}
             {!username ? (
                 <div className="login-container">
                     <input
                         type="text"
-                        placeholder="Enter your admin username"
+                        placeholder="Enter your username"
                         value={tempUsername}
                         onChange={(e) => setTempUsername(e.target.value)}
                         className="input"
@@ -77,74 +71,45 @@ const AdminMain = () => {
                     </button>
                 </div>
             ) : (
-                <div>
-                    <h1>Admin Control Center</h1>
-
-                    {/* ✅ Basket Count Message */}
-                    <p>You have {basketData.length} saved basket{basketData.length !== 1 ? "s" : ""}.</p>
-
-                    {/* ✅ Button to open Create Basket Modal */}
-                    <button className="create-basket-button" onClick={() => openModal()}>
-                        + Create Basket
+                <div className="welcome-container">
+                    <p>Welcome, <strong>{username}</strong>!</p>
+                    <button onClick={handleLogout} className="logout-button">
+                        Log Out
                     </button>
+                </div>
+            )}
 
-                    {/* ✅ Basket Carousel with Correct Basket Numbering */}
-                    {basketData.length > 0 ? (
-                        <div className="basket-carousel">
+            {/* ✅ Basket Carousel */}
+            {basketData.length > 0 && (
+                <div className="basket-carousel">
+                    {/* ✅ Basket Display */}
+                    <div className="basket-display">
+                        <h3>#{currentIndex + 1} {basketData[currentIndex].name}</h3>
+                        <p>{basketData[currentIndex].content}</p>
+
+                        {/* ✅ Favorite Button */}
+                        {username && (
                             <button
-                                onClick={() =>
-                                    setCurrentBasketIndex((prev) => (prev > 0 ? prev - 1 : basketData.length - 1))
-                                }
-                                className="carousel-button left">
-                                ◀
+                                className={`favorite-button ${isFavorited(basketData[currentIndex]._id) ? "favorited" : "not-favorited"}`}
+                                onClick={() => toggleFavorite(basketData[currentIndex]._id)}>
+                                {isFavorited(basketData[currentIndex]._id) ? "Remove from Favorites" : "Add to Favorites"}
                             </button>
+                        )}
+                    </div>
 
-                            <div className="basket-display">
-                                <h3>
-                                    Basket #{basketData[currentBasketIndex]?.basketNumber || "N/A"}: {basketData[currentBasketIndex].name}
-                                </h3>
-                                <p>{basketData[currentBasketIndex].content}</p>
-                                <button
-                                    onClick={() => openModal(basketData[currentBasketIndex])}
-                                    className="edit-button">
-                                    Edit
-                                </button>
-                                <button
-                                    onClick={() => deleteBasket(basketData[currentBasketIndex]._id)}
-                                    className="delete-button">
-                                    Delete
-                                </button>
-                            </div>
-
-                            <button
-                                onClick={() =>
-                                    setCurrentBasketIndex((prev) => (prev < basketData.length - 1 ? prev + 1 : 0))
-                                }
-                                className="carousel-button right">
-                                ▶
-                            </button>
-                        </div>
-                    ) : (
-                        <p>No baskets available. Add a new basket to get started!</p>
-                    )}
-
-                    {/* ✅ Delete All Baskets Button */}
-                    {basketData.length > 0 && (
-                        <button onClick={deleteAllBaskets} className="delete-all">
-                            Delete All Baskets
+                    {/* ✅ Arrows Below the Card */}
+                    <div className="carousel-controls">
+                        <button onClick={() => setCurrentIndex(prev => prev > 0 ? prev - 1 : basketData.length - 1)} className="carousel-button left">
+                            <FaArrowLeft />
                         </button>
-                    )}
-
-                    {/* ✅ Render BasketForm */}
-                    <BasketForm
-                        isModalOpen={isModalOpen}
-                        closeModal={closeModal}
-                        editingBasket={editingBasket}
-                    />
+                        <button onClick={() => setCurrentIndex(prev => prev < basketData.length - 1 ? prev + 1 : 0)} className="carousel-button right">
+                            <FaArrowRight />
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
     );
 };
 
-export default AdminMain;
+export default UserMain;

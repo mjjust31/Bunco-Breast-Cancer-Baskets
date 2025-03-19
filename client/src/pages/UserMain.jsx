@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { FaArrowLeft, FaArrowRight, FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { BasketContext } from "../context/BasketContext";
 import "./UserMain.scss";
@@ -24,10 +25,8 @@ const UserMain = () => {
         }
     }, [username]);
 
-    // ✅ Check if a basket is favorited
     const isFavorited = (basketId) => favorites.some(fav => fav._id === basketId);
 
-    // ✅ Add or Remove Favorite (Backend + Frontend Update)
     const toggleFavorite = async (basketId) => {
         try {
             if (isFavorited(basketId)) {
@@ -42,7 +41,6 @@ const UserMain = () => {
 
                 const data = await res.json();
                 if (data.success) {
-                    // ✅ Fetch the full basket details before updating `favorites`
                     const fullBasket = basketData.find(basket => basket._id === basketId);
                     if (fullBasket) {
                         setFavorites(prev => [...prev, fullBasket]); 
@@ -56,10 +54,6 @@ const UserMain = () => {
 
     return (
         <div className="main-container">
-            <header>
-                <h1>Bunco Baskets</h1>
-            </header>
-
             {!username ? (
                 <div className="login-container">
                     <input
@@ -75,33 +69,36 @@ const UserMain = () => {
                 </div>
             ) : (
                 <div className="welcome-container">
+                    <button onClick={handleLogout} className="logout-button">Log Out</button>
                     <p>Welcome, <strong>{username}</strong>!</p>
-                    <button onClick={handleLogout} className="logout-button"> {/* ✅ Fixed Logout Button */}
-                        Log Out
-                    </button>
                 </div>
             )}
 
-            {/* ✅ Basket Carousel */}
             {basketData.length > 0 && (
-                <div className="basket-carousel">
-                    <button onClick={() => setCurrentIndex(prev => prev > 0 ? prev - 1 : basketData.length - 1)} className="carousel-button left">◀</button>
-
+                <div className="carousel-container">
                     <div className="basket-display">
                         <h3>#{currentIndex + 1} {basketData[currentIndex].name}</h3>
                         <p>{basketData[currentIndex].content}</p>
 
-                        {/* ✅ Show "Add to Favorites" when logged in */}
                         {username && (
                             <button
-                                className={`favorite-button ${isFavorited(basketData[currentIndex]._id) ? "favorited" : ""}`}
+                                className={`favorite-button ${isFavorited(basketData[currentIndex]._id) ? "favorited" : "not-favorited"}`}
                                 onClick={() => toggleFavorite(basketData[currentIndex]._id)}>
-                                {isFavorited(basketData[currentIndex]._id) ? "Remove from Favorites" : "Add to Favorites"}
+                                <FaHeart className="heart-icon" />
+                                {isFavorited(basketData[currentIndex]._id) ? " Remove from Favorites" : " Add to Favorites"}
                             </button>
                         )}
                     </div>
 
-                    <button onClick={() => setCurrentIndex(prev => prev < basketData.length - 1 ? prev + 1 : 0)} className="carousel-button right">▶</button>
+                    <div className="carousel-arrows">
+                        <button onClick={() => setCurrentIndex(prev => prev > 0 ? prev - 1 : basketData.length - 1)} className="carousel-button left">
+                            <FaArrowLeft />
+                        </button>
+
+                        <button onClick={() => setCurrentIndex(prev => prev < basketData.length - 1 ? prev + 1 : 0)} className="carousel-button right">
+                            <FaArrowRight />
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
