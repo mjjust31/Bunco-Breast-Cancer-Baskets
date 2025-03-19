@@ -1,121 +1,132 @@
-/* 🎀 Breast Cancer Theme Colors */
-$primary-pink: #f06292; /* Dark Pink */
-$secondary-pink: #f8bbd0; /* Soft Pink */
-$text-color: #333; /* Dark text for contrast */
-$background-color: #f8bbd0; /* Light pink background */
-$white: #ffffff;
-
-/* 📌 Favorites Container */
+/* Favorites Container */
 .favorites-container {
-  padding: 20px;
-  background-color: $white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 800px;
-  text-align: center;
-  margin-top: 80px;
-}
-
-/* 🏷️ Heading */
-.favorites-heading {
-  font-size: 32px;
-  font-weight: bold;
-  color: $primary-pink;
-  margin-bottom: 20px;
-}
-
-/* 🔢 Favorite Numbers Header */
-.favorite-numbers {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--background-color);
+  min-height: 100vh;
+  justify-content: flex-start;
+}
+
+/* Title */
+h1 {
+  font-size: 24px;
+  color: var(--primary-pink);
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
-.fav-number {
-  background: $primary-pink;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 16px;
+/* Favorite Header */
+.favorite-header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-/* 🎠 Favorite Basket Carousel */
+.favorite-header strong {
+  font-size: 18px;
+  color: var(--primary-pink);
+  display: block;
+  margin-top: 10px;
+}
+
+/* Favorite Basket Carousel */
 .basket-carousel {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.basket-display {
-  background-color: $white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  margin-top: 30px;
   width: 100%;
-  max-width: 300px;
+  max-width: 600px;
+  position: relative; /* For absolute positioning of arrows */
 }
 
+/* Carousel Button */
 .carousel-button {
-  background: $primary-pink;
+  background-color: var(--primary-pink);
   color: white;
+  padding: 12px;
   border: none;
-  padding: 10px;
-  border-radius: 50%;
+  font-size: 24px;
   cursor: pointer;
-  font-size: 18px;
-  width: 40px;
-  height: 40px;
-  transition: background 0.3s;
-
-  &:hover {
-    background: darken($primary-pink, 10%);
-  }
+  transition: background-color 0.3s ease;
+  margin: 10px;
+  position: absolute; /* Absolute positioning for arrows */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Center arrows properly */
 }
 
-/* 🗑️ Remove Favorite Button */
+.carousel-button.left {
+  left: 0; /* Place arrow on the left side */
+}
+
+.carousel-button.right {
+  right: 0; /* Place arrow on the right side */
+}
+
+/* Hover Effect for Arrows */
+.carousel-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Basket Display */
+.basket-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 80%;
+  text-align: center;
+}
+
+.basket-display h3 {
+  font-size: 22px;
+  color: var(--primary-pink);
+}
+
+.basket-display p {
+  font-size: 16px;
+  color: var(--text-color);
+  margin: 15px 0;
+}
+
+/* Remove from Favorites Button */
 .remove-fav-button {
-  background: #f44336;
+  background-color: var(--primary-pink);
   color: white;
-  padding: 10px;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
-
-  &:hover {
-    background: darken(#f44336, 10%);
-  }
+  margin-top: 15px;
+  transition: background-color 0.3s;
 }
 
-/* 📱 Mobile Responsive */
+.remove-fav-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Responsiveness */
 @media (max-width: 600px) {
-  .favorites-container {
-    padding: 15px;
-    margin-top: 120px;
-  }
-
-  .favorites-heading {
-    font-size: 28px;
-  }
-
-  .fav-number {
+  .favorite-header {
     font-size: 14px;
-    padding: 4px 8px;
   }
 
   .carousel-button {
-    width: 35px;
-    height: 35px;
-    font-size: 16px;
+    font-size: 18px;
+  }
+
+  .basket-display {
+    width: 90%;
+    padding: 15px;
   }
 
   .remove-fav-button {
     font-size: 14px;
-    padding: 8px;
   }
 }

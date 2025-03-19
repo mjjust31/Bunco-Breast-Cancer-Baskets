@@ -1,36 +1,21 @@
-/* NavTabs.scss */
-
-/* Define the primary pink color variable */
-$primary-pink: #f06292; /* Dark Pink */
-$secondary-pink: #f8bbd0; /* Soft Pink */
-$text-color: #333; /* Dark text for contrast */
-$background-color: #ffffff; /* White background for navbar */
-
-/* Navbar styles */
+/* Nav Bar Styling */
 .navbar {
+  background-color: #fff5f5; /* Light pink background */
+  padding: 10px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background-color: $primary-pink;
-  padding: 10px 0;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
-
-  /* Ensure the navbar is positioned correctly */
-  position: fixed; /* Fix navbar to the top of the page */
-  top: 0; /* Stick it to the top */
-  left: 0;
-  width: 100%; /* Take full width */
-  z-index: 1000; /* Ensure navbar stays on top of other content */
-  padding-top: 15px; /* Add a bit more space at the top for visibility */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid var(--primary-pink);
 }
 
-/* NavTabs styles */
 .nav-tabs {
   display: flex;
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-item {
@@ -38,50 +23,51 @@ $background-color: #ffffff; /* White background for navbar */
 }
 
 .nav-link {
-  color: white;
+  color: var(--primary-pink);
   font-size: 18px;
   text-decoration: none;
-  font-weight: bold;
-  padding: 8px 16px;
+  padding: 10px 15px;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: darken($primary-pink, 10%);
-  }
-
-  /* Active link styling */
-  &.active {
-    background-color: darken($primary-pink, 15%);
-  }
+  transition: background-color 0.3s, color 0.3s;
+  display: inline-block;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-  .navbar {
-    padding: 15px 0; /* Adjust padding for mobile */
-    position: fixed; /* Keep it fixed on top */
-    top: 0; /* Ensure it's always at the top */
-    left: 0;
-    z-index: 1000; /* Keep it on top */
-  }
+.nav-link:hover {
+  background-color: var(--primary-pink);
+  color: #fff;
+}
 
+.logout-button {
+  background-color: var(--primary-pink);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: none;
+}
+
+.logout-button:hover {
+  background-color: #f56c6c;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
   .nav-tabs {
-    flex-direction: column; /* Stack links vertically on small screens */
-    width: 100%; /* Make nav items take full width */
-    align-items: center; /* Center align them */
+    flex-direction: column;
   }
 
   .nav-item {
     margin: 10px 0;
-    width: 100%; /* Ensure nav items take full width */
-    text-align: center; /* Center text inside items */
   }
 
   .nav-link {
     font-size: 16px;
-    padding: 10px 20px; /* Larger clickable area */
-    width: 100%; /* Ensure links span the entire width */
-    text-align: center; /* Center-align text */
+    padding: 8px 10px;
+  }
+
+  .logout-button {
+    font-size: 16px;
+    padding: 8px 15px;
   }
 }

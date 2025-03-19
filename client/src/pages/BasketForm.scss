@@ -1,152 +1,121 @@
-.admin-container {
-  text-align: center;
-}
-
-.create-basket-button {
-  background-color: #e91e63; /* Pink */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-bottom: 15px;
-}
-
-.basket-list {
-  list-style: none;
-  padding: 0;
-}
-
-.basket-item {
-  background: #ffe4e1; /* Light pink */
-  padding: 10px;
-  margin: 10px auto;
-  width: 80%;
-  border-radius: 8px;
-}
-
-.edit-button {
-  background-color: #ff69b4; /* Bright pink */
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.delete-button {
-  background-color: #d32f2f; /* Red */
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.delete-all {
-  background-color: #880e4f; /* Dark pink */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-top: 15px;
-}
+/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-}
-.modal {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  width: 400px;
-  transform: translateY(-20px);
-  transition: transform 0.3s ease-in-out;
+  opacity: 0;
+  transition: all 0.3s ease;
 }
 
 .modal-overlay.show {
-  opacity: 1;
   visibility: visible;
+  opacity: 1;
 }
 
-
-.modal.show {
-  transform: translateY(0);
+/* Modal Window */
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
+/* Modal Header */
+.modal h2 {
+  font-size: 24px;
+  color: var(--primary-pink);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Input and Textarea */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+input[type="text"], textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+input[type="text"]:focus, textarea:focus {
+  border-color: var(--primary-pink);
+}
+
+/* Modal Buttons */
 .modal-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  align-items: center;
+}
+
+button {
+  padding: 12px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"] {
+  background-color: var(--primary-pink);
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--button-hover);
 }
 
 .cancel-button {
-  background: #d32f2f;
-  color: white;
+  background-color: #f2f2f2;
+  color: var(--text-color);
 }
 
-.admin-container {
-  text-align: center;
-  padding-top: 80px; /* ✅ Adds space below navbar */
+.cancel-button:hover {
+  background-color: #ddd;
 }
 
-.create-basket-button {
-  background-color: #e91e63; /* Pink */
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  display: inline-block;
-  position: relative; /* ✅ Ensures it's positioned correctly */
-  z-index: 10; /* ✅ Makes sure it's above other elements */
+/* Modal Close Button */
+.cancel-button {
+  background-color: #f2f2f2;
+  color: var(--text-color);
 }
 
-.basket-carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 100%;
+.cancel-button:hover {
+  background-color: #ddd;
 }
 
-.basket-display {
-  text-align: center;
-  background: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: 300px;
-}
+/* Responsiveness */
+@media (max-width: 600px) {
+  .modal {
+    width: 100%;
+    padding: 15px;
+  }
 
-.carousel-button {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 10px;
-}
+  .modal h2 {
+    font-size: 20px;
+  }
 
-.left {
-  margin-right: 10px;
-}
-
-.right {
-  margin-left: 10px;
+  button {
+    font-size: 14px;
+  }
 }
