@@ -8,9 +8,8 @@ function App() {
   const { basketData, username } = useContext(BasketContext);
   const [currentIndex, setCurrentIndex] = useState(0);
   const location = useLocation(); // ✅ Get current route
-
-  // ✅ Hide the basket carousel on /favorites page
-  const hideCarousel = location.pathname === "/favorites";
+  // ✅ Hide carousel if user is signed in OR on /favorites or /administrator
+  const hideCarousel = username || location.pathname === "/favorites" || location.pathname.startsWith("/administrator");
 
   // ✅ Handle carousel navigation
   const prevBasket = () => {

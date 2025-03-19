@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
-export const BasketContext = createContext(); // ✅ Named Export
+export const BasketContext = createContext();
 
 export const BasketContextProvider = ({ children }) => {
     const [basketData, setBasketData] = useState([]);
@@ -9,28 +9,27 @@ export const BasketContextProvider = ({ children }) => {
 
     useEffect(() => {
         fetch("/api/baskets")
-            .then((response) => response.json())
-            .then((data) => {
-                setBasketData(Array.isArray(data) ? data : []);
-            })
-            .catch((error) => console.error("❌ API Fetch Error:", error));
+            .then(response => response.json())
+            .then(data => setBasketData(Array.isArray(data) ? data : []))
+            .catch(error => console.error("❌ API Fetch Error:", error));
     }, []);
 
-    const handleLogin = (tempUsername, navigate) => {  // ✅ Pass `navigate` from the component
+    const handleLogin = (tempUsername, navigate) => {
         if (!tempUsername.trim()) return;
 
         setUsername(tempUsername.trim());
         localStorage.setItem("username", tempUsername.trim());
 
         if (tempUsername.toLowerCase() === "admin") {
-            navigate("/administrator/basketform"); // ✅ Redirect Admin
+            navigate("/administrator");
         } else {
-            navigate("/"); // ✅ Redirect Normal User
+            navigate("/");
         }
     };
 
-    const handleLogout = (navigate) => {  // ✅ Pass `navigate` from the component
+    const handleLogout = (navigate) => {
         setUsername("");
+        setFavorites([]); // ✅ Clear favorites on logout
         localStorage.removeItem("username");
         navigate("/");
     };
@@ -38,8 +37,9 @@ export const BasketContextProvider = ({ children }) => {
     return (
         <BasketContext.Provider value={{
             basketData, setBasketData,
-            username, handleLogin, handleLogout,
-            favorites
+            username, setUsername,
+            favorites, setFavorites,
+            handleLogin, handleLogout
         }}>
             {children}
         </BasketContext.Provider>

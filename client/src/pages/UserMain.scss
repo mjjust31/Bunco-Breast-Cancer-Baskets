@@ -1,133 +1,87 @@
-/* UserMain.scss */
-
-/* Colors for Breast Cancer Theme */
+/* 🎀 Breast Cancer Theme Colors */
 $primary-pink: #f06292; /* Dark Pink */
 $secondary-pink: #f8bbd0; /* Soft Pink */
 $text-color: #333; /* Dark text for contrast */
 $background-color: #f8bbd0; /* Light pink background */
+$white: #ffffff;
 
-/* Global Styles */
-body {
-  font-family: Arial, sans-serif;
-  background: $background-color;
-  color: $text-color;
-  margin: 0;
-  padding: 0;
+/* 🏠 User Main Container */
+.user-container {
+  padding: 20px;
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  margin-top: 80px;
+}
+
+/* 🎠 Basket Carousel */
+.basket-carousel {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: flex-start; /* Align content to the top */
-  height: 100vh; /* Full height of the viewport */
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-/* Main Container */
-.main-container {
-  padding: 20px;
-  margin: 0 auto;
-  max-width: 600px; /* Restrict max-width to make the page not too wide */
-  text-align: center; /* Center all text */
-  background-color: white;
+.basket-display {
+  background-color: $white;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-  margin-top: 80px; /* Added margin to avoid overlap with fixed navbar */
-}
-
-/* Header */
-header {
   padding: 20px;
-  background-color: $primary-pink;
-  color: white;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
 }
 
-header h1 {
-  font-size: 32px;
-  font-weight: bold;
-  margin: 0;
-}
-
-/* Buttons */
-button {
-  background-color: $primary-pink;
+.carousel-button {
+  background: $primary-pink;
   color: white;
   border: none;
-  padding: 12px 24px;
-  font-size: 18px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 50%;
   cursor: pointer;
-  width: 100%;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: darken($primary-pink, 10%);
-}
-
-/* Login Form */
-.login-container {
-  text-align: center;
-}
-
-input {
-  padding: 10px;
-  font-size: 16px;
-  width: 80%;
-  margin-top: 10px;
-  border-radius: 5px;
-  border: 1px solid $primary-pink;
-}
-
-input:focus {
-  outline: none;
-  border-color: $primary-pink;
-}
-
-/* Basket Cards */
-.basket-container {
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.basket-container h2 {
-  font-size: 24px;
-  color: $primary-pink;
-}
-
-.basket-container p {
   font-size: 18px;
+  width: 40px;
+  height: 40px;
+  transition: background 0.3s;
+
+  &:hover {
+    background: darken($primary-pink, 10%);
+  }
 }
 
-.basket-container button {
-  font-size: 16px;
-  padding: 10px;
-  width: auto;
-  margin-top: 10px;
+/* 💖 Favorite Button */
+.favorite-button {
+  background: $primary-pink;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+
+  &.favorited {
+    background: #4caf50; /* ✅ Turns Green when Favorited */
+  }
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  font-size: 14px;
-  color: $text-color;
-  margin-top: 40px;
-}
-
-/* Mobile Responsiveness */
+/* 📱 Mobile Responsive */
 @media (max-width: 600px) {
-  .main-container {
+  .user-container {
     padding: 15px;
-    margin-top: 120px; /* Adjusted top margin for mobile screens to account for navbar height */
+    margin-top: 120px;
   }
 
-  button {
+  .carousel-button {
+    width: 35px;
+    height: 35px;
     font-size: 16px;
   }
 
-  input {
-    width: 90%;
+  .favorite-button {
+    font-size: 14px;
+    padding: 8px;
   }
 }

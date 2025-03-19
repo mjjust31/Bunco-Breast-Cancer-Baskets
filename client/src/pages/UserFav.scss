@@ -1,37 +1,23 @@
-/* UserFav.scss */
-
-/* Colors for Breast Cancer Theme */
+/* 🎀 Breast Cancer Theme Colors */
 $primary-pink: #f06292; /* Dark Pink */
 $secondary-pink: #f8bbd0; /* Soft Pink */
 $text-color: #333; /* Dark text for contrast */
 $background-color: #f8bbd0; /* Light pink background */
+$white: #ffffff;
 
-/* Global Styles */
-body {
-  font-family: Arial, sans-serif;
-  background: $background-color;
-  color: $text-color;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: flex-start; /* Align content to the top */
-  height: 100vh; /* Full height of the viewport */
-}
-
-/* Favorites Container */
+/* 📌 Favorites Container */
 .favorites-container {
   padding: 20px;
-  background-color: white;
+  background-color: $white;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 800px;
   text-align: center;
-  margin-top: 80px; /* Adjusted to ensure content isn't hidden behind navbar */
+  margin-top: 80px;
 }
 
-/* Favorites Heading */
+/* 🏷️ Heading */
 .favorites-heading {
   font-size: 32px;
   font-weight: bold;
@@ -39,72 +25,97 @@ body {
   margin-bottom: 20px;
 }
 
-/* No Favorites Message */
-.no-favorites-message {
-  font-size: 18px;
-  color: $text-color;
-}
-
-/* Basket Cards Container */
-.basket-cards-container {
+/* 🔢 Favorite Numbers Header */
+.favorite-numbers {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Center the basket cards */
-  gap: 20px; /* Space between cards */
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-/* Individual Basket Card */
-.basket-card {
-  background-color: white;
+.fav-number {
+  background: $primary-pink;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* 🎠 Favorite Basket Carousel */
+.basket-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.basket-display {
+  background-color: $white;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 280px;
   text-align: center;
-  transition: box-shadow 0.3s ease-in-out;
+  width: 100%;
+  max-width: 300px;
+}
+
+.carousel-button {
+  background: $primary-pink;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  transition: background 0.3s;
 
   &:hover {
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    background: darken($primary-pink, 10%);
   }
 }
 
-.basket-name {
-  font-size: 20px;
-  color: $primary-pink;
-  margin-bottom: 15px;
+/* 🗑️ Remove Favorite Button */
+.remove-fav-button {
+  background: #f44336;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+
+  &:hover {
+    background: darken(#f44336, 10%);
+  }
 }
 
-.basket-content {
-  font-size: 18px;
-  color: $text-color;
-}
-
-.no-content-message {
-  font-size: 16px;
-  color: $text-color;
-}
-
-/* Mobile Responsiveness */
+/* 📱 Mobile Responsive */
 @media (max-width: 600px) {
   .favorites-container {
     padding: 15px;
-    margin-top: 120px; /* Adjusted to avoid navbar overlap */
+    margin-top: 120px;
   }
 
   .favorites-heading {
     font-size: 28px;
   }
 
-  .basket-name {
-    font-size: 18px;
+  .fav-number {
+    font-size: 14px;
+    padding: 4px 8px;
   }
 
-  .basket-content {
+  .carousel-button {
+    width: 35px;
+    height: 35px;
     font-size: 16px;
   }
 
-  .basket-card {
-    width: 100%; /* Stack cards vertically on small screens */
-    padding: 15px; /* Slightly smaller padding for mobile */
+  .remove-fav-button {
+    font-size: 14px;
+    padding: 8px;
   }
 }

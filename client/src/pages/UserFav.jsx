@@ -1,46 +1,55 @@
-import React, { useState, useEffect, useContext } from "react";
-import { BasketContext } from "../context/BasketContext"; // ✅ Correct Import
+import React, { useContext, useState } from "react";
+import { BasketContext } from "../context/BasketContext";
+import "./UserFav.scss"; // ✅ Import styles
 
-function UserFav() {
-  const { basketData, username } = useContext(BasketContext); // ✅ Get data from context
-  const [localFavorites, setLocalFavorites] = useState([]);
+const UserFav = () => {
+    const { favorites, setFavorites } = useContext(BasketContext);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    // Fetch user's favorite baskets from backend
-    if (username) {
-      fetch(`/api/${username}/favorites`)
-        .then((response) => response.json())
-        .then((data) => setLocalFavorites(data))
-        .catch((error) => console.error("Error fetching favorites:", error));
-    }
-  }, [username]);
+    // ✅ Remove from favorites
+    const removeFavorite = (basketId) => {
+        setFavorites(favorites.filter(fav => fav._id !== basketId));
+    };
 
-  // Filter the baskets based on favorites
-  const favoriteBaskets = basketData.filter((basket) =>
-    localFavorites.includes(basket.id)
-  );
+    return (
+        <div className="favorites-container">
+            <h1>You have selected {favorites.length} favorite basket{favorites.length !== 1 ? "s" : ""}!</h1>
 
-  return (
-    <div className="favorites-container">
-      <h1 className="favorites-heading">Your Favorites</h1>
-      {favoriteBaskets.length === 0 ? (
-        <p className="no-favorites-message">No favorites selected yet.</p>
-      ) : (
-        <div className="basket-cards-container">
-          {favoriteBaskets.map((basket) => (
-            <div key={basket.id} className="basket-card">
-              <h2 className="basket-name">{`Basket #${basket.id}: ${basket.name}`}</h2>
-              {basket.content ? (
-                <p className="basket-content">{basket.content}</p>
-              ) : (
-                <p className="no-content-message">No content available</p>
-              )}
+            {/* ✅ Display Selected Favorite Numbers */}
+            <div className="favorite-numbers">
+                {favorites.map((fav, index) => (
+                    <span key={index} className="fav-number">#{index + 1}</span>
+                ))}
             </div>
-          ))}
+
+            {/* ✅ Favorite Basket Carousel */}
+            {favorites.length === 0 ? (
+                <p>No favorite baskets selected.</p>
+            ) : (
+                <div className="basket-carousel">
+                    <button
+                        onClick={() => setCurrentIndex(prev => prev > 0 ? prev - 1 : favorites.length - 1)}
+                        className="carousel-button left">
+                        ◀
+                    </button>
+
+                    <div className="basket-display">
+                        <h3>#{currentIndex + 1} {favorites[currentIndex].name}</h3>
+                        <p>{favorites[currentIndex].content}</p>
+                        <button className="remove-fav-button" onClick={() => removeFavorite(favorites[currentIndex]._id)}>
+                            Remove from Favorites
+                        </button>
+                    </div>
+
+                    <button
+                        onClick={() => setCurrentIndex(prev => prev < favorites.length - 1 ? prev + 1 : 0)}
+                        className="carousel-button right">
+                        ▶
+                    </button>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
-}
+    );
+};
 
 export default UserFav;
