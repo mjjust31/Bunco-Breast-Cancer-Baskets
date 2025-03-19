@@ -1,51 +1,17 @@
-import React, { useContext, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom"; // ✅ Import useLocation
+import React, { useContext } from "react";
+import { Outlet } from "react-router-dom"; 
 import "./App.css";
 import Nav from "./components/NavTabs";
-import { BasketContext } from "./context/BasketContext"; // ✅ Import Context
+import { BasketContext } from "./context/BasketContext"; 
 
 function App() {
-  const { basketData, username } = useContext(BasketContext);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const location = useLocation(); // ✅ Get current route
-  // ✅ Hide carousel if user is signed in OR on /favorites or /administrator
-  const hideCarousel = username || location.pathname === "/favorites" || location.pathname.startsWith("/administrator");
-
-  // ✅ Handle carousel navigation
-  const prevBasket = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : basketData.length - 1));
-  };
-
-  const nextBasket = () => {
-    setCurrentIndex((prev) => (prev < basketData.length - 1 ? prev + 1 : 0));
-  };
+  const { username } = useContext(BasketContext);
 
   return (
     <>
       <Nav username={username} />
       <main className="mx-3">
         <Outlet /> {/* ✅ Renders UserMain, AdminMain, etc. */}
-
-        {/* ✅ Show Basket Carousel on all pages except Favorites */}
-        {!hideCarousel && (
-          <section className="global-baskets">
-            <h2>Available Baskets</h2>
-            {basketData.length === 0 ? (
-              <p>No baskets available.</p>
-            ) : (
-              <div className="basket-carousel">
-                <button onClick={prevBasket} className="carousel-button left">◀</button>
-
-                <div className="basket-display">
-                  <h3>#{currentIndex + 1} {basketData[currentIndex].name}</h3>
-                  <p>{basketData[currentIndex].content}</p>
-                </div>
-
-                <button onClick={nextBasket} className="carousel-button right">▶</button>
-              </div>
-            )}
-          </section>
-        )}
       </main>
     </>
   );
