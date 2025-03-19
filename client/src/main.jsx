@@ -17,9 +17,9 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />, // ✅ Handle invalid routes globally
     children: [
       { index: true, element: <UserMain /> },
-      { path: "/favorites", element: <Favs /> },
-      { path: "/administrator", element: <AdminMain /> },
-      { path: "/administrator/basketform", element: <BasketForm /> },
+      { path: "favorites", element: <Favs /> }, // ✅ Removed leading `/`
+      { path: "administrator", element: <AdminMain /> }, // ✅ Removed leading `/`
+      { path: "administrator/basketform", element: <BasketForm /> }, // ✅ Removed leading `/`
     ],
   },
   {

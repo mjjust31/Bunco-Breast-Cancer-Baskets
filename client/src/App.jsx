@@ -1,15 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom"; 
 import "./App.css";
-import Nav from "./components/NavTabs";
-import { BasketContext } from "./context/BasketContext"; 
+import Nav from "./components/NavTabs"; // ✅ Nav already has access to context
+import { BasketContextProvider } from "./context/BasketContext"; // ✅ Ensure Context is provided
 
 function App() {
-  const { username } = useContext(BasketContext);
-
   return (
     <>
-      <Nav username={username} />
+      <Nav /> {/* ✅ Removed unnecessary prop */}
       <main className="mx-3">
         <Outlet /> {/* ✅ Renders UserMain, AdminMain, etc. */}
       </main>

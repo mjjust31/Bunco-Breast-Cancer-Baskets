@@ -51,7 +51,7 @@ export const BasketContextProvider = ({ children }) => {
             // ✅ Find the basket and add it to favorites
             const basket = basketData.find(basket => basket._id === basketId);
             if (basket) {
-                setFavorites([...favorites, basket]);
+                setFavorites(prevFavorites => [...prevFavorites, basket]);
             }
         } catch (error) {
             console.error("❌ Error adding favorite:", error);
@@ -70,7 +70,7 @@ export const BasketContextProvider = ({ children }) => {
                 return;
             }
 
-            setFavorites(favorites.filter(fav => fav._id !== basketId));
+            setFavorites(prevFavorites => prevFavorites.filter(fav => fav._id !== basketId));
         } catch (error) {
             console.error("❌ Error removing favorite:", error);
         }
@@ -84,7 +84,7 @@ export const BasketContextProvider = ({ children }) => {
         navigate(tempUsername.toLowerCase() === "admin" ? "/administrator" : "/");
     };
 
-    // ✅ Handle logout
+    // ✅ Handle logout (Fixed: navigate is now a parameter again)
     const handleLogout = (navigate) => {
         setUsername("");
         setFavorites([]); // ✅ Clear favorites on logout

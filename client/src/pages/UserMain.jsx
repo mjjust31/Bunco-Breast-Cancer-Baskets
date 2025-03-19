@@ -11,7 +11,7 @@ const UserMain = () => {
 
     useEffect(() => {
         if (username) {
-            fetch(`/api/favorites/${username}`) // ✅ Corrected API endpoint
+            fetch(`/api/favorites/${username}`)
                 .then((res) => res.json())
                 .then((data) => {
                     if (Array.isArray(data)) {
@@ -32,7 +32,7 @@ const UserMain = () => {
         try {
             if (isFavorited(basketId)) {
                 await fetch(`/api/favorites/${username}/${basketId}`, { method: "DELETE" });
-                setFavorites(prev => prev.filter(fav => fav._id !== basketId)); // ✅ Ensure consistent removal
+                setFavorites(prev => prev.filter(fav => fav._id !== basketId));
             } else {
                 const res = await fetch(`/api/favorites/${username}`, {
                     method: "POST",
@@ -42,7 +42,11 @@ const UserMain = () => {
 
                 const data = await res.json();
                 if (data.success) {
-                    setFavorites(prev => [...prev, { _id: basketId }]); // ✅ Ensure correct structure
+                    // ✅ Fetch the full basket details before updating `favorites`
+                    const fullBasket = basketData.find(basket => basket._id === basketId);
+                    if (fullBasket) {
+                        setFavorites(prev => [...prev, fullBasket]); 
+                    }
                 }
             }
         } catch (error) {
@@ -72,7 +76,7 @@ const UserMain = () => {
             ) : (
                 <div className="welcome-container">
                     <p>Welcome, <strong>{username}</strong>!</p>
-                    <button onClick={() => handleLogout(navigate)} className="logout-button">
+                    <button onClick={handleLogout} className="logout-button"> {/* ✅ Fixed Logout Button */}
                         Log Out
                     </button>
                 </div>

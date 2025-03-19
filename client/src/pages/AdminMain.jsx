@@ -14,6 +14,12 @@ const AdminMain = () => {
 
     console.log("AdminMain component is rendering. Username:", username);
 
+    useEffect(() => {
+        if (currentBasketIndex >= basketData.length) {
+            setCurrentBasketIndex(0); // ✅ Prevent invalid index after deletion
+        }
+    }, [basketData]);
+
     // ✅ Open Create/Edit Modal
     const openModal = (basket = null) => {
         setEditingBasket(basket); // If editing, prefill basket details
@@ -82,7 +88,7 @@ const AdminMain = () => {
                         + Create Basket
                     </button>
 
-                    {/* ✅ Basket Carousel with Numbering */}
+                    {/* ✅ Basket Carousel with Correct Basket Numbering */}
                     {basketData.length > 0 ? (
                         <div className="basket-carousel">
                             <button
@@ -94,7 +100,9 @@ const AdminMain = () => {
                             </button>
 
                             <div className="basket-display">
-                                <h3>#{currentBasketIndex + 1} {basketData[currentBasketIndex].name}</h3>
+                                <h3>
+                                    Basket #{basketData[currentBasketIndex]?.basketNumber || "N/A"}: {basketData[currentBasketIndex].name}
+                                </h3>
                                 <p>{basketData[currentBasketIndex].content}</p>
                                 <button
                                     onClick={() => openModal(basketData[currentBasketIndex])}

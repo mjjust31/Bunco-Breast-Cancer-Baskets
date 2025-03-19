@@ -6,20 +6,22 @@ const UserFav = () => {
     const { favorites, setFavorites, username } = useContext(BasketContext);
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    console.log("🔥 Favorites Data:", favorites);
+
     useEffect(() => {
         if (currentIndex >= favorites.length) {
             setCurrentIndex(0); // ✅ Reset index if last item is removed
         }
     }, [favorites]);
 
-    // ✅ Remove from favorites (Frontend + Backend)
+    // ✅ Remove from favorites (Backend + State Update)
     const removeFavorite = async (basketId) => {
         try {
             const response = await fetch(`/api/favorites/${username}/${basketId}`, { method: "DELETE" });
             if (!response.ok) throw new Error("Failed to remove favorite");
 
-            const updatedFavorites = favorites.filter(basket => basket._id !== basketId);
-            setFavorites(updatedFavorites);
+            // ✅ Use functional state update to prevent stale state issues
+            setFavorites(prevFavorites => prevFavorites.filter(basket => basket._id !== basketId));
         } catch (error) {
             console.error("❌ Error removing favorite:", error);
         }
@@ -29,12 +31,12 @@ const UserFav = () => {
         <div className="favorites-container">
             <h1>Your Favorite Baskets</h1>
 
-            {/* ✅ Show number of favorites */}
+            {/* ✅ Show favorite basket numbers with fallback for missing values */}
             {favorites.length === 0 ? (
                 <p>You have no favorite baskets.</p>
             ) : (
                 <div className="favorite-header">
-                    <strong>{favorites.map((basket, index) => `Basket #${index + 1}`).join(", ")}</strong>
+                    <strong>{favorites.map((basket) => `Basket #${basket.basketNumber || "N/A"}`).join(", ")}</strong>
                 </div>
             )}
 
@@ -48,7 +50,7 @@ const UserFav = () => {
                     </button>
 
                     <div className="basket-display">
-                        <h3>Basket #{currentIndex + 1}: {favorites[currentIndex].name}</h3>
+                        <h3>Basket #{favorites[currentIndex].basketNumber || "N/A"}: {favorites[currentIndex].name}</h3>
                         <p>{favorites[currentIndex].content}</p>
                         <button
                             className="remove-fav-button"

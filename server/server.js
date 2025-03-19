@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, "../client")));
 app.get("/api/baskets", async (req, res) => {
   console.log("🛠️ GET /api/baskets was called!");
   try {
-    const baskets = await Basket.find({});
+    const baskets = await Basket.find({}).sort({ basketNumber: 1 }); // ✅ Sort by basketNumber
     res.json(baskets);
   } catch (error) {
     console.error("❌ Failed to fetch baskets:", error);
@@ -45,10 +45,13 @@ app.post("/api/baskets/admin", async (req, res) => {
       return res.status(400).json({ error: "Name and content are required" });
     }
 
-    const newBasket = new Basket({ name, content });
+    const lastBasket = await Basket.findOne().sort({ basketNumber: -1 }); // ✅ Get last basket number
+    const newBasketNumber = lastBasket ? lastBasket.basketNumber + 1 : 1; // ✅ Increment basketNumber
+
+    const newBasket = new Basket({ basketNumber: newBasketNumber, name, content });
     await newBasket.save();
-    
-    const updatedBaskets = await Basket.find();
+
+    const updatedBaskets = await Basket.find().sort({ basketNumber: 1 });
     res.json(updatedBaskets);
   } catch (error) {
     console.error("❌ Error adding basket:", error);
@@ -59,19 +62,28 @@ app.post("/api/baskets/admin", async (req, res) => {
 // ✅ Edit an existing basket
 app.put("/api/baskets/admin/:id", async (req, res) => {
   try {
-    const updatedBasket = await Basket.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedBasket) {
+    const { name, content } = req.body;
+
+    const existingBasket = await Basket.findById(req.params.id);
+    if (!existingBasket) {
       return res.status(404).json({ error: "Basket not found" });
     }
 
-    const updatedBaskets = await Basket.find();
+    // ✅ Ensure basketNumber remains unchanged
+    const updatedBasket = await Basket.findByIdAndUpdate(
+      req.params.id,
+      { name, content, basketNumber: existingBasket.basketNumber }, 
+      { new: true }
+    );
+
+    const updatedBaskets = await Basket.find().sort({ basketNumber: 1 });
     res.json(updatedBaskets);
   } catch (error) {
     res.status(500).json({ error: "Failed to edit basket" });
   }
 });
 
-// ✅ Delete a single basket & remove from favorites
+// ✅ Delete a single basket & update basket numbers
 app.delete("/api/baskets/admin/:id", async (req, res) => {
   try {
     const basket = await Basket.findById(req.params.id);
@@ -82,10 +94,10 @@ app.delete("/api/baskets/admin/:id", async (req, res) => {
     await Favorite.deleteMany({ basketId: req.params.id }); // ✅ Remove favorites related to this basket
     await Basket.findByIdAndDelete(req.params.id);
 
-    // Fetch remaining baskets and reorder their numbers
-    const baskets = await Basket.find().sort({ _id: 1 });
+    // ✅ Reorder basket numbers after deletion
+    const baskets = await Basket.find().sort({ basketNumber: 1 });
     for (let i = 0; i < baskets.length; i++) {
-      baskets[i].number = i + 1; // ✅ Ensure correct numbering
+      baskets[i].basketNumber = i + 1; // ✅ Reassign numbers correctly
       await baskets[i].save();
     }
 
@@ -106,47 +118,49 @@ app.delete("/api/baskets/admin", async (req, res) => {
   }
 });
 
-// ====== ✅ USER FAVORITES API (Stored in MongoDB) ======
+// ====== ✅ USER FAVORITES API ======
 
 // ✅ Get all favorite baskets for a user
 app.get("/api/favorites/:username", async (req, res) => {
   try {
-    const favorites = await Favorite.find({ username: req.params.username }).populate("basketId");
+    const favorites = await Favorite.find({ username: req.params.username })
+      .populate("basketId")
+      .sort({ "basketId.basketNumber": 1 }); // ✅ Sort by basketNumber
 
     if (!favorites || favorites.length === 0) {
-      return res.json([]); // ✅ Return empty array instead of `undefined`
+      return res.json([]); // ✅ Return empty array if no favorites
     }
 
-    // ✅ Transform the response to ensure correct structure
+    // ✅ Return `basketNumber` in response
     const formattedFavorites = favorites.map(fav => ({
-      _id: fav.basketId?._id || null,      // ✅ Use basket's _id, ensure it's not undefined
-      name: fav.basketId?.name || "Unknown Basket",    // ✅ Get basket name safely
-      content: fav.basketId?.content || "No content available" // ✅ Get basket content safely
+      _id: fav.basketId?._id || null,
+      basketNumber: fav.basketId?.basketNumber || "N/A", // ✅ Include basketNumber
+      name: fav.basketId?.name || "Unknown Basket",
+      content: fav.basketId?.content || "No content available"
     }));
 
-    res.json(formattedFavorites); // ✅ Send full basket details
+    res.json(formattedFavorites);
   } catch (error) {
     console.error("❌ Failed to fetch favorites:", error);
     res.status(500).json({ error: "Failed to fetch favorites" });
   }
 });
 
+// ✅ Add a favorite basket for a user
 app.post("/api/favorites/:username", async (req, res) => {
   try {
-    const { basketId } = req.body;  // ✅ Only extract `basketId` from the body
-    const username = req.params.username;  // ✅ Extract `username` from the URL
+    const { basketId } = req.body;
+    const username = req.params.username;
 
     if (!basketId || !username) {
       return res.status(400).json({ error: "Username and Basket ID are required" });
     }
 
-    // ✅ Check if the basket is already a favorite
     const existingFavorite = await Favorite.findOne({ username, basketId });
     if (existingFavorite) {
       return res.status(400).json({ error: "Basket is already favorited" });
     }
 
-    // ✅ Save to MongoDB
     const newFavorite = new Favorite({ username, basketId });
     await newFavorite.save();
 
@@ -156,7 +170,6 @@ app.post("/api/favorites/:username", async (req, res) => {
     res.status(500).json({ error: "Failed to add favorite" });
   }
 });
-
 
 // ✅ Remove a specific favorite
 app.delete("/api/favorites/:username/:basketId", async (req, res) => {

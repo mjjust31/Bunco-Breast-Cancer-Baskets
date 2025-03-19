@@ -47,7 +47,13 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
             if (!response.ok) throw new Error(`Failed to ${editingBasket ? "edit" : "add"} basket`);
 
             const updatedBaskets = await response.json();
-            setBasketData(updatedBaskets);
+
+            // ✅ Ensure `basketNumber` is included in updated baskets
+            setBasketData(updatedBaskets.map(basket => ({
+                ...basket,
+                basketNumber: basket.basketNumber || "N/A" // Prevents NaN errors
+            })));
+
             closeModal();
         } catch (error) {
             console.error(`❌ Error ${editingBasket ? "editing" : "adding"} basket:`, error);
@@ -84,3 +90,4 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
 };
 
 export default BasketForm;
+

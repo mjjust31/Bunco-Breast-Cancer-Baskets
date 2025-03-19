@@ -21,9 +21,15 @@ const NavTabs = () => {
           </li>
         )}
 
-        {safeUsername === "admin" && (
+        {safeUsername && (
           <li className="nav-item">
-            <button onClick={() => handleLogout(navigate)} className="nav-link logout-button">
+            <button 
+              onClick={() => {
+                handleLogout();
+                navigate("/"); // ✅ Redirect user to Home after logout
+              }} 
+              className="nav-link logout-button"
+            >
               Logout
             </button>
           </li>
