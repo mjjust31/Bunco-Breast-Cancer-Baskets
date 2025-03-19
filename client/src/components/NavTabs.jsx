@@ -21,7 +21,7 @@ const NavTabs = () => {
         {/* ✅ Admin Home Link (View User Page) */}
         {safeUsername === "admin" && (
           <Link to="/" className="nav-link admin-home-link">
-           Home
+            Home
           </Link>
         )}
       </div>
@@ -36,6 +36,13 @@ const NavTabs = () => {
         {safeUsername && safeUsername !== "admin" && (
           <Link to="/favorites" className="nav-link">
             Favorites
+          </Link>
+        )}
+
+        {/* ✅ Admin Portal Link (Only for Admin) */}
+        {safeUsername === "admin" && (
+          <Link to="/administrator" className="nav-link admin-portal-link">
+            Admin Portal
           </Link>
         )}
       </div>

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; 
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import { BasketContext } from "../context/BasketContext";
 import BasketForm from "./BasketForm"; // ✅ Import the form
 import "./AdminMain.scss";
@@ -9,6 +10,7 @@ const AdminMain = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingBasket, setEditingBasket] = useState(null);
+    const navigate = useNavigate(); // ✅ Define navigate
 
     // ✅ Open Form for New Basket
     const openCreateBasket = () => {
@@ -38,7 +40,10 @@ const AdminMain = () => {
     return (
         <div className="admin-container">
             <div className="admin-header">
-                <button onClick={handleLogout} className="logout-button">Log Out</button>
+                {/* ✅ Pass navigate to handleLogout */}
+                <button onClick={() => handleLogout(navigate)} className="logout-button">
+                    Log Out
+                </button>
                 <h1>🎗 Admin Control Panel 🎗</h1>
             </div>
 

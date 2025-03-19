@@ -16,10 +16,10 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-bottom: 30px; /* ✅ Adds space below the carousel */
+  margin-bottom: 30px;
 }
 
-/* 🎲 Basket Card */
+/* 🎲 Basket Card (No Changes) */
 .basket-display {
   width: 85%;
   max-width: 400px;
@@ -29,26 +29,27 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s ease-in-out;
-  margin-bottom: 20px; /* ✅ Adds space between basket and arrows */
+  margin-bottom: 20px;
+  border: 3px solid var(--primary-pink);
 }
 
 .basket-display:hover {
   transform: scale(1.05);
 }
 
-/* ✅ Pretty Pink Arrows */
+/* ✅ Carousel Arrows */
 .carousel-arrows {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 40px; /* ✅ Adds space between arrows and login form */
+  margin-bottom: 40px;
 }
 
 .carousel-button {
   background-color: var(--primary-pink);
   border: none;
-  color: white !important; /* ✅ Forces white arrow */
-  font-size: 28px; /* ✅ Bigger icon */
+  color: white !important;
+  font-size: 28px;
   border-radius: 50%;
   width: 55px;
   height: 55px;
@@ -62,34 +63,38 @@
   background-color: var(--button-hover);
 }
 
-/* 🎀 Login Form */
+/* 🎀 Login Form (Made Smaller) */
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   background: white;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 400px;
-  margin-top: 20px; /* ✅ Adds space between carousel arrows and login form */
+  width: 50%; /* ✅ Now smaller than basket cards */
+  max-width: 250px; /* ✅ Compact */
+  margin-top: 20px;
+  border: 2px solid var(--primary-pink);
 }
 
-.login-container h2 {
+.login-container p {
   color: var(--primary-pink);
-  font-size: 22px;
-  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 .input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
+  padding: 8px;
+  margin-bottom: 10px;
   border-radius: 5px;
-  border: 1px solid var(--primary-pink);
-  font-size: 16px;
+  border: 2px solid var(--primary-pink);
+  font-size: 14px;
   outline: none;
+  text-align: center;
 }
 
 .input:focus {
@@ -99,10 +104,10 @@
 .login-button {
   background-color: var(--primary-pink);
   color: white;
-  padding: 12px 24px;
+  padding: 8px 16px;
   border: none;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s;
   width: 100%;
@@ -126,7 +131,8 @@
   }
 
   .login-container {
-    width: 100%;
-    padding: 15px;
+    width: 65%; /* ✅ Slightly smaller on mobile */
+    max-width: 220px;
+    padding: 10px;
   }
 }
