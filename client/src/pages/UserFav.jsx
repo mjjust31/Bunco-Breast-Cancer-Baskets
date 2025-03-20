@@ -16,13 +16,13 @@ const UserFav = () => {
 
   const removeFavorite = async (basketId) => {
     if (isAdmin) return; // ✅ Admin can't remove favorites
-
+  
     try {
-      `${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to remove favorite");
-
+  
       setFavorites((prevFavorites) =>
         prevFavorites.filter((basket) => basket._id !== basketId)
       );
@@ -30,7 +30,7 @@ const UserFav = () => {
       console.error("❌ Error removing favorite:", error);
     }
   };
-
+  
   if (isAdmin) {
     return (
       <div className="favorites-container">
