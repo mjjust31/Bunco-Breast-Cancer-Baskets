@@ -143,3 +143,31 @@
     font-size: 12px;
   }
 }
+
+/* 🏆 Logout Button */
+.logout-button {
+  background-color: var(--primary-pink);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: all 0.3s ease-in-out;
+
+  @media (max-width: 600px) {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
+.logout-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* ✅ Responsive Tweaks */
+@media (max-width: 600px) {
+  .welcome-container {
+    margin-bottom: 10px;
+  }
+}
