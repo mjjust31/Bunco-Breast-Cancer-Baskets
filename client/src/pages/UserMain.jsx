@@ -21,7 +21,7 @@ const UserMain = () => {
   useEffect(() => {
     if (username && !isAdmin) {
       // ✅ Admin doesn't fetch favorites
-      fetch(`/api/favorites/${username}`)
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data)) {
@@ -42,7 +42,7 @@ const UserMain = () => {
 
     try {
       if (isFavorited(basketId)) {
-        await fetch(`/api/favorites/${username}/${basketId}`, {
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
           method: "DELETE",
         });
         setFavorites((prev) => prev.filter((fav) => fav._id !== basketId));

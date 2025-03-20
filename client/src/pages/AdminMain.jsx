@@ -35,7 +35,7 @@ const AdminMain = () => {
     // Remove Basket
     const deleteBasket = async (basketId) => {
         try {
-            const response = await fetch(`/api/baskets/admin/${basketId}`, { method: "DELETE" });
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/baskets/admin/${basketId}`, { method: "DELETE" });
             if (!response.ok) throw new Error("Failed to delete basket");
 
             // Delay state update to prevent React setState errors
@@ -62,7 +62,7 @@ const AdminMain = () => {
     // Delete All Baskets
     const deleteAllBaskets = async () => {
         try {
-            const response = await fetch(`/api/baskets/admin`, { method: "DELETE" });
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/baskets/admin`, { method: "DELETE" });
             if (!response.ok) throw new Error("Failed to delete all baskets");
 
             setTimeout(() => {

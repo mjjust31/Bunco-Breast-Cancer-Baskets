@@ -18,7 +18,7 @@ const UserFav = () => {
     if (isAdmin) return; // ✅ Admin can't remove favorites
 
     try {
-      const response = await fetch(`/api/favorites/${username}/${basketId}`, {
+      `${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to remove favorite");

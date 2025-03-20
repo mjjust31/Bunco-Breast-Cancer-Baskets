@@ -31,13 +31,13 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
         try {
             let response;
             if (editingBasket && editingBasket._id) {
-                response = await fetch(`/api/baskets/admin/${editingBasket._id}`, {
+                response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/baskets/admin/${editingBasket._id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(basketDataToSend),
                 });
             } else {
-                response = await fetch("/api/baskets/admin", {
+                response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/baskets/admin`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(basketDataToSend),
