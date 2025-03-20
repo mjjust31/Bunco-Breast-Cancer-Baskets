@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -7,7 +8,10 @@ const Basket = require("./models/Basket"); // Basket Model
 const Favorite = require("./models/Favorite"); // Favorite Model
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5050;
+
+// ✅ Debugging to check if MONGO_URI is being read
+console.log("✅ MONGO_URI from .env:", process.env.MONGO_URI || "MONGO_URI is Undefined");
 
 
 console.log("✅ Server is running");
