@@ -3,13 +3,13 @@ import { BasketContext } from "../context/BasketContext";
 import "./BasketForm.scss"; // ✅ Import styles
 
 const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
-    const { setBasketData } = useContext(BasketContext);
+    const { setBasketData, showAddBasketConfirmation } = useContext(BasketContext);
     const [basketName, setBasketName] = useState("");
     const [basketContent, setBasketContent] = useState("");
 
     // ✅ Load Basket Data into Form when Editing
     useEffect(() => {
-        if (editingBasket) {
+        if (editingBasket && editingBasket._id) {
             setBasketName(editingBasket.name);
             setBasketContent(editingBasket.content);
         } else {
@@ -30,7 +30,7 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
 
         try {
             let response;
-            if (editingBasket) {
+            if (editingBasket && editingBasket._id) {
                 response = await fetch(`/api/baskets/admin/${editingBasket._id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -44,7 +44,7 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
                 });
             }
 
-            if (!response.ok) throw new Error(`Failed to ${editingBasket ? "edit" : "add"} basket`);
+            if (!response.ok) throw new Error(`Failed to ${editingBasket && editingBasket._id ? "edit" : "add"} basket`);
 
             const updatedBaskets = await response.json();
 
@@ -55,8 +55,12 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
             })));
 
             closeModal();
+
+            if (!editingBasket || !editingBasket._id) {
+                showAddBasketConfirmation(); // ✅ Show confirmation modal for new baskets
+            }
         } catch (error) {
-            console.error(`❌ Error ${editingBasket ? "editing" : "adding"} basket:`, error);
+            console.error(`❌ Error ${editingBasket && editingBasket._id ? "editing" : "adding"} basket:`, error);
         }
     };
 
@@ -65,7 +69,7 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
             {isModalOpen && (
                 <div className="modal-overlay show">
                     <div className="modal show">
-                        <h2>{editingBasket ? "Edit Basket" : "Create a New Basket"}</h2>
+                        <h2>{editingBasket && editingBasket._id ? "Edit Basket" : "Create a New Basket"}</h2>
                         <form onSubmit={handleSubmit}>
                             <label className="form-label">
                                 Basket Name:
@@ -86,7 +90,7 @@ const BasketForm = ({ isModalOpen, closeModal, editingBasket }) => {
                             </label>
                             <div className="modal-buttons">
                                 <button type="submit" className="submit-button">
-                                    {editingBasket ? "Update Basket" : "Add Basket"}
+                                    {editingBasket && editingBasket._id ? "Update Basket" : "Add Basket"}
                                 </button>
                                 <button type="button" onClick={closeModal} className="cancel-button">
                                     Cancel

@@ -146,6 +146,11 @@ const UserMain = () => {
               <FaArrowRight />
             </button>
           </div>
+
+          <p>
+            {username &&
+              "After adding favorites, click the Favorites link above to view them!"}
+          </p>
         </div>
       )}
     </div>

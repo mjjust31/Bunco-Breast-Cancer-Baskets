@@ -1,5 +1,3 @@
-
-
 import { createContext, useState, useEffect } from "react";
 
 export const BasketContext = createContext();
@@ -8,6 +6,7 @@ export const BasketContextProvider = ({ children }) => {
     const [basketData, setBasketData] = useState([]);
     const [username, setUsername] = useState(localStorage.getItem("username") || "");
     const [favorites, setFavorites] = useState([]);
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);  // New state for confirmation modal
 
     // ✅ Fetch all baskets
     useEffect(() => {
@@ -86,16 +85,26 @@ export const BasketContextProvider = ({ children }) => {
         navigate(tempUsername.toLowerCase() === "admin" ? "/administrator" : "/");
     };
 
-    // ✅ Handle logout (Fixed: navigate is now a parameter)
+    // ✅ Handle logout
     const handleLogout = (navigate) => {
         if (typeof navigate === "function") {
             setUsername("");
-            setFavorites([]); // ✅ Clear favorites on logout
+            setFavorites([]); // Clear favorites on logout
             localStorage.removeItem("username");
-            navigate("/"); // ✅ Redirect to home page
+            navigate("/"); // Redirect to home page
         } else {
             console.error("❌ Error: navigate is not a function");
         }
+    };
+
+    // ✅ Show confirmation modal after adding a basket
+    const showAddBasketConfirmation = () => {
+        setShowConfirmationModal(true);
+    };
+
+    // ✅ Close confirmation modal
+    const closeConfirmationModal = () => {
+        setShowConfirmationModal(false);
     };
 
     return (
@@ -103,7 +112,8 @@ export const BasketContextProvider = ({ children }) => {
             basketData, setBasketData,
             username, handleLogin, handleLogout,
             favorites, setFavorites,
-            addFavorite, removeFavorite
+            addFavorite, removeFavorite,
+            showConfirmationModal, showAddBasketConfirmation, closeConfirmationModal // New modal logic
         }}>
             {children}
         </BasketContext.Provider>
