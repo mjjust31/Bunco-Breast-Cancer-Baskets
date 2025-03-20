@@ -7,7 +7,8 @@ const Basket = require("./models/Basket"); // Basket Model
 const Favorite = require("./models/Favorite"); // Favorite Model
 
 const app = express();
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 10000;
+
 
 console.log("✅ Server is running");
 

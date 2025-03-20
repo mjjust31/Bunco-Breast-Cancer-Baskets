@@ -1,0 +1,23 @@
+# Node modules (frontend & backend)
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment Variables
+.env
+client/.env
+server/.env
+
+# Build files
+client/build/
+dist/
+server/dist/
+
+# Logs & Debugging Files
+npm-debug.log
+yarn-error.log
+.DS_Store
+
+# System Files
+.vscode/
+.idea/
