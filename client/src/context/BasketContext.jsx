@@ -10,7 +10,7 @@ export const BasketContextProvider = ({ children }) => {
 
     // ✅ Fetch all baskets
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/baskets`)
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/baskets`)
             .then((response) => {
                 if (!response.ok) throw new Error("Failed to fetch baskets");
                 return response.json();
@@ -22,7 +22,7 @@ export const BasketContextProvider = ({ children }) => {
     // ✅ Fetch user favorites from MongoDB when user logs in
     useEffect(() => {
         if (username) {
-            fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}`)
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}`)
                 .then((response) => {
                     if (!response.ok) throw new Error("Failed to fetch favorites");
                     return response.json();
@@ -37,7 +37,7 @@ export const BasketContextProvider = ({ children }) => {
     // ✅ Add a basket to favorites
     const addFavorite = async (basketId) => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ basketId }),
@@ -62,7 +62,7 @@ export const BasketContextProvider = ({ children }) => {
     // ✅ Remove a basket from favorites
     const removeFavorite = async (basketId) => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
                 method: "DELETE",
             });
 

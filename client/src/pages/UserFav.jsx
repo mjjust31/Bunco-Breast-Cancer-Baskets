@@ -16,13 +16,16 @@ const UserFav = () => {
 
   const removeFavorite = async (basketId) => {
     if (isAdmin) return; // ✅ Admin can't remove favorites
-  
+
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}/${basketId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (!response.ok) throw new Error("Failed to remove favorite");
-  
+
       setFavorites((prevFavorites) =>
         prevFavorites.filter((basket) => basket._id !== basketId)
       );
@@ -30,7 +33,7 @@ const UserFav = () => {
       console.error("❌ Error removing favorite:", error);
     }
   };
-  
+
   if (isAdmin) {
     return (
       <div className="favorites-container">
@@ -66,7 +69,8 @@ const UserFav = () => {
             <p>{favorites[currentIndex].content}</p>
             <button
               className="remove-fav-button"
-              onClick={() => removeFavorite(favorites[currentIndex]._id)}>
+              onClick={() => removeFavorite(favorites[currentIndex]._id)}
+            >
               <FaHeart className="heart-icon" />
               Remove from Favorites
             </button>
@@ -79,7 +83,8 @@ const UserFav = () => {
                   prev > 0 ? prev - 1 : favorites.length - 1
                 )
               }
-              className="carousel-button left">
+              className="carousel-button left"
+            >
               <FaArrowLeft />
             </button>
 
@@ -89,7 +94,8 @@ const UserFav = () => {
                   prev < favorites.length - 1 ? prev + 1 : 0
                 )
               }
-              className="carousel-button right">
+              className="carousel-button right"
+            >
               <FaArrowRight />
             </button>
           </div>

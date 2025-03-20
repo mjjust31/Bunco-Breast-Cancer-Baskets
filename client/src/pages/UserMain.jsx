@@ -19,8 +19,13 @@ const UserMain = () => {
   const isAdmin = username?.toLowerCase() === "admin";
 
   useEffect(() => {
+    console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
+  }, []);
+  
+
+  useEffect(() => {
     if (username && !isAdmin) {
-      fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}`)
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data)) {
@@ -41,12 +46,12 @@ const UserMain = () => {
 
     try {
       if (isFavorited(basketId)) {
-        await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
           method: "DELETE",
         });
         setFavorites((prev) => prev.filter((fav) => fav._id !== basketId));
       } else {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ basketId }),

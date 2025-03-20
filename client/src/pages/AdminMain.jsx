@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { BasketContext } from "../context/BasketContext";
-import BasketForm from "./BasketForm"; 
+import BasketForm from "./BasketForm";
 import "./AdminMain.scss";
 
 const AdminMain = () => {
@@ -11,7 +11,7 @@ const AdminMain = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingBasket, setEditingBasket] = useState(null);
     const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (basketData.length === 0) {
@@ -35,17 +35,17 @@ const AdminMain = () => {
     // Remove Basket
     const deleteBasket = async (basketId) => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/baskets/admin/${basketId}`, { method: "DELETE" });
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/baskets/admin/${basketId}`, { method: "DELETE" });
             if (!response.ok) throw new Error("Failed to delete basket");
 
             // Delay state update to prevent React setState errors
             setTimeout(() => {
                 setBasketData(prevBaskets => {
                     const updatedBaskets = prevBaskets.filter(basket => basket._id !== basketId);
-                    
+
                     // Adjust current index to avoid out-of-bounds error
                     setCurrentIndex(prevIndex => (prevIndex >= updatedBaskets.length ? Math.max(0, updatedBaskets.length - 1) : prevIndex));
-                    
+
                     return updatedBaskets;
                 });
             }, 0);
@@ -62,7 +62,7 @@ const AdminMain = () => {
     // Delete All Baskets
     const deleteAllBaskets = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/baskets/admin`, { method: "DELETE" });
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/baskets/admin`, { method: "DELETE" });
             if (!response.ok) throw new Error("Failed to delete all baskets");
 
             setTimeout(() => {
@@ -158,3 +158,4 @@ const AdminMain = () => {
 };
 
 export default AdminMain;
+
