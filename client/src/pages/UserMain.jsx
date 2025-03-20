@@ -16,11 +16,10 @@ const UserMain = () => {
   const [tempUsername, setTempUsername] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
-  const isAdmin = username?.toLowerCase() === "admin"; // ✅ Check if admin
+  const isAdmin = username?.toLowerCase() === "admin";
 
   useEffect(() => {
     if (username && !isAdmin) {
-      // ✅ Admin doesn't fetch favorites
       fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}`)
         .then((res) => res.json())
         .then((data) => {
@@ -38,7 +37,7 @@ const UserMain = () => {
     favorites.some((fav) => fav._id === basketId);
 
   const toggleFavorite = async (basketId) => {
-    if (isAdmin) return; // ✅ Admin can't toggle favorites
+    if (isAdmin) return;
 
     try {
       if (isFavorited(basketId)) {
@@ -47,7 +46,7 @@ const UserMain = () => {
         });
         setFavorites((prev) => prev.filter((fav) => fav._id !== basketId));
       } else {
-        const res = await fetch(`/api/favorites/${username}`, {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/favorites/${username}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ basketId }),
@@ -108,7 +107,6 @@ const UserMain = () => {
             </h3>
             <p>{basketData[currentIndex].content}</p>
 
-            {/* ✅ Show Favorite Button only if NOT Admin */}
             {username && !isAdmin && (
               <button
                 className={`favorite-button ${
