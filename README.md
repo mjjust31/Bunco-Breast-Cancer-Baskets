@@ -16,7 +16,7 @@
 
 The **Bunco for Breast Cancer Fundraiser** app is designed to facilitate the annual Bunco fundraiser event. It allows participants to log in, view baskets available for raffle, and track which baskets they are interested in for placing their raffle tickets later. Users can also mark their favorite baskets to keep a record of them.
 
-Organizers or admins can manage the basket data, add new baskets, and remove old ones. This app ensures that users can view the available baskets in a carousel, get detailed information about each, and know how to use their raffle tickets accordingly.
+Organizers or admins can manage the basket data, add new baskets, edit existing ones, and remove old ones. This app ensures that users can view the available baskets in a carousel, get detailed information about each, and know how to use their raffle tickets accordingly.
 
 ## Features
 
@@ -25,6 +25,7 @@ Organizers or admins can manage the basket data, add new baskets, and remove old
 - **Admin Panel**: Admins can manage baskets, including adding new baskets, editing existing ones, and deleting baskets that are no longer available.
 - **Basket Carousel**: Users can browse baskets in a carousel-style display for easier navigation.
 - **Basket Details**: Each basket comes with a name, description, and content to help users decide where to place their tickets.
+- **Confirmation Modal for Admin Actions**: When an admin creates or deletes baskets, a confirmation modal ensures actions are intentional and prevents accidental modifications.
 
 ## Technologies Used
 
@@ -43,31 +44,43 @@ Organizers or admins can manage the basket data, add new baskets, and remove old
 ## Installation Instructions
 
 ### 1. Clone the repository
-git clone <repository-url> cd <project-folder>
-cd client npm install
+```sh
+git clone <repository-url>
+cd <project-folder>
+```
 
 ### 2. Install dependencies
 - Install frontend dependencies:
-
-cd server npm install
+```sh
+cd client 
+npm install
+```
 - Install backend dependencies:
-
+```sh
+cd server 
+npm install
+```
 
 ### 3. Set up Environment Variables
 Create a `.env` file in the **server** directory and add the necessary environment variables, such as:
-MONGO_URI=<your-mongo-db-uri> PORT=5050
-
+```sh
+MONGO_URI=<your-mongo-db-uri>
+PORT=5050
+```
 
 ### 4. Running the Application
 
 - **Start the Backend (Server)**:
-cd server npm start
-
+```sh
+cd server 
+npm start
+```
 
 - **Start the Frontend (React App)**:
-cd client npm start
-
-
+```sh
+cd client 
+npm start
+```
 
 The app should now be running locally on `http://localhost:3000` (frontend) and `http://localhost:5050` (backend).
 
@@ -79,6 +92,8 @@ The app should now be running locally on `http://localhost:3000` (frontend) and 
 - **Favorite Baskets**: Users can mark their favorite baskets to track which ones they might want to place their raffle tickets in later.
 - **Favorites Page**: Users can see a carousel of their favorite baskets with detailed information on each.
 - **Admin Flow**: Admins can log in to manage the baskets by adding new ones, editing existing ones, or deleting outdated ones. Admins also have the option to delete all baskets if necessary.
+- **Confirmation for Deleting All Baskets**: A confirmation modal ensures that an admin does not accidentally remove all baskets at once.
+- **Prevention of Undefined Errors**: The app handles edge cases where no baskets exist, preventing crashes and ensuring smooth user experience.
 
 ### Note: 
 - **Raffle Tickets**: The app helps users track the baskets they are interested in for later use with their raffle tickets, but users are not voting on baskets. The main purpose is to mark baskets for future ticket placement.
@@ -101,7 +116,3 @@ This project is licensed under the MIT License.
 - **Bunco for Breast Cancer**: This app was developed to support and track the fundraising event for breast cancer.
 - **React Docs**: For comprehensive documentation on React concepts and patterns.
 - **Node.js & Express Docs**: For setting up the backend and API endpoints.
-
----
-
-
