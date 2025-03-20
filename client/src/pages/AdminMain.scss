@@ -4,7 +4,7 @@
   padding: 20px;
   background-color: var(--background-color);
   min-height: 100vh;
-  padding-top: 80px; /* ✅ Push content down below navbar */
+  padding-top: 80px;
 }
 
 /* 🎀 Admin Header */
@@ -144,7 +144,7 @@
 
 /* ✅ Bigger White Arrow Icons */
 .arrow-icon {
-  font-size: 32px !important; /* ✅ Bigger for better visibility */
+  font-size: 32px !important;
   color: white !important;
 }
 
@@ -160,14 +160,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-  display: none; /* Hidden by default */
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
   justify-content: center;
   align-items: center;
 }
 
 .modal-overlay.show {
-  display: flex; /* Show when 'show' class is added */
+  display: flex;
 }
 
 .modal {
@@ -214,14 +214,14 @@
 }
 
 .modal-button.cancel {
-  background-color: #d42f2f; /* Red for Cancel */
+  background-color: #d42f2f;
 }
 
 .modal-button.cancel:hover {
-  background-color: #ff4d4d; /* Hover effect for Cancel */
+  background-color: #ff4d4d;
 }
 
-/* ✅ Responsive Styles for Modal */
+/* ✅ Responsive Styles */
 @media (max-width: 600px) {
   .modal {
     width: 90%;

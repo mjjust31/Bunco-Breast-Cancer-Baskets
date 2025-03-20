@@ -1,7 +1,7 @@
 /* ✅ Full-Width Navbar */
 .navbar {
   background-color: #f8f8f8 !important; /* Soft Off-White */
-  width: 100vw; /* Full width */
+  width: 100%; /* Full width */
   padding: 15px 20px;
   display: flex;
   align-items: center;
@@ -46,17 +46,16 @@
   background: none; /* ✅ Matches normal nav links */
   cursor: pointer;
 }
+
 /* ✅ Hover effect for both links & button */
 .nav-link:hover, .logout-button:hover {
   background-color: #eb4b98;
   color: #fff;
 }
 
-/* ✅ Responsive Design */
+/* ✅ Mobile Friendly Design */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: row;
-    justify-content: space-between;
     padding: 10px;
   }
 
@@ -64,11 +63,8 @@
     font-size: 1.3rem;
   }
 
-  .nav-left, .nav-right {
-    flex: 1;
-  }
-
-  .nav-center {
-    flex-grow: 2;
+  .nav-link, .logout-button {
+    font-size: 16px;
+    padding: 8px 12px;
   }
 }

@@ -8,6 +8,11 @@
   min-height: 100vh;
   justify-content: flex-start;
   padding-top: 80px;
+
+  @media (max-width: 600px) {
+    padding: 10px;
+    padding-top: 60px;
+  }
 }
 
 /* 🎀 Basket Carousel */
@@ -17,9 +22,13 @@
   align-items: center;
   width: 100%;
   margin-bottom: 30px;
+
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
+  }
 }
 
-/* 🎲 Basket Card (No Changes) */
+/* 🎲 Basket Card */
 .basket-display {
   width: 85%;
   max-width: 400px;
@@ -28,13 +37,14 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transition: transform 0.3s ease-in-out;
   margin-bottom: 20px;
   border: 3px solid var(--primary-pink);
-}
 
-.basket-display:hover {
-  transform: scale(1.05);
+  @media (max-width: 600px) {
+    width: 100%;
+    padding: 15px;
+    font-size: 14px;
+  }
 }
 
 /* ✅ Carousel Arrows */
@@ -43,12 +53,16 @@
   justify-content: center;
   gap: 20px;
   margin-bottom: 40px;
+
+  @media (max-width: 600px) {
+    gap: 10px;
+  }
 }
 
 .carousel-button {
   background-color: var(--primary-pink);
   border: none;
-  color: white !important;
+  color: white;
   font-size: 28px;
   border-radius: 50%;
   width: 55px;
@@ -57,13 +71,15 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease-in-out;
+
+  @media (max-width: 600px) {
+    font-size: 24px;
+    width: 45px;
+    height: 45px;
+  }
 }
 
-.carousel-button:hover {
-  background-color: var(--button-hover);
-}
-
-/* 🎀 Login Form (Made Smaller) */
+/* 🎀 Login Form */
 .login-container {
   display: flex;
   flex-direction: column;
@@ -72,10 +88,16 @@
   padding: 12px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 50%; /* ✅ Now smaller than basket cards */
-  max-width: 250px; /* ✅ Compact */
+  width: 50%;
+  max-width: 250px;
   margin-top: 20px;
   border: 2px solid var(--primary-pink);
+
+  @media (max-width: 600px) {
+    width: 75%;
+    max-width: 200px;
+    padding: 10px;
+  }
 }
 
 .login-container p {
@@ -95,6 +117,10 @@
   font-size: 14px;
   outline: none;
   text-align: center;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 }
 
 .input:focus {
@@ -111,28 +137,9 @@
   cursor: pointer;
   transition: background-color 0.3s;
   width: 100%;
-}
 
-.login-button:hover {
-  background-color: var(--button-hover);
-}
-
-/* ✅ Responsive Tweaks */
-@media (max-width: 600px) {
-  .basket-display {
-    width: 90%;
-    padding: 15px;
-  }
-
-  .carousel-button {
-    font-size: 24px;
-    width: 50px;
-    height: 50px;
-  }
-
-  .login-container {
-    width: 65%; /* ✅ Slightly smaller on mobile */
-    max-width: 220px;
-    padding: 10px;
+  @media (max-width: 600px) {
+    padding: 6px 12px;
+    font-size: 12px;
   }
 }

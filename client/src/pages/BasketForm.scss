@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* ✅ Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,7 @@
   max-width: 400px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  overflow: hidden; /* ✅ Prevents form elements from overflowing */
+  overflow: hidden;
   position: relative;
 }
 
@@ -54,12 +54,12 @@
 /* 🎀 Input Fields */
 .modal input,
 .modal textarea {
-  width: calc(100% - 20px); /* ✅ Prevents overflow */
+  width: calc(100% - 20px);
   padding: 10px;
   border: 2px solid var(--primary-pink);
   border-radius: 8px;
   font-size: 16px;
-  box-sizing: border-box; /* ✅ Ensures padding doesn’t exceed container */
+  box-sizing: border-box;
   margin-bottom: 15px;
 }
 
