@@ -28,7 +28,7 @@ const NavTabs = () => {
 
       {/* ✅ Centered Title */}
       <div className="nav-center">
-        <h1 className="nav-title">🎗️🎲 Bunco Baskets 🎲 🎗️</h1>
+        <h1 className="nav-title">🎗️🎲Bunco Baskets🎲🎗️</h1>
       </div>
 
       <div className="nav-right">

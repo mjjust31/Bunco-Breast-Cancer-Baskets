@@ -1,50 +1,74 @@
 /* 🎗 Favorites Container */
 .favorites-container {
   text-align: center;
-  padding: 20px;
+  padding: 15px;
   background-color: var(--background-color);
   min-height: 100vh;
-  padding-top: 80px; /* ✅ Push content down below navbar */
+  padding-top: 70px;
+
+  @media (max-width: 600px) {
+    padding: 10px;
+    padding-top: 60px;
+  }
 }
 
 /* 🏆 Favorite Header */
 .favorite-header {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 8px;
   color: var(--primary-pink);
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 }
 
 /* 🎲 Basket Display */
 .basket-display {
   background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 85%;
-  max-width: 400px;
+  width: 90%;
+  max-width: 350px;
   border: 3px solid var(--primary-pink);
   transition: box-shadow 0.3s ease-in-out;
+  margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
 }
 
 /* ✅ Subtle Glow Effect */
 .basket-display:hover {
-  box-shadow: 0px 0px 12px var(--primary-pink);
+  box-shadow: 0px 0px 10px var(--primary-pink);
 }
 
 /* 🎗 Basket Number */
 .basket-display h3 {
-  font-size: 22px;
+  font-size: 20px;
   color: var(--primary-pink);
   font-weight: bold;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 }
 
 /* 📝 Basket Content */
 .basket-display p {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--text-color);
-  margin: 10px 0;
+  margin: 8px 0;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 }
 
 /* 💖 Favorite Button Styling */
@@ -53,18 +77,27 @@
   align-items: center;
   justify-content: center;
   border: 2px solid var(--primary-pink);
-  font-size: 16px;
-  padding: 12px 20px;
+  font-size: 14px;
+  padding: 10px 18px;
   border-radius: 5px;
   cursor: pointer;
   width: 100%;
   transition: all 0.3s ease-in-out;
   font-weight: bold;
+
+  @media (max-width: 600px) {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
 }
 
 /* ❤️ Heart Icon */
 .heart-icon {
-  margin-right: 8px;
+  margin-right: 6px;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 }
 
 /* ❌ Not Favorited (White with Pink Border) */
@@ -95,7 +128,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 15px;
+
+  @media (max-width: 600px) {
+    margin-top: 10px;
+  }
 }
 
 /* ✅ Arrows BELOW the Card */
@@ -103,52 +140,45 @@
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  gap: 15px;
+  gap: 10px;
+
+  @media (max-width: 600px) {
+    gap: 8px;
+  }
 }
 
 /* ✅ Pretty Pink Arrow Buttons */
 .carousel-button {
   background-color: var(--primary-pink);
   color: white !important;
-  font-size: 28px;
+  font-size: 24px;
   border: none;
   border-radius: 50%;
-  width: 55px;
-  height: 55px;
+  width: 45px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease-in-out;
+
+  @media (max-width: 600px) {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+  }
 }
 
 /* ✅ Bigger White Arrow Icons */
 .arrow-icon {
-  font-size: 32px !important; /* ✅ Bigger for better visibility */
+  font-size: 28px !important;
   color: white !important;
+
+  @media (max-width: 600px) {
+    font-size: 24px !important;
+  }
 }
 
 /* ✅ Hover Effect */
 .carousel-button:hover {
   background-color: var(--accent-gold);
-}
-
-/* ✅ Responsive Styles */
-@media (max-width: 600px) {
-  .basket-display {
-    width: 90%;
-  }
-
-  .favorite-button {
-    font-size: 14px;
-  }
-
-  .carousel-button {
-    font-size: 24px;
-    width: 50px;
-    height: 50px;
-  }
-
-  .arrow-icon {
-    font-size: 28px !important;
-  }
 }

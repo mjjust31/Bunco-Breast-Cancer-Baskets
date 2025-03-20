@@ -12,12 +12,22 @@
   z-index: 1000;
   border-bottom: 3px solid #eb4b98;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 8px 10px;
+  }
 }
 
 /* ✅ Keep Left, Center, and Right Aligned */
-.nav-left, .nav-center, .nav-right {
+.nav-left,
+.nav-center,
+.nav-right {
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
 }
 
 /* ✅ Center Title */
@@ -25,6 +35,10 @@
   flex-grow: 1; /* Pushes content equally */
   display: flex;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+  }
 }
 
 /* ✅ Title Styling */
@@ -33,10 +47,15 @@
   font-weight: bold;
   color: #333;
   white-space: nowrap; /* Ensures text stays on one line */
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 }
 
 /* ✅ Navigation Links (Including Logout) */
-.nav-link, .logout-button {
+.nav-link,
+.logout-button {
   color: #eb4b98; /* Primary pink */
   font-size: 16px;
   text-decoration: none;
@@ -46,26 +65,16 @@
   border: none;
   background: none; /* ✅ Matches normal nav links */
   cursor: pointer;
-}
 
-/* ✅ Hover effect for both links & button */
-.nav-link:hover, .logout-button:hover {
-  background-color: #eb4b98;
-  color: #fff;
-}
-
-/* ✅ Mobile Friendly Design */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 8px 10px;
-  }
-
-  .nav-title {
-    font-size: 1rem;
-  }
-
-  .nav-link, .logout-button {
+  @media (max-width: 768px) {
     font-size: 14px;
     padding: 6px 8px;
   }
+}
+
+/* ✅ Hover effect for both links & button */
+.nav-link:hover,
+.logout-button:hover {
+  background-color: #eb4b98;
+  color: #fff;
 }

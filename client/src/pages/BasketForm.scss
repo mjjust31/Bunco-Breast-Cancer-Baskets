@@ -15,21 +15,25 @@
 /* 🎀 Basket Form Modal */
 .modal {
   background-color: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
-  width: 90%;
-  max-width: 350px;
+  width: 85%;
+  max-width: 320px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   position: relative;
 }
 
 /* 🎗 Modal Title */
 .modal h2 {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--primary-pink);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 }
 
 /* 🎀 Form Styles */
@@ -49,23 +53,32 @@
   display: block;
   text-align: left;
   width: 100%;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 }
 
 /* 🎀 Input Fields */
 .modal input,
 .modal textarea {
-  width: calc(100% - 15px);
+  width: calc(100% - 10px);
   padding: 8px;
   border: 2px solid var(--primary-pink);
   border-radius: 6px;
   font-size: 14px;
   box-sizing: border-box;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+
+  @media (max-width: 600px) {
+    padding: 6px;
+    font-size: 12px;
+  }
 }
 
 /* 🎗 Textarea Styling */
 .modal textarea {
-  height: 80px;
+  height: 70px;
   resize: vertical;
 }
 
@@ -80,19 +93,24 @@
 /* ✅ Primary Button */
 .modal-buttons button {
   flex: 1;
-  padding: 10px;
+  padding: 8px;
   border: none;
   border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+    padding: 6px;
+  }
 }
 
 /* ✅ Add / Update Button */
 .modal-buttons button:first-child {
   background-color: var(--primary-pink);
   color: white;
-  margin-right: 8px;
+  margin-right: 5px;
 }
 
 .modal-buttons button:first-child:hover {
@@ -103,6 +121,11 @@
 .modal-buttons .cancel-button {
   background-color: #ccc;
   color: black;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+    padding: 6px;
+  }
 }
 
 .modal-buttons .cancel-button:hover {
@@ -113,12 +136,16 @@
 .modal-close {
   position: absolute;
   top: 10px;
-  right: 12px;
+  right: 10px;
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   color: var(--primary-pink);
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 }
 
 .modal-close:hover {
@@ -128,22 +155,12 @@
 /* ✅ Responsive Fixes */
 @media (max-width: 600px) {
   .modal {
-    padding: 15px;
-    max-width: 300px;
-  }
-
-  .modal h2 {
-    font-size: 16px;
-  }
-
-  .modal input,
-  .modal textarea {
-    font-size: 12px;
-    padding: 6px;
+    padding: 12px;
+    max-width: 280px;
   }
 
   .modal-buttons button {
     font-size: 12px;
-    padding: 8px;
+    padding: 6px;
   }
 }
