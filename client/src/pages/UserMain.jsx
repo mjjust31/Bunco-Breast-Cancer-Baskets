@@ -21,7 +21,6 @@ const UserMain = () => {
   useEffect(() => {
     console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
   }, []);
-  
 
   useEffect(() => {
     if (username && !isAdmin) {
@@ -46,16 +45,24 @@ const UserMain = () => {
 
     try {
       if (isFavorited(basketId)) {
-        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}/${basketId}`, {
-          method: "DELETE",
-        });
+        await fetch(
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/favorites/${username}/${basketId}`,
+          {
+            method: "DELETE",
+          }
+        );
         setFavorites((prev) => prev.filter((fav) => fav._id !== basketId));
       } else {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ basketId }),
-        });
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/favorites/${username}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ basketId }),
+          }
+        );
 
         const data = await res.json();
         if (data.success) {
@@ -150,10 +157,16 @@ const UserMain = () => {
             </button>
           </div>
 
-          <p>
-            {username &&
-              "After adding favorites, click the Favorites link above to view them!"}
-          </p>
+          {isAdmin ? (
+            <p>These baskets are now available at the home screen</p>
+          ) : (
+            username && (
+              <p>
+                After adding favorites, click the Favorites link above to view
+                them!
+              </p>
+            )
+          )}
         </div>
       )}
     </div>
