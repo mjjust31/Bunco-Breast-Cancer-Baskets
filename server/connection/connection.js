@@ -2,16 +2,16 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 
 // Log to confirm MONGO_URI is being read
-console.log("✅ MONGO_URI being used:", process.env.MONGO_URI);
+console.log("✅ MONGO_URI being used:", process.env.MONGODB_URI);
 
 const connectDB = async () => {
   try {
-    if (!process.env.MONGO_URI) {
+    if (!process.env.MONGODB_URI) {
       throw new Error("MONGO_URI is undefined. Check your .env file.");
     }
 
     console.log("Attempting to connect to MongoDB...");
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 30000,
