@@ -17,6 +17,10 @@ body {
   color: var(--text-color);
   margin: 0;
   padding: 0;
+
+  @media (max-width: 600px) {
+    font-size: 14px; /* Slightly smaller font for smaller screens */
+  }
 }
 
 /* ✅ Keep Global Layout Aligned */
@@ -25,6 +29,10 @@ main {
   flex-direction: column;
   align-items: center;
   padding: 15px;
+
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
 }
 
 /* ✅ Headers (Maintain Consistency) */
@@ -32,12 +40,19 @@ h1, h2, h3 {
   font-family: var(--font-family);
   text-align: center;
 
+  @media (max-width: 600px) {
+    font-size: 16px; /* Slightly smaller headers for mobile */
+  }
 }
 
 /* ✅ Simple Button Styling */
 button {
   font-family: var(--font-family);
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    font-size: 14px; /* Smaller buttons for smaller screens */
+  }
 }
 
 /* ✅ Responsive Tweaks */
