@@ -113,7 +113,7 @@ const UserMain = () => {
         </div>
       )}
 
-      {basketData.length > 0 && (
+      {basketData.length > 0 ? (
         <div className="carousel-container">
           <div className="basket-display">
             <h3>
@@ -122,7 +122,7 @@ const UserMain = () => {
             <p>{basketData[currentIndex].content}</p>
 
             {username && !isAdmin && (
-              <Button
+              <button
                 className={`favorite-button ${
                   isFavorited(basketData[currentIndex]._id)
                     ? "favorited"
@@ -133,12 +133,12 @@ const UserMain = () => {
                 {isFavorited(basketData[currentIndex]._id)
                   ? " Remove from Favorites"
                   : " Add to Favorites"}
-              </Button>
+              </button>
             )}
           </div>
 
           <div className="carousel-arrows">
-            <Button
+            <button
               onClick={() =>
                 setCurrentIndex((prev) =>
                   prev > 0 ? prev - 1 : basketData.length - 1
@@ -146,9 +146,9 @@ const UserMain = () => {
               }
               className="carousel-button left">
               <FaArrowLeft />
-            </Button>
+            </button>
 
-            <Button
+            <button
               onClick={() =>
                 setCurrentIndex((prev) =>
                   prev < basketData.length - 1 ? prev + 1 : 0
@@ -156,19 +156,23 @@ const UserMain = () => {
               }
               className="carousel-button right">
               <FaArrowRight />
-            </Button>
+            </button>
           </div>
 
           {isAdmin ? (
             <p>These baskets are now available at the home screen</p>
           ) : (
             username && (
-              <p>
+              <p className="view-favorites-note">
                 After adding favorites, click the Favorites link above to view
                 them!
               </p>
             )
           )}
+        </div>
+      ) : (
+        <div className="no-baskets">
+          <p>No Baskets yet! Keep checking!</p>
         </div>
       )}
     </div>

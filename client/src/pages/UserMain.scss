@@ -153,6 +153,10 @@
   cursor: pointer;
   margin-bottom: 10px;
   transition: all 0.3s ease-in-out;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 
   @media (max-width: 600px) {
     padding: 6px;
@@ -162,6 +166,15 @@
 
 .logout-button:hover {
   background-color: var(--button-hover);
+}
+
+.no-baskets {
+  padding: 20px;
+}
+
+.view-favorites-note {
+  text-align: center;
+  color:var(--primary-pink);
 }
 
 /* ✅ Responsive Tweaks */
