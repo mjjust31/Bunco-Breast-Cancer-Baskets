@@ -3,6 +3,7 @@ import { FaArrowLeft, FaArrowRight, FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { BasketContext } from "../context/BasketContext";
 import "./UserMain.scss";
+import Button from "../components/Buttons/Buttons";
 
 const UserMain = () => {
   const {
@@ -91,20 +92,21 @@ const UserMain = () => {
             onChange={(e) => setTempUsername(e.target.value)}
             className="input"
           />
-          <button
+          <Button
             onClick={() => handleLogin(tempUsername, navigate)}
-            className="login-button">
-            Submit
-          </button>
+            className="login-button"
+            text="Login">
+            Login
+          </Button>
         </div>
       ) : (
         <div className="welcome-container">
-          <button
+          <Button
             onClick={() => handleLogout(navigate)}
-            className="logout-button">
-            Log Out
-          </button>
-
+            className="logout-button"
+            text="Log Out">
+            Logout
+          </Button>
           <p>
             Welcome, <strong>{username}</strong>!
           </p>
@@ -120,7 +122,7 @@ const UserMain = () => {
             <p>{basketData[currentIndex].content}</p>
 
             {username && !isAdmin && (
-              <button
+              <Button
                 className={`favorite-button ${
                   isFavorited(basketData[currentIndex]._id)
                     ? "favorited"
@@ -131,12 +133,12 @@ const UserMain = () => {
                 {isFavorited(basketData[currentIndex]._id)
                   ? " Remove from Favorites"
                   : " Add to Favorites"}
-              </button>
+              </Button>
             )}
           </div>
 
           <div className="carousel-arrows">
-            <button
+            <Button
               onClick={() =>
                 setCurrentIndex((prev) =>
                   prev > 0 ? prev - 1 : basketData.length - 1
@@ -144,9 +146,9 @@ const UserMain = () => {
               }
               className="carousel-button left">
               <FaArrowLeft />
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() =>
                 setCurrentIndex((prev) =>
                   prev < basketData.length - 1 ? prev + 1 : 0
@@ -154,7 +156,7 @@ const UserMain = () => {
               }
               className="carousel-button right">
               <FaArrowRight />
-            </button>
+            </Button>
           </div>
 
           {isAdmin ? (

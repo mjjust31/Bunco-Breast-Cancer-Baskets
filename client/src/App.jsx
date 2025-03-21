@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom"; 
 import "./App.css";
-import Nav from "./components/NavTabs"; // ✅ Nav already has access to context
+import Nav from "./components/NavTabs/NavTabs"; // ✅ Nav already has access to context
 import { BasketContextProvider } from "./context/BasketContext"; // ✅ Ensure Context is provided
 
 function App() {

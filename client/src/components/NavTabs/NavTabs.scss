@@ -12,6 +12,7 @@
   z-index: 1000;
   border-bottom: 3px solid #eb4b98;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: visible;
 
   @media (max-width: 768px) {
     padding: 8px 10px;
@@ -24,13 +25,6 @@
 .nav-right {
   display: flex;
   align-items: center;
-}
-
-/* 🎲 Center Title */
-.nav-center {
-  flex-grow: 1; /* Pushes content equally */
-  display: flex;
-  justify-content: center;
 }
 
 /* 🎗 Title Styling */
@@ -69,4 +63,30 @@
 .logout-button:hover {
   background-color: #eb4b98;
   color: #fff;
+}
+
+/* 🎀 Add some space for the Favorites link */
+.nav-link-fav {
+  padding-right: 20px;
+  white-space: nowrap; /* Ensures the text does not break into multiple lines */
+  overflow: hidden; /* Prevents text from spilling over */
+  text-overflow: ellipsis; /* Optional: Adds "..." if text overflows */
+}
+
+/* 🎀 Admin Home Link Styling (Optional, for admin-specific styling) */
+.admin-home-link {
+  color: #333;
+  padding-left: 20px;
+  @media (max-width: 768px) {
+    padding-left: 15px;
+  }
+}
+
+/* 🎀 Admin Portal Link Styling */
+.admin-portal-link {
+  color: #333;
+  padding-left: 20px;
+  @media (max-width: 768px) {
+    padding-left: 15px;
+  }
 }

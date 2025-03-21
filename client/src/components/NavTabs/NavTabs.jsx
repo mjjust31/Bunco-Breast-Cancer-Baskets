@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BasketContext } from "../context/BasketContext";
+import { BasketContext } from "../../context/BasketContext";
 import "./NavTabs.scss";
 
 const NavTabs = () => {
@@ -34,7 +34,7 @@ const NavTabs = () => {
       <div className="nav-right">
         {/* ✅ Favorites Button (Regular User) */}
         {safeUsername && safeUsername !== "admin" && (
-          <Link to="/favorites" className="nav-link">
+          <Link to="/favorites" className="nav-link nav-link-fav">
             Favorites
           </Link>
         )}
