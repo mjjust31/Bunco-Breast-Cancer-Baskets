@@ -1,4 +1,4 @@
-/* ✅ Full-Width Navbar */
+/* 🎗 Navbar Styling */
 .navbar {
   background-color: #f8f8f8 !important; /* Soft Off-White */
   width: 100%; /* Full width */
@@ -18,30 +18,22 @@
   }
 }
 
-/* ✅ Keep Left, Center, and Right Aligned */
+/* 🎀 Left, Center, Right Layout */
 .nav-left,
 .nav-center,
 .nav-right {
   display: flex;
   align-items: center;
-
-  @media (max-width: 768px) {
-    flex-wrap: wrap;
-  }
 }
 
-/* ✅ Center Title */
+/* 🎲 Center Title */
 .nav-center {
   flex-grow: 1; /* Pushes content equally */
   display: flex;
   justify-content: center;
-
-  @media (max-width: 768px) {
-    justify-content: flex-start;
-  }
 }
 
-/* ✅ Title Styling */
+/* 🎗 Title Styling */
 .nav-title {
   font-size: 1.2rem;
   font-weight: bold;
@@ -53,7 +45,7 @@
   }
 }
 
-/* ✅ Navigation Links (Including Logout) */
+/* 🎀 Links and Buttons */
 .nav-link,
 .logout-button {
   color: #eb4b98; /* Primary pink */
@@ -63,7 +55,7 @@
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
   border: none;
-  background: none; /* ✅ Matches normal nav links */
+  background: none; /* Matches normal nav links */
   cursor: pointer;
 
   @media (max-width: 768px) {
@@ -72,7 +64,7 @@
   }
 }
 
-/* ✅ Hover effect for both links & button */
+/* 🎲 Hover Effects */
 .nav-link:hover,
 .logout-button:hover {
   background-color: #eb4b98;

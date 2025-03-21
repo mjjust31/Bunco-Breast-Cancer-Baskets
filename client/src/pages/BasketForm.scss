@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow-y: auto; /* Enable scrolling if content exceeds height */
 }
 
 /* 🎀 Basket Form Modal */
@@ -17,8 +18,8 @@
   background-color: white;
   padding: 15px;
   border-radius: 10px;
-  width: 85%;
-  max-width: 320px;
+  width: 90%;
+  max-width: 300px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -78,8 +79,9 @@
 
 /* 🎗 Textarea Styling */
 .modal textarea {
-  height: 70px;
+  height: auto;
   resize: vertical;
+  min-height: 60px; /* Set a smaller minimum height for mobile */
 }
 
 /* 🎀 Buttons Container */
